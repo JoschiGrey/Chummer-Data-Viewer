@@ -1,31 +1,31 @@
-﻿<Bar Mode="BarMode.VerticalInline"
+﻿@using System.Diagnostics
+<Bar Mode="BarMode.VerticalInline"
      CollapseMode="BarCollapseMode.Small"
      Breakpoint="Breakpoint.Desktop"
      NavigationBreakpoint="Breakpoint.Tablet"
-     ThemeContrast="ThemeContrast.Dark">
+     ThemeContrast="ThemeContrast.Dark"
+>
+    <BarToggler></BarToggler>
     <BarBrand>
         <BarItem>
-            <BarLink To="#">
-                <BarIcon IconName="IconName.Dashboard" />
-                Blazorise Demo
+            <BarLink To="/">
+                <BarIcon IconName="chummerIcon"/>
+                <span>Chummer DB Viewer</span>
             </BarLink>
         </BarItem>
     </BarBrand>
     <BarMenu>
         <BarStart>
             <BarItem>
-                <BarLink To="#home">
-                    <BarIcon IconName="IconName.Dashboard" />
-                    Home
+                <BarLink To="/WeaponTable">
+                    <BarIcon IconName="@("icon-rifle")"></BarIcon>
+                    Weapons
                 </BarLink>
-            </BarItem>
-            <BarItem>
-                <BarLink To="/WeaponTable">Weapon Table</BarLink>
             </BarItem>
             <BarItem>
                 <BarDropdown>
                     <BarDropdownToggle>
-                        <BarIcon IconName="IconName.Edit" />
+                        <BarIcon IconName="IconName.Edit"/>
                         Dropdown
                     </BarDropdownToggle>
                     <BarDropdownMenu>
@@ -35,5 +35,18 @@
                 </BarDropdown>
             </BarItem>
         </BarStart>
+        <BarEnd>
+            <BarItem>
+                <BarLink To="Attributions">
+                    <BarIcon IconName="IconName.InfoCircle"></BarIcon>
+                    Attributions
+                </BarLink>
+            </BarItem>
+        </BarEnd>
     </BarMenu>
 </Bar>
+
+@code
+{
+    RenderFragment chummerIcon = @<img src="ressources/troll.png" style="width: 44px; height: 54px; margin-bottom: 0.2rem"/>;
+}

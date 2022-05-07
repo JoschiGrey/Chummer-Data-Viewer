@@ -1,14 +1,50 @@
 ﻿@page "/WeaponTable"
-@using Chummer_Database.Classes
+@using Blazorise.DataGrid.Configuration
+@using System.Collections.Immutable
+@inject HttpClient _client
+@inject ILogger<WeaponTable> _logger
 
-<h3>WeaponTable</h3>
+<div class="mt-2 d-flex align-content-center justify-content-center">
+    <h1 class="text-decoration-underline">WeaponTable Test</h1>
+</div>
 
-<DataGrid TItem="Weapon">
-    <DataGridColumns>
-        <DataGridColumn TItem="Weapon" Field="Name" Caption="Name"></DataGridColumn>
-    </DataGridColumns>
-</DataGrid>
+<div class="m-3">
+    <DataGrid TItem="Weapon"
+              Data="Weapons"
+              @bind-SelectedRow="@SelectedWeapon"
+              Filterable="true"
+              SortMode="DataGridSortMode.Single"
+              Hoverable="true"
+              HeaderThemeContrast="ThemeContrast.Dark"
+              ShowPager="true"
+              ShowPageSizes="true"
+              FixedHeader="true"
+    >
+        
+        <DataGridColumns>
+            <DataGridColumn TItem="Weapon" Field="Category.Name" Caption="Category"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Name)" Caption="Name"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Accuracy)" Caption="ACC"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.DamageString)" Caption="DAMAGE"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Ap)" Caption="AP"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Mode)" Caption="Mode"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Rc)" Caption="RC"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Ammo)" Caption="Ammo"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.AvailabilityString)" Caption="Avail"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Cost)" Caption="Cost"></DataGridColumn>
+            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.DisplaySource)" Caption="Source"></DataGridColumn>
+        </DataGridColumns>
+    </DataGrid>
+</div>
 
 @code {
-    
+    public ImmutableHashSet<Weapon>? Weapons { get; set; }
+    private Weapon? SelectedWeapon {get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await XmlLoader.LoadAll(_client, _logger);
+        Weapons = XmlLoader.WeaponXmlData?.Weapons.ToImmutableHashSet();
+    }
+
 }

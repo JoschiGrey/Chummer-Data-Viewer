@@ -55,14 +55,16 @@ public class Weapon {
 
 	[XmlElement(ElementName="source")] public string Source { get; set; } = string.Empty;
 
-	[XmlElement(ElementName="page")] public int Page { get; set; } 
+	[XmlElement(ElementName="page")] public int Page { get; set; }
+
+    [XmlIgnore] public string DisplaySource => $"p.{Page} ({Source})";
 
 	/*
 [XmlElement(ElementName="accessories")] 
 public Accessories Accessories { get; set; } 
 */
 
-	[XmlArray("accessorymounts")]
+[XmlArray("accessorymounts")]
 	[XmlArrayItem("mount", typeof(AccessoryMount))]
 	public List<AccessoryMount> AccessoryMounts { get; set; } = new();
 	
@@ -207,14 +209,16 @@ public Accessories Accessories { get; set; }
 	[XmlElement(ElementName="hide")] 
 	public object Hide { get; set; } 
 	*/
+
+
 	
 	public bool Create(ILogger logger)
 	{
 		AmmoCategory = GetAmmoCategory();
 		Damage = new Damage(DamageString, logger);
 
-		if (TryGetCategory(out var category))
-			Category = category;
+
+        Category = TryGetCategory();
 
 		Skill = TryGetSkill();
 
@@ -233,9 +237,10 @@ public Accessories Accessories { get; set; }
 			return string.Empty;
 		}
 		
-		bool TryGetCategory(out Category outCategory)
+		Category TryGetCategory()
 		{
 			var catAsString = CategoryAsString;
+            Category outCategory;
 
 			if (WeaponsXmlRoot.WeaponCategoryDictionary is null)
 				throw new ArgumentNullException("category dic was still null");
@@ -250,7 +255,7 @@ public Accessories Accessories { get; set; }
 				if (WeaponType.IsNullOrEmpty())
 					WeaponType = outCategory.Type;
 
-				return true;
+				return outCategory;
 			}
 
 			outCategory = new Category()
@@ -258,14 +263,13 @@ public Accessories Accessories { get; set; }
 				Name = catAsString,
 				Type = WeaponType
 			};
-        
-			if (!WeaponsXmlRoot.WeaponCategoryDictionary.ContainsKey(catAsString))
-			{
-				WeaponsXmlRoot.WeaponCategoryDictionary.Add(outCategory.Name, outCategory);
-			}
 
-			return false;
-		}
+            if (WeaponsXmlRoot.WeaponCategoryDictionary.ContainsKey(catAsString)) return outCategory;
+
+            WeaponsXmlRoot.WeaponCategoryDictionary.Add(outCategory.Name, outCategory);
+            return outCategory;
+
+        }
 
 		Skill TryGetSkill()
 		{
