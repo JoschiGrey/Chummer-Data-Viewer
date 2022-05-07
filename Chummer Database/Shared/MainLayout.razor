@@ -3,27 +3,32 @@
 @inject HttpClient _client
 @inject ILogger<MainLayout> _logger
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+
+<Layout>
+    <LayoutHeader>
+        <TopMenu></TopMenu>
+    </LayoutHeader>
+    <Layout Sider>
+        <LayoutSider>
+            <LayoutSiderContent>
+                <NavMenu />
+            </LayoutSiderContent>
+        </LayoutSider>
+        <Layout>
+            <LayoutContent Padding="Padding.Is4.OnX">
+                @Body
+            </LayoutContent>
+        </Layout>
+    </Layout>
+</Layout>
 
 @code{
 
     protected override async Task OnInitializedAsync()
     {
-        await XmlLoader.LoadAll(_client, _logger);
+        //await XmlLoader.LoadAll(_client, _logger);
     }
 
 }

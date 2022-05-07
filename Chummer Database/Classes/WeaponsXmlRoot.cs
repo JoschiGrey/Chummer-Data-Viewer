@@ -17,7 +17,11 @@ public class WeaponsXmlRoot
     [XmlArray("weapons")]
     [XmlArrayItem("weapon")]
     public List<Weapon> Weapons { get; set; } = new();
-    
+
+    // [XmlArray("accessories")]
+    // [XmlArrayItem("accessory", typeof(Accessory))]
+    // public List<Accessory> Accessories { get; set; } = new();
+
     public bool Create(ILogger logger)
     {
         logger.LogTrace("Creating {Type}", GetType().Name);

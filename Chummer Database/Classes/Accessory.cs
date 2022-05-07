@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using Chummer_Database.Enums;
 
 namespace Chummer_Database.Classes;
 
@@ -6,7 +7,7 @@ namespace Chummer_Database.Classes;
 public class Accessory { 
 
     [XmlElement(ElementName="rating")] 
-    public List<int> Rating { get; set; } 
+    public int Rating { get; set; } 
 
     [XmlElement(ElementName="rc")] 
     public int Rc { get; set; } 
@@ -34,11 +35,10 @@ public class Accessory {
 
     [XmlElement(ElementName="page")] 
     public int Page { get; set; } 
-}
-
-[XmlRoot(ElementName="accessories")]
-public class Accessories { 
-
-    [XmlElement(ElementName="accessory")] 
-    public List<Accessory> Accessory { get; set; } 
+    
+    [XmlElement(ElementName = "mount")]
+    private string MountString { get; set; }
+    
+    [XmlIgnore] 
+    public List<AccessoryMount> Mounts { get; set; } = new();
 }
