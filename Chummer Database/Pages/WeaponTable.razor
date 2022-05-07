@@ -1,5 +1,4 @@
 ﻿@page "/WeaponTable"
-@using Blazorise.DataGrid.Configuration
 @using System.Collections.Immutable
 @inject HttpClient _client
 @inject ILogger<WeaponTable> _logger
@@ -43,8 +42,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await XmlLoader.LoadAll(_client, _logger);
-        Weapons = XmlLoader.WeaponXmlData?.Weapons.ToImmutableHashSet();
+        if (WeaponXmlData is null)
+        {
+            await LoadAll(_client, _logger);
+        }
+        Weapons = WeaponXmlData?.Weapons.ToImmutableHashSet();
     }
 
 }
