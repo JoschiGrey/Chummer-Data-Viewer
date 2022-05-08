@@ -46,9 +46,7 @@
                 }
                 <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Name)" Caption="Name"/>
                 <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Accuracy)" Caption="ACC"/>
-                <DataGridNumericColumn TItem="Weapon" CellClass="@(weapon => weapon.FormDamageCssString())" Field="Damage.DamageAmount" Caption="DAMAGE"/>
-                <DataGridNumericColumn TItem="Weapon" Field="Damage.DamageRadiusString"/>
-                <DataGridNumericColumn TItem="Weapon" Field="Damage.DamageDropPerMeterString"/>
+                <DataGridColumn TItem="Weapon" SortField="Damage.DamageAmount" Field="Damage.DisplayString" Caption="DAMAGE"/>
                 <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Ap)" Caption="AP"/>
                 <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Mode)" Caption="Mode"/>
                 <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Rc)" Caption="RC"/>
@@ -77,19 +75,6 @@
         }
         Weapons = WeaponXmlData?.Weapons.ToHashSet();
         WeaponCategories = WeaponXmlData?.WeaponCategories.ToHashSet();
-    }
-
-    private string testFunc(Weapon weapon)
-    {
-        switch (weapon.Availability?.Legality)
-        {
-            case Legality.Forbidden:
-                return "forbidden";
-            case Legality.Restricted:
-                return "restricted";
-            default:
-                return string.Empty;
-        }
     }
 
     private bool OnCustomFilter(Weapon weapon)

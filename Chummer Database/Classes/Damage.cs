@@ -4,15 +4,18 @@ using Blazor.Extensions.Logging;
 using Blazorise.Extensions;
 using Chummer_Database.Enums;
 using Microsoft.AspNetCore.Components;
+// ReSharper disable MemberCanBePrivate.Global
+
 
 namespace Chummer_Database.Classes;
 
 public class Damage
 {
-    public string FullDamageString { get; }
+    private string FullDamageString { get; }
+    public string DisplayString { get; }
     public DamageType DamageType { get; } = DamageType.Special;
     public Element Element { get; } = Element.None;
-    public int? DamageAmount { get; }
+    public int DamageAmount { get; }
     public int DamageDropPerMeter { get; }
     public string? DamageDropPerMeterString { get; }
     public int DamageRadius { get; }
@@ -103,6 +106,89 @@ public class Damage
         }
 
 
+        DisplayString = FormDamageDisplay();
+
+    }
+    
+    private string FormDamageDisplay()
+    {
+        if (FullDamageString.IsNullOrEmpty())
+            return string.Empty;
+        
+        //Osmium Mace, yeah not gonna deal with that shit rn!
+        if (FullDamageString.Contains(")))"))
+            return "special ";
+
+        var sb = new StringBuilder();
+
+        var outputString = FullDamageString;
+
+        //Remove all { }
+        const string pattern = "({|})";
+        outputString = Regex.Replace(outputString, pattern, "");
+        
+        //Removes most (), leaves stuff like (e) or (Radius 10) alone
+        //pattern = @"(^\((?!\d))|(\)(?=.))";
+        //outputString = Regex.Replace(outputString, pattern, "");
+
+        //Insert a space in front of P or S
+        //pattern = "(P|S)";
+        //outputString = Regex.Replace(outputString, pattern, @" $&");
+        
+        
+        
+        switch (FullDamageString)
+        {
+            case { } s when s.Contains("MAG*"):
+                sb.Append("MAG *");
+                break;
+            case { } s when s.Contains("Rating+"):
+                sb.Append("Rating +");
+                break;
+            case { } s when s.Contains("{STR}+"):
+                sb.Append("STR +");
+                break;
+            case { } s when s.Contains("{STR}"):
+                sb.Append("STR");
+                break;
+            case { } s when s.Contains("Special"):
+                sb.Append("Special");
+                break;
+            case { } s when s.Contains("Grenade"):
+                sb.Append("Grenade");
+                break;
+            case { } s when s.Contains("Missile"):
+                sb.Append("missile ");
+                break;
+            case { } s when s.Contains("Chemical"):
+                sb.Append("chemical ");
+                break;
+            case { } s when s.Contains("Toxin"):
+                sb.Append("chemical ");
+                break;
+            case { } s when s.Contains("Pepper Punch"):
+                sb.Append("chemical ");
+                break;
+        }
+
+        switch (DamageType)
+        {
+            case DamageType.Physical:
+                sb.Append("dmg-physical ");
+                break;
+            case DamageType.Stun:
+                sb.Append("dmg-stun ");
+                break;
+        }
+
+        switch (Element)
+        {
+            case Element.Electro:
+                sb.Append("dmg-electro ");
+                break;
+        }
+
+        return outputString;
     }
 
 
