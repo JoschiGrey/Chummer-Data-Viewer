@@ -29,7 +29,7 @@ public static class XmlLoader
         };
 
         await Task.WhenAll(tasks);
-        logger.LogTrace("Finished LoadingAll");
+        logger.LogInformation("Finished LoadingAll");
         return true;
     }
 

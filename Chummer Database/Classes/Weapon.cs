@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using Blazor.Extensions.Logging;
 using Blazorise.Extensions;
@@ -49,9 +50,12 @@ public class Weapon {
 	[XmlElement(ElementName="avail")] public string AvailabilityString { get; set; } = string.Empty;
 	
 	[XmlIgnore]
-	public Availability? Availability { get; set; }
+	public Availability? Availability { get; set; } 
 
-	[XmlElement(ElementName="cost")] public string Cost { get; set; } = string.Empty;
+	[XmlElement(ElementName="cost")] public string CostString { get; set; } = string.Empty;
+	
+	[XmlIgnore]
+	public int Cost { get; private set; }
 
 	[XmlElement(ElementName="source")] public string Source { get; set; } = string.Empty;
 
@@ -210,17 +214,32 @@ public Accessories Accessories { get; set; }
 	public object Hide { get; set; } 
 	*/
 
-
+	private const string NumberPattern = "[0-9]+";
 	
 	public bool Create(ILogger logger)
 	{
 		AmmoCategory = GetAmmoCategory();
 		Damage = new Damage(DamageString, logger);
-
-
+		
         Category = TryGetCategory();
 
 		Skill = TryGetSkill();
+
+		Availability = new Availability(AvailabilityString, logger);
+
+		try
+		{
+
+			var match = Regex.Match(CostString, NumberPattern).ToString();
+			if (!match.IsNullOrEmpty())
+				Cost = int.Parse(match);
+
+		}
+		catch (FormatException e)
+		{
+			logger.LogWarning(e, "Failed to parse {CostString} to an cost", CostString);
+		}
+			
 
 		return true;
 		string GetAmmoCategory()

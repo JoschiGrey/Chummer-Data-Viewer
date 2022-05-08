@@ -1,5 +1,7 @@
 ﻿@page "/WeaponTable"
-@using System.Collections.Immutable
+@using Chummer_Database.Extensions
+@using Blazorise.Extensions
+@using Chummer_Database.Enums
 @inject HttpClient _client
 @inject ILogger<WeaponTable> _logger
 
@@ -7,38 +9,65 @@
     <h1 class="text-decoration-underline">WeaponTable Test</h1>
 </div>
 
-<div class="m-3">
-    <DataGrid TItem="Weapon"
-              Data="Weapons"
-              @bind-SelectedRow="@SelectedWeapon"
-              Filterable="true"
-              SortMode="DataGridSortMode.Single"
-              Hoverable="true"
-              HeaderThemeContrast="ThemeContrast.Dark"
-              ShowPager="true"
-              ShowPageSizes="true"
-              FixedHeader="true"
-    >
-        
-        <DataGridColumns>
-            <DataGridColumn TItem="Weapon" Field="Category.Name" Caption="Category"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Name)" Caption="Name"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Accuracy)" Caption="ACC"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.DamageString)" Caption="DAMAGE"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Ap)" Caption="AP"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Mode)" Caption="Mode"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Rc)" Caption="RC"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Ammo)" Caption="Ammo"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.AvailabilityString)" Caption="Avail"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Cost)" Caption="Cost"></DataGridColumn>
-            <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.DisplaySource)" Caption="Source"></DataGridColumn>
-        </DataGridColumns>
-    </DataGrid>
+<div>
+    <div>
+        <RadioGroup TValue="string" Name="Weapon Category" @bind-CheckedValue="SelectedCategory">
+            @{
+                if (WeaponCategories is not null)
+                {
+                    foreach (var category in WeaponCategories)
+                    {
+                        <Radio TValue="string" Value="@(category.Name)">@category.Name</Radio>
+                    }
+                    <Radio TValue="string" Value="@(string.Empty)">All</Radio>
+                }
+            }
+        </RadioGroup>
+    </div>
+    <div>
+        <DataGrid TItem="Weapon"
+                  Data="Weapons"
+                  @bind-SelectedRow="@SelectedWeapon"
+                  Filterable="false"
+                  CustomFilter="@OnCustomFilter"
+                  SortMode="DataGridSortMode.Single"
+                  Hoverable="true"
+                  HeaderThemeContrast="ThemeContrast.Dark"
+                  ShowPager="true"
+                  PagerPosition="DataGridPagerPosition.Top"
+                  ShowPageSizes="true"
+                  FixedHeader="true">
+            <DataGridColumns>
+                @{
+                    if (SelectedCategory.IsNullOrEmpty())
+                    {
+                        <DataGridColumn TItem="Weapon" Field="Category.Name" Caption="Category"></DataGridColumn>
+                    }
+                }
+                <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Name)" Caption="Name"/>
+                <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Accuracy)" Caption="ACC"/>
+                <DataGridNumericColumn TItem="Weapon" CellClass="@(weapon => weapon.FormDamageCssString())" Field="Damage.DamageAmount" Caption="DAMAGE"/>
+                <DataGridNumericColumn TItem="Weapon" Field="Damage.DamageRadiusString"/>
+                <DataGridNumericColumn TItem="Weapon" Field="Damage.DamageDropPerMeterString"/>
+                <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Ap)" Caption="AP"/>
+                <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Mode)" Caption="Mode"/>
+                <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Rc)" Caption="RC"/>
+                <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Ammo)" Caption="Ammo"/>
+                <DataGridNumericColumn CellClass="@((item) => item.FormAvailabilityCssClass())"
+                                       TItem="Weapon" Field="Availability.AvailabilityInt" Caption="Avail"/>
+                <DataGridNumericColumn CellClass="@(item => item.FormCostCssClass())" TItem="Weapon" Field="@nameof(Weapon.Cost)" Caption="Cost"/>
+                <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.DisplaySource)" Caption="Source"/>
+            </DataGridColumns>
+        </DataGrid>
+    </div>
 </div>
 
+
 @code {
-    public ImmutableHashSet<Weapon>? Weapons { get; set; }
-    private Weapon? SelectedWeapon {get; set; }
+    private HashSet<Weapon>? Weapons { get; set; }
+    private Weapon? SelectedWeapon { get; set; }
+    private HashSet<Category>? WeaponCategories { get; set; }
+    private string SelectedCategory { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -46,7 +75,29 @@
         {
             await LoadAll(_client, _logger);
         }
-        Weapons = WeaponXmlData?.Weapons.ToImmutableHashSet();
+        Weapons = WeaponXmlData?.Weapons.ToHashSet();
+        WeaponCategories = WeaponXmlData?.WeaponCategories.ToHashSet();
+    }
+
+    private string testFunc(Weapon weapon)
+    {
+        switch (weapon.Availability?.Legality)
+        {
+            case Legality.Forbidden:
+                return "forbidden";
+            case Legality.Restricted:
+                return "restricted";
+            default:
+                return string.Empty;
+        }
+    }
+
+    private bool OnCustomFilter(Weapon weapon)
+    {
+        if (SelectedCategory.IsNullOrEmpty())
+            return true;
+
+        return weapon.CategoryAsString == SelectedCategory;
     }
 
 }

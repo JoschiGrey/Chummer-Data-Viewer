@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Blazor.Extensions.Logging;
 using Blazorise.Extensions;
 using Chummer_Database.Enums;
 
@@ -25,17 +26,15 @@ public class Availability
         
         try
         {
-            pattern = @"(?<=[^0-9])[0-9]*(?=(F|R|[0-9]))";
+            pattern = "[0-9]+";
             match = Regex.Match(AvailabilityString, pattern).ToString();
             if (!match.IsNullOrEmpty())
                 AvailabilityInt = int.Parse(match);
-
         }
         catch (FormatException e)
         {
-            logger.LogDebug(e,"Failed Parsing of AvailabilityInt for {AvailabilityString}", AvailabilityString);
+            logger.LogWarning(e,"Failed Parsing of AvailabilityInt for {AvailabilityString}", AvailabilityString);
         }
-
         if (AvailabilityString.EndsWith('R'))
             Legality = Legality.Restricted;
         if (AvailabilityString.EndsWith('F'))
