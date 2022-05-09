@@ -57,7 +57,7 @@ public class Weapon {
 	[XmlIgnore]
 	public int Cost { get; private set; }
 
-	[XmlElement(ElementName="source")] public string Source { get; set; } = string.Empty;
+	[XmlElement(ElementName="source")] private string Source { get; set; } = string.Empty;
 
 	[XmlElement(ElementName="page")] public int Page { get; set; }
 
@@ -330,6 +330,7 @@ public Accessories Accessories { get; set; }
 }
 
 
+/*
 [XmlRoot(ElementName="usegear")]
 public class Usegear { 
 
@@ -494,6 +495,7 @@ public class DamageOperation {
 	[XmlText] 
 	public string Text { get; set; } 
 }
+*/
 
 
 

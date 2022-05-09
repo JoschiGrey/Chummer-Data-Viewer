@@ -30,6 +30,11 @@ public class SkillsXmlRoot
         SkillCategoriesDictionary = SkillCategories.ToDictionary(k => k.Name);
 
         SkillsDictionary = Skills.ToDictionary(k => k.Name);
+
+        foreach (var skill in Skills)
+        {
+            skill.Create(logger);
+        }
         
         return true;
     }

@@ -19,10 +19,10 @@ public class Accessory {
     public int Rcgroup { get; set; } 
 
     [XmlElement(ElementName="id")] 
-    public string Id { get; set; } 
+    public Guid Id { get; set; }
 
-    [XmlElement(ElementName="name")] 
-    public string Name { get; set; }
+    [XmlElement(ElementName = "name")] public 
+    string Name { get; set; } = string.Empty;
 
     [XmlElement(ElementName="avail")] 
     public int Avail { get; set; } 
@@ -31,13 +31,13 @@ public class Accessory {
     public int Cost { get; set; } 
 
     [XmlElement(ElementName="source")] 
-    public string Source { get; set; } 
+    public string Source { get; set; } = string.Empty;
 
     [XmlElement(ElementName="page")] 
     public int Page { get; set; } 
     
     [XmlElement(ElementName = "mount")]
-    private string MountString { get; set; }
+    private string MountString { get; set; } = string.Empty;
     
     [XmlIgnore] 
     public List<AccessoryMount> Mounts { get; set; } = new();

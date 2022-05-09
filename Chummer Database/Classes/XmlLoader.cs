@@ -34,7 +34,7 @@ public static class XmlLoader
     }
 
 
-    public static async Task<bool> LoadWeaponsXml(HttpClient client, ILogger logger)
+    private static async Task<bool> LoadWeaponsXml(HttpClient client, ILogger logger)
     { 
         logger.LogDebug("Loading WeaponsXml");
         var xmlString = await client.GetStringAsync("data/weapons.xml");
@@ -50,7 +50,7 @@ public static class XmlLoader
         return true;
     }
 
-    public static async Task<bool> LoadRangesXml(HttpClient client, ILogger logger)
+    private static async Task<bool> LoadRangesXml(HttpClient client, ILogger logger)
     {
         logger.LogDebug("Loading Ranges.xml");
         var xmlString = await client.GetStringAsync("data/ranges.xml");
@@ -66,7 +66,7 @@ public static class XmlLoader
         return true;
     }
     
-    public static async Task<bool> LoadSkillsXml(HttpClient client, ILogger logger)
+    private static async Task<bool> LoadSkillsXml(HttpClient client, ILogger logger)
     {
         logger.LogDebug("Loading Skills.xml");
         var xmlString = await client.GetStringAsync("data/skills.xml");

@@ -13,7 +13,7 @@ public class Skill {
     public string Name { get; set; } = string.Empty;
 
     [XmlElement(ElementName = "attribute")]
-    public string Attribute { get; set; }
+    public string Attribute { get; set; } = string.Empty;
 
     [XmlElement(ElementName="category")] 
     public string CategoryAsString { get; set; } = string.Empty;
@@ -36,9 +36,11 @@ public class Skill {
 
     [XmlElement(ElementName="page")] 
     public int Page { get; set; } 
+    
+    [XmlIgnore] public string DisplaySource => $"p.{Page} ({Source})";
 
     [XmlElement(ElementName="exotic")] 
-    private string ExoticString { get; set; } 
+    private string ExoticString { get; set; } = string.Empty;
     
     [XmlIgnore]
     public bool Exotic => ExoticString.Equals("True");

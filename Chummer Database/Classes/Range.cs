@@ -27,19 +27,19 @@ public class Range
 {
     [XmlElement("name")]
     public string RangeCategory { get; set; } = string.Empty;
-    
-    [XmlElement(ElementName="min")] 
-    public string Min { get; set; } 
 
-    [XmlElement(ElementName="short")] 
-    public string Short { get; set; } 
+    [XmlElement(ElementName = "min")] 
+    public string Min { get; set; } = "0";
+
+    [XmlElement(ElementName = "short")] 
+    public string Short { get; set; } = "0";
 
     [XmlElement(ElementName="medium")] 
-    public string Medium { get; set; } 
+    public string Medium { get; set; } = "0";
 
     [XmlElement(ElementName="long")] 
-    public string Long { get; set; } 
+    public string Long { get; set; } = "0";
 
     [XmlElement(ElementName="extreme")] 
-    public string Extreme { get; set; }
+    public string Extreme { get; set; } = "0";
 }
