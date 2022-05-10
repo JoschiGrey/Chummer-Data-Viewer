@@ -1,21 +1,20 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Xml.Serialization;
-using Blazor.Extensions.Logging;
 using Blazorise.Extensions;
 using Chummer_Database.Enums;
-using Microsoft.AspNetCore.Components;
+
 
 namespace Chummer_Database.Classes;
 [XmlRoot(ElementName="weapon")]
-public class Weapon {
+public class Weapon
+{
 
 	[XmlElement(ElementName="id")] 
 	public Guid Id { get; set; }
 
 	[XmlElement(ElementName="name")] 
 	public string Name { get; set; } = string.Empty;
-	
+
 	[XmlElement(ElementName = "category")] 
 	public string CategoryAsString { get; set; } = string.Empty;
 
@@ -45,7 +44,13 @@ public class Weapon {
 
 	[XmlElement(ElementName="rc")] public string Rc { get; set; } = string.Empty;
 
-	[XmlElement(ElementName = "ammo")] public string Ammo { get; set; } = "0";
+	/// <summary>
+	/// Raw deserialized string. Use Ammo.DisplayString instead
+	/// </summary>
+	[XmlElement(ElementName = "ammo")] public string AmmoStringDeserialized { get; set; } = "-";
+	
+	[XmlIgnore]
+	public Ammo? Ammo { get; private set; }
 
 	[XmlElement(ElementName="avail")] public string AvailabilityString { get; set; } = string.Empty;
 	
@@ -57,7 +62,7 @@ public class Weapon {
 	[XmlIgnore]
 	public int Cost { get; private set; }
 
-	[XmlElement(ElementName="source")] private string Source { get; set; } = string.Empty;
+	[XmlElement(ElementName="source")] public string Source { get; set; } = string.Empty;
 
 	[XmlElement(ElementName="page")] public int Page { get; set; }
 
@@ -68,7 +73,7 @@ public class Weapon {
 public Accessories Accessories { get; set; } 
 */
 
-[XmlArray("accessorymounts")]
+	[XmlArray("accessorymounts")]
 	[XmlArrayItem("mount", typeof(AccessoryMount))]
 	public List<AccessoryMount> AccessoryMounts { get; set; } = new();
 	
@@ -79,8 +84,11 @@ public Accessories Accessories { get; set; }
 	[XmlElement(ElementName = "addweapon")]
 	public List<string> RelatedWeaponsAsStrings { get; set; } = new();
 
+	/// <summary>
+	/// The pure deserialized string use Weapon.Ammo.AmmoCategory instead
+	/// </summary>
 	[XmlElement(ElementName = "ammocategory")]
-	public string AmmoCategory { get; set; } = string.Empty;
+	public string? AmmoCategoryDeserialized { get; set; }
 
 	[XmlElement(ElementName = "range")] public string RangeCategory { get; set; } = string.Empty;
 	
@@ -106,7 +114,7 @@ public Accessories Accessories { get; set; }
 	public string AlternateRangeString { get; set; } = string.Empty;
    
    [XmlIgnore]
-   public Range? AlternateRange
+   public Range AlternateRange
    {
 	   get
 	   {
@@ -207,7 +215,7 @@ public Accessories Accessories { get; set; }
 
 
 	[XmlElement(ElementName = "maxrating")]
-	public int MaxRating { get; set; } = 0;
+	public int MaxRating { get; set; }
 
 	/* This exists, but I'm fairly certain I don't need it. Chummer uses it to hide stuff from lists, but atm I don't wanna do this.
 	[XmlElement(ElementName="hide")] 
@@ -218,7 +226,6 @@ public Accessories Accessories { get; set; }
 	
 	public bool Create(ILogger logger)
 	{
-		AmmoCategory = GetAmmoCategory();
 		Damage = new Damage(DamageString, logger);
 		
         Category = TryGetCategory();
@@ -226,6 +233,8 @@ public Accessories Accessories { get; set; }
 		Skill = TryGetSkill();
 
 		Availability = new Availability(AvailabilityString, logger);
+
+		Ammo = new Ammo(this, logger);
 
 		try
 		{
@@ -242,27 +251,14 @@ public Accessories Accessories { get; set; }
 			
 
 		return true;
-		string GetAmmoCategory()
-		{
-			if (!AmmoCategory.IsNullOrEmpty()) return AmmoCategory;
-			
-			logger.LogDebug("Determining Ammo Category of {Name}, with Ammo: {Ammo} and RangeType {RangeType}", Name, Ammo, RangeType);
 
-			if (Ammo != "0" && RangeType != "Melee")
-			{
-				return CategoryAsString;
-			}
-			
-			return string.Empty;
-		}
-		
 		Category TryGetCategory()
 		{
 			var catAsString = CategoryAsString;
             Category outCategory;
 
 			if (WeaponsXmlRoot.WeaponCategoryDictionary is null)
-				throw new ArgumentNullException("category dic was still null");
+				throw new ArgumentNullException(nameof(WeaponsXmlRoot.WeaponCategoryDictionary));
 
 			if (WeaponsXmlRoot.WeaponCategoryDictionary.ContainsKey(catAsString))
 			{

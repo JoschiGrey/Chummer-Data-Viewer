@@ -39,5 +39,8 @@ public class Availability
             Legality = Legality.Restricted;
         if (AvailabilityString.EndsWith('F'))
             Legality = Legality.Forbidden;
+
+        if (AvailabilityInt >= 99)
+            AvailabilityString = "NA";
     }
 }

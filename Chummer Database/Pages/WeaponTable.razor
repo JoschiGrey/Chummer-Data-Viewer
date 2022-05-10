@@ -1,7 +1,6 @@
 ﻿@page "/WeaponTable"
 @using Chummer_Database.Extensions
 @using Blazorise.Extensions
-@using Chummer_Database.Enums
 @inject HttpClient _client
 @inject ILogger<WeaponTable> _logger
 
@@ -28,33 +27,89 @@
         <DataGrid TItem="Weapon"
                   Data="Weapons"
                   @bind-SelectedRow="@SelectedWeapon"
-                  Filterable="false"
-                  CustomFilter="@OnCustomFilter"
+                  @ref="@_dataGridRef"
+
                   SortMode="DataGridSortMode.Single"
                   Hoverable="true"
                   HeaderThemeContrast="ThemeContrast.Dark"
+                  
                   ShowPager="true"
+                  @bind-PageSize="_pageSize"
+                  PageSizes="@(new []{5,10, 20, 50})"
                   PagerPosition="DataGridPagerPosition.Top"
+                  PageChanged="@(args => _dataGridRef?.ScrollToRow(1).AsTask() ?? throw new InvalidOperationException())"
                   ShowPageSizes="true"
-                  FixedHeader="true">
+                  
+                  FixedHeader="true"
+                  
+                  CustomFilter="@OnCustomFilter"
+                  Filterable="true"
+                  FilterMethod="DataGridFilterMethod.Contains"
+                  >
             <DataGridColumns>
                 @{
                     if (SelectedCategory.IsNullOrEmpty())
                     {
-                        <DataGridColumn TItem="Weapon" Field="Category.Name" Caption="Category"></DataGridColumn>
+                        <DataGridColumn 
+                            TItem="Weapon" 
+                            Field="Category.Name" 
+                            Caption="Category"></DataGridColumn>
                     }
                 }
-                <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Name)" Caption="Name"/>
-                <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Accuracy)" Caption="ACC"/>
-                <DataGridColumn TItem="Weapon" SortField="Damage.DamageAmount" Field="Damage.DisplayString" Caption="DAMAGE"/>
-                <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Ap)" Caption="AP"/>
-                <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.Mode)" Caption="Mode"/>
-                <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Rc)" Caption="RC"/>
-                <DataGridNumericColumn TItem="Weapon" Field="@nameof(Weapon.Ammo)" Caption="Ammo"/>
-                <DataGridNumericColumn CellClass="@((item) => item.FormAvailabilityCssClass())"
-                                       TItem="Weapon" Field="Availability.AvailabilityInt" Caption="Avail"/>
-                <DataGridNumericColumn CellClass="@(item => item.FormCostCssClass())" TItem="Weapon" Field="@nameof(Weapon.Cost)" Caption="Cost"/>
-                <DataGridColumn TItem="Weapon" Field="@nameof(Weapon.DisplaySource)" Caption="Source"/>
+                <DataGridColumn 
+                    TItem="Weapon" 
+                    Field="@nameof(Weapon.Name)" 
+                    Caption="Name" 
+                    SortDirection="SortDirection.Ascending" 
+                    Filterable/>
+                <DataGridNumericColumn 
+                    TItem="Weapon" 
+                    Field="@nameof(Weapon.Accuracy)" 
+                    Caption="ACC"
+                    Filterable="false"/>
+                <DataGridColumn 
+                    TItem="Weapon"
+                    Field="Damage.DisplayString" 
+                    Caption="DAMAGE"
+                    SortField="Damage.DamageAmount"
+                    Filterable="false"/>
+                <DataGridNumericColumn 
+                    TItem="Weapon" 
+                    Field="@nameof(Weapon.Ap)" 
+                    Caption="AP"
+                    Filterable="false"/>
+                <DataGridColumn 
+                    TItem="Weapon" 
+                    Field="@nameof(Weapon.Mode)" 
+                    Caption="Mode"
+                    Filterable="false"/>
+                <DataGridNumericColumn 
+                    TItem="Weapon" 
+                    Field="@nameof(Weapon.Rc)" 
+                    Caption="RC"
+                    Filterable="false"/>
+                <DataGridNumericColumn 
+                    TItem="Weapon" 
+                    Field="Ammo.DisplayString" 
+                    SortField="Ammo.MagazineSize" Caption="Ammo"
+                    Filterable="false"/>
+                <DataGridNumericColumn 
+                    TItem="Weapon" 
+                    Field="Availability.AvailabilityString" 
+                    SortField="Availability.AvailabilityInt" 
+                    Caption="Avail"
+                    Filterable="false"/>
+                <DataGridNumericColumn
+                    TItem="Weapon" Field="@nameof(Weapon.Cost)" 
+                    SortField="@nameof(Weapon.Page)" 
+                    Caption="Cost"
+                    CellClass="@(item => item.FormCostCssClass())"
+                    Filterable="false"/>
+                <DataGridColumn 
+                    TItem="Weapon" 
+                    Field="@nameof(Weapon.DisplaySource)" 
+                    Caption="Source"
+                    Filterable="false"/>
             </DataGridColumns>
         </DataGrid>
     </div>
@@ -66,6 +121,8 @@
     private Weapon? SelectedWeapon { get; set; }
     private HashSet<Category>? WeaponCategories { get; set; }
     private string SelectedCategory { get; set; } = string.Empty;
+    private DataGrid<Weapon>? _dataGridRef;
+    private int _pageSize = 10;
 
     protected override async Task OnInitializedAsync()
     {
