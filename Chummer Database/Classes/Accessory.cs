@@ -21,8 +21,8 @@ public class Accessory {
     [XmlElement(ElementName="id")] 
     public Guid Id { get; set; }
 
-    [XmlElement(ElementName = "name")] public 
-    string Name { get; set; } = string.Empty;
+    [XmlElement(ElementName = "name")] 
+    public string Name { get; set; } = string.Empty;
 
     [XmlElement(ElementName="avail")] 
     public int Avail { get; set; } 

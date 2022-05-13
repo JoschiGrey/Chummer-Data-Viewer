@@ -1,8 +1,8 @@
 ﻿@page "/WeaponTable"
 @using Chummer_Database.Extensions
 @using Blazorise.Extensions
-@inject HttpClient _client
-@inject ILogger<WeaponTable> _logger
+@inject HttpClient Client
+@inject ILogger<WeaponTable> Logger
 
 <div class="mt-2 d-flex align-content-center justify-content-center">
     <h1 class="text-decoration-underline">WeaponTable Test</h1>
@@ -10,7 +10,7 @@
 
 <div>
     <div>
-        <RadioGroup TValue="string" Name="Weapon Category" @bind-CheckedValue="SelectedCategory">
+        @*<RadioGroup TValue="string" Name="Weapon Category" @bind-CheckedValue="SelectedCategory">
             @{
                 if (WeaponCategories is not null)
                 {
@@ -21,7 +21,19 @@
                     <Radio TValue="string" Value="@(string.Empty)">All</Radio>
                 }
             }
-        </RadioGroup>
+        </RadioGroup>*@
+        <Select TValue="string" @bind-SelectedValues="SelectedCategories" Multiple>
+            @{
+                if (WeaponCategories is not null)
+                {
+                    foreach (var category in WeaponCategories)
+                    {
+                        <SelectItem Value="@(category.Name)">@category.Name</SelectItem>
+                    }
+                    <SelectItem Value="@("All")">All</SelectItem>
+                }
+            }
+        </Select>
     </div>
     <div>
         <DataGrid TItem="Weapon"
@@ -48,7 +60,7 @@
                   >
             <DataGridColumns>
                 @{
-                    if (SelectedCategory.IsNullOrEmpty())
+                    if (SelectedCategories.IsNullOrEmpty() || SelectedCategories?.Count > 1 || SelectedCategories?.First() == "All")
                     {
                         <DataGridColumn 
                             TItem="Weapon" 
@@ -120,15 +132,16 @@
     private HashSet<Weapon>? Weapons { get; set; }
     private Weapon? SelectedWeapon { get; set; }
     private HashSet<Category>? WeaponCategories { get; set; }
-    private string SelectedCategory { get; set; } = string.Empty;
+    private IReadOnlyList<string>? SelectedCategories { get; set; }
     private DataGrid<Weapon>? _dataGridRef;
     private int _pageSize = 10;
+    
 
     protected override async Task OnInitializedAsync()
     {
         if (WeaponXmlData is null)
         {
-            await LoadAll(_client, _logger);
+            await LoadAll(Client, Logger);
         }
         Weapons = WeaponXmlData?.Weapons.ToHashSet();
         WeaponCategories = WeaponXmlData?.WeaponCategories.ToHashSet();
@@ -136,10 +149,18 @@
 
     private bool OnCustomFilter(Weapon weapon)
     {
-        if (SelectedCategory.IsNullOrEmpty())
+        if (weapon.Category is null)
+            throw new ArgumentNullException(nameof(weapon.Category));
+        if (SelectedCategories is null)
+            return true;
+        if (SelectedCategories.Count == 0)
+            return true;
+        if (SelectedCategories.First() == "All")
             return true;
 
-        return weapon.CategoryAsString == SelectedCategory;
+        var selectedSet = SelectedCategories.ToHashSet();
+        
+        return selectedSet.Contains(weapon.Category.Name);
     }
 
 }

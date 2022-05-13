@@ -1,0 +1,26 @@
+﻿@page "/Skills"
+<h3>Skills</h3>
+
+<DataGrid
+    TItem="Skill" Data="SkillsList">
+    <DataGridColumns>
+        <DataGridColumn 
+            TItem="Skill"
+            Field="@nameof(Skill.Name)"
+            Caption="Skill"
+            SortDirection="SortDirection.Ascending"/>
+        <DataGridColumn 
+            TItem="Skill"
+            Field="@nameof(Skill.Attribute)"
+            Caption="Attribute"/>
+        <DataGridColumn 
+            TItem="Skill"
+            Field="@nameof(Skill.DisplaySource)"
+            Caption="Source"/>
+    </DataGridColumns>
+</DataGrid>
+
+
+@code {
+    private HashSet<Skill>? SkillsList { get; set; } = SkillsXmlData?.Skills;
+}
