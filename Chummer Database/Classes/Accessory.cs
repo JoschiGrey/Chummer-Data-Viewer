@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 using Chummer_Database.Enums;
 
 namespace Chummer_Database.Classes;
@@ -24,11 +25,11 @@ public class Accessory {
     [XmlElement(ElementName = "name")] 
     public string Name { get; set; } = string.Empty;
 
-    [XmlElement(ElementName="avail")] 
-    public int Avail { get; set; } 
+    [XmlElement(ElementName = "avail")] 
+    public string Avail { get; set; } = string.Empty;
 
-    [XmlElement(ElementName="cost")] 
-    public int Cost { get; set; } 
+    [XmlElement(ElementName = "cost")] 
+    public string Cost { get; set; } = string.Empty;
 
     [XmlElement(ElementName="source")] 
     public string Source { get; set; } = string.Empty;
@@ -36,9 +37,30 @@ public class Accessory {
     [XmlElement(ElementName="page")] 
     public int Page { get; set; } 
     
+    [XmlIgnore] 
+    public string DisplaySource => $"p.{Page} ({Source})";
+    
     [XmlElement(ElementName = "mount")]
     private string MountString { get; set; } = string.Empty;
     
     [XmlIgnore] 
-    public List<AccessoryMount> Mounts { get; set; } = new();
+    public HashSet<AccessoryMount> Mounts { get; set; } = new();
+    
+    [XmlIgnore]
+    private ILogger? Logger { get; set; }
+
+    public bool Create(ILogger logger)
+    {
+        Logger = logger;
+        
+        const string AccesoryMountStringPattern = @"([A-Z])\w+";
+        var matches = Regex.Matches(MountString, AccesoryMountStringPattern);
+        foreach (Match match in matches)
+        {
+            if(Enum.TryParse<AccessoryMount>(match.ToString(), out var accessoryMount))
+                Mounts.Add(accessoryMount);
+        }
+        
+        return true;
+    }
 }

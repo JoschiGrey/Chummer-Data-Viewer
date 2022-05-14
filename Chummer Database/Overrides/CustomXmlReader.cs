@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace Chummer_Database.Classes;
+namespace Chummer_Database.Overrides;
 
 public class CustomXmlReader : XmlTextReader
 {

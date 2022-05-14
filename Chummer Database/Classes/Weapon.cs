@@ -66,12 +66,17 @@ public class Weapon
 
 	[XmlElement(ElementName="page")] public int Page { get; set; }
 
-    [XmlIgnore] public string DisplaySource => $"p.{Page} ({Source})";
+    [XmlIgnore] 
+    public string DisplaySource => $"p.{Page} ({Source})";
 
-	/*
-[XmlElement(ElementName="accessories")] 
-public Accessories Accessories { get; set; } 
-*/
+    
+    [XmlArray("accessories")]
+    [XmlArrayItem("accessory")]
+    private List<string> AccessoriesStringList { get; set; } = new();
+
+    [XmlIgnore] 
+    public List<Accessory> Accessories { get; set; } = new();
+
 
 	[XmlArray("accessorymounts")]
 	[XmlArrayItem("mount", typeof(AccessoryMount))]
@@ -236,6 +241,12 @@ public Accessories Accessories { get; set; }
 
 		Ammo = new Ammo(this, logger);
 
+		foreach (var accessoryString in AccessoriesStringList)
+		{
+			if(WeaponsXmlRoot.AccessoriesDictionary.ContainsKey(accessoryString))
+				Accessories.Add(WeaponsXmlRoot.AccessoriesDictionary[accessoryString]);
+		}
+
 		try
 		{
 
@@ -248,8 +259,7 @@ public Accessories Accessories { get; set; }
 		{
 			logger.LogWarning(e, "Failed to parse {CostString} to an cost", CostString);
 		}
-			
-
+		
 		return true;
 
 		Category TryGetCategory()
