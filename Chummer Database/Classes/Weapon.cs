@@ -8,7 +8,6 @@ namespace Chummer_Database.Classes;
 [XmlRoot(ElementName="weapon")]
 public class Weapon
 {
-
 	[XmlElement(ElementName="id")] 
 	public Guid Id { get; set; }
 
@@ -31,23 +30,27 @@ public class Weapon
 
 	[XmlElement(ElementName="reach")] 
 	public int Reach { get; set; }
-
-
-	[XmlElement(ElementName = "damage")] public string DamageString { get; set; } = string.Empty;
+	
+	[XmlElement(ElementName = "damage")] 
+	public string DamageString { get; set; } = string.Empty;
 	
 	[XmlIgnore]
 	public Damage? Damage { get; set; }
 
-	[XmlElement(ElementName = "ap")] public string Ap { get; set; } = string.Empty;
+	[XmlElement(ElementName = "ap")] 
+	public string Ap { get; set; } = string.Empty;
 
-	[XmlElement(ElementName = "mode")] public string Mode { get; set; } = string.Empty;
+	[XmlElement(ElementName = "mode")] 
+	public string Mode { get; set; } = string.Empty;
 
-	[XmlElement(ElementName="rc")] public string Rc { get; set; } = string.Empty;
+	[XmlElement(ElementName="rc")] 
+	public string RecoilCompensation { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Raw deserialized string. Use Ammo.DisplayString instead
 	/// </summary>
-	[XmlElement(ElementName = "ammo")] public string AmmoStringDeserialized { get; set; } = "-";
+	[XmlElement(ElementName = "ammo")] 
+	public string AmmoStringDeserialized { get; set; } = "-";
 	
 	[XmlIgnore]
 	public Ammo? Ammo { get; private set; }
@@ -97,6 +100,7 @@ public class Weapon
 
 	[XmlElement(ElementName = "range")] public string RangeCategory { get; set; } = string.Empty;
 	
+	//TODO: This can be problematic if I ever introduce custom Data
 	[XmlIgnore]
 	public Range? Range => XmlLoader.RangesXmlData?.RangeDictionary[RangeCategory];
 	
@@ -227,10 +231,11 @@ public class Weapon
 	public object Hide { get; set; } 
 	*/
 
-	private const string NumberPattern = "[0-9]+";
+
 	
 	public bool Create(ILogger logger)
 	{
+		const string numberPattern = "[0-9]+";
 		Damage = new Damage(DamageString, logger);
 		
         Category = TryGetCategory();
@@ -250,7 +255,7 @@ public class Weapon
 		try
 		{
 
-			var match = Regex.Match(CostString, NumberPattern).ToString();
+			var match = Regex.Match(CostString, numberPattern).ToString();
 			if (!match.IsNullOrEmpty())
 				Cost = int.Parse(match);
 

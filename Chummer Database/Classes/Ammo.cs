@@ -18,11 +18,16 @@ public class Ammo
     public string AmmoCategory { get; }
     private ILogger Logger { get; }
 
+    public static HashSet<string> AllAmmoCategories { get; } = new();
+
     public Ammo(Weapon weapon, ILogger logger)
     {
         Logger = logger;
         AmmoString = weapon.AmmoStringDeserialized;
         AmmoCategory = GetAmmoCategory();
+
+        if (!AllAmmoCategories.Contains(AmmoCategory) && AmmoCategory != string.Empty)
+            AllAmmoCategories.Add(AmmoCategory);
 
         const string matchNumbers = @"\d+";
         var size = Regex.Match(AmmoString, matchNumbers).ToString();

@@ -1,6 +1,8 @@
 ﻿@page "/WeaponTable"
 @using Chummer_Database.Extensions
 @using Blazorise.Extensions
+@using EnumExtensions = Chummer_Database.Extensions.EnumExtensions
+@using System.Collections.Immutable
 @inject HttpClient Client
 @inject ILogger<WeaponTable> Logger
 
@@ -10,19 +12,8 @@
 
 <div>
     <div>
-        @*<RadioGroup TValue="string" Name="Weapon Category" @bind-CheckedValue="SelectedCategory">
-            @{
-                if (WeaponCategories is not null)
-                {
-                    foreach (var category in WeaponCategories)
-                    {
-                        <Radio TValue="string" Value="@(category.Name)">@category.Name</Radio>
-                    }
-                    <Radio TValue="string" Value="@(string.Empty)">All</Radio>
-                }
-            }
-        </RadioGroup>*@
-        <Select TValue="string" @bind-SelectedValues="SelectedCategories" Multiple>
+        @*Selector for WeaponCategory Filtering*@
+        <Select TValue="string" SelectedValuesChanged="@OnSelectedCategoriesChanged" Multiple>
             @{
                 if (WeaponCategories is not null)
                 {
@@ -34,6 +25,160 @@
                 }
             }
         </Select>
+        
+        @*Weapon name Filter *@
+        <TextEdit 
+            @bind-Text="@_nameFilter" 
+            Immediate="false" 
+            Placeholder="Weapon Name"></TextEdit>
+        
+        @*Weapon Price Filter*@
+        @*Min Value*@
+        <NumericPicker 
+            @bind-Value="_minPrice"
+            TValue="int" 
+            CurrencySymbol="¥" 
+            Step="1000"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        @*Max Value*@
+        <NumericPicker 
+            @bind-Value="_maxPrice"
+            TValue="int" 
+            CurrencySymbol="¥" 
+            Step="1000"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        
+        @*Weapon Availability Filter*@
+        @*Min Availability*@
+        <NumericPicker 
+            @bind-Value="_minAvail"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        @*Max Availability*@
+        <NumericPicker 
+            @bind-Value="_maxAvail"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        @*Legality*@
+        <Select TValue="Legality" SelectedValuesChanged="@OnSelectedLegalitiesChanged" Multiple>
+            <Repeater Items="_legalities">
+                <SelectItem TValue="Legality" Value="context">@context</SelectItem>
+            </Repeater>
+        </Select>
+        
+        @*Weapon Damage Filter*@
+        @*Min Damage*@
+        <NumericPicker 
+            @bind-Value="_minDamage"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        @*Max Damage*@
+        <NumericPicker 
+            @bind-Value="_maxDamage"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        
+        @*Weapon Conceal Filter*@
+        @*Min Conceal*@
+        <NumericPicker 
+            @bind-Value="_minConceal"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        @*Max Conceal*@
+        <NumericPicker 
+            @bind-Value="_maxConceal"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        
+        @*Weapon Reach Filter*@
+        @*Min Reach*@
+        <NumericPicker 
+            @bind-Value="_minReach"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        @*Max Reach*@
+        <NumericPicker 
+            @bind-Value="_maxReach"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        
+        @*Weapon Ammo Capacity Filter*@
+        @*Min Capacity*@
+        <NumericPicker 
+            @bind-Value="_minAmmo"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        @*Max Capacity*@
+        <NumericPicker 
+            @bind-Value="_maxAmmo"
+            TValue="int"
+            Step="1"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+        />
+        
+        @*Anmo Category Filter*@
+        <Select TValue="string" SelectedValuesChanged="@OnSelectedAmmoCategoriesChanged" Multiple>
+            <Repeater Items="Ammo.AllAmmoCategories">
+                <SelectItem TValue="string" Value="context">@context</SelectItem>
+            </Repeater>
+        </Select>
+                
+        @*Weapon Accessory Filter*@
+        <TextEdit 
+            @bind-Text="_accessoryFilter" 
+            Immediate="false" 
+            Placeholder="Accessory Name"></TextEdit>
+        
+        @*Weapon Skill Filter*@
+        <TextEdit 
+            @bind-Text="_skillFilter" 
+            Immediate="false" 
+            Placeholder="Skill Name"></TextEdit>
+        
     </div>
     <div>
         <DataGrid TItem="Weapon"
@@ -59,15 +204,6 @@
                   FilterMethod="DataGridFilterMethod.Contains"
                   >
             <DataGridColumns>
-                @{
-                    if (SelectedCategories.IsNullOrEmpty() || SelectedCategories?.Count > 1 || SelectedCategories?.First() == "All")
-                    {
-                        <DataGridColumn 
-                            TItem="Weapon" 
-                            Field="Category.Name" 
-                            Caption="Category"></DataGridColumn>
-                    }
-                }
                 <DataGridColumn 
                     TItem="Weapon" 
                     Field="@nameof(Weapon.Name)" 
@@ -97,7 +233,7 @@
                     Filterable="false"/>
                 <DataGridNumericColumn 
                     TItem="Weapon" 
-                    Field="@nameof(Weapon.Rc)" 
+                    Field="@nameof(Weapon.RecoilCompensation)" 
                     Caption="RC"
                     Filterable="false"/>
                 <DataGridNumericColumn 
@@ -122,6 +258,15 @@
                     Field="@nameof(Weapon.DisplaySource)" 
                     Caption="Source"
                     Filterable="false"/>
+                @{
+                    if (SelectedCategories.IsNullOrEmpty() || SelectedCategories?.Count > 1 || SelectedCategories?.First() == "All")
+                    {
+                        <DataGridColumn 
+                            TItem="Weapon" 
+                            Field="Category.Name" 
+                            Caption="Category"></DataGridColumn>
+                    }
+                }
             </DataGridColumns>
         </DataGrid>
     </div>
@@ -132,7 +277,7 @@
     private HashSet<Weapon>? Weapons { get; set; }
     private Weapon? SelectedWeapon { get; set; }
     private HashSet<Category>? WeaponCategories { get; set; }
-    private IReadOnlyList<string>? SelectedCategories { get; set; }
+
     private DataGrid<Weapon>? _dataGridRef;
     private int _pageSize = 10;
     
@@ -147,20 +292,217 @@
         WeaponCategories = WeaponXmlData?.WeaponCategories.ToHashSet();
     }
 
-    private bool OnCustomFilter(Weapon weapon)
+    Task OnSelectedCategoriesChanged(IReadOnlyList<string> list)
     {
-        if (weapon.Category is null)
-            throw new ArgumentNullException(nameof(weapon.Category));
-        if (SelectedCategories is null)
-            return true;
-        if (SelectedCategories.Count == 0)
-            return true;
-        if (SelectedCategories.First() == "All")
-            return true;
-
-        var selectedSet = SelectedCategories.ToHashSet();
+        SelectedCategories = list.ToHashSet();
         
-        return selectedSet.Contains(weapon.Category.Name);
+        return Task.CompletedTask;
     }
 
+    Task OnSelectedLegalitiesChanged(IReadOnlyList<Legality> list)
+    {
+        _selectedLegalities = list.ToHashSet();
+        
+        return Task.CompletedTask;
+    }
+
+    Task OnSelectedAmmoCategoriesChanged(IReadOnlyList<string> list)
+    {
+        _selectedAmmoCategories = list.ToHashSet();
+        
+        return Task.CompletedTask;
+    }
+    
+    private HashSet<string>? SelectedCategories { get; set; }
+
+    private string _nameFilter = string.Empty;
+
+    private int _minPrice;
+    private int _maxPrice;
+    
+    private int _minAvail;
+    private int _maxAvail;
+
+    private HashSet<Legality>? _selectedLegalities;
+    private readonly IEnumerable<Legality> _legalities = EnumExtensions.GetValues<Legality>();
+    
+    private int _minDamage;
+    private int _maxDamage;
+
+    private int _minConceal;
+    private int _maxConceal;
+    
+    private int _minReach;
+    private int _maxReach;
+
+    private int _minAmmo;
+    private int _maxAmmo;
+
+    private HashSet<string>? _selectedAmmoCategories;
+
+    private string _accessoryFilter = string.Empty;
+
+    private string _skillFilter = string.Empty;
+
+
+    private bool OnCustomFilter(Weapon weapon)
+    {
+
+        //TODO: Rework this to use individual callbacks on the inputs that update a list value to not recheck everything
+        return CheckName() &&
+               CheckPrice() &&
+               CheckLegality() &&
+               CheckCategory() &&
+               CheckAvailability() &&
+               CheckDamage() &&
+               CheckConceal() &&
+               CheckReach() &&
+               CheckAmmoCapacity() &&
+               CheckAmmoCategory() &&
+               CheckAccessories() &&
+               CheckSkill();
+
+
+        //Name
+        bool CheckName()
+        {
+            return weapon.Name.Contains(_nameFilter);
+        }
+        
+        //Price
+        bool CheckPrice()
+        {
+            return NumberFilter(weapon.Cost, _minPrice, _maxPrice);
+        }
+        
+        //Legality
+        bool CheckLegality()
+        {
+            if (_selectedLegalities is null)
+                return true;
+            if (_selectedLegalities.Count == 0)
+                return true;
+            if (weapon.Availability is null)
+            {
+                Logger.LogInformation("Availability of {Name} was null", weapon.Name);
+                return false;
+            }
+            return _selectedLegalities.Contains(weapon.Availability.Legality);
+        }
+
+        //Availability
+        bool CheckAvailability()
+        {
+            return NumberFilter(weapon.Availability?.AvailabilityInt, _minAvail, _maxAvail);
+        }
+        
+        //TODO: Source Book this requires the deserialization of books.xml
+        
+        //Category
+        bool CheckCategory()
+        {
+            if (weapon.Category is null)
+                throw new ArgumentNullException(nameof(weapon.Category));
+            if (SelectedCategories is null)
+                return true;
+            if (SelectedCategories.Count == 0)
+                return true;
+            if (SelectedCategories.First() == "All")
+                return true;
+
+            return SelectedCategories.Contains(weapon.Category.Name);
+        }
+        
+        //Ap TODO: ApInt erstellen in Weapon
+        
+        //DMG
+        bool CheckDamage()
+        {
+            return NumberFilter(weapon.Damage?.DamageAmount, _minDamage, _maxDamage);
+        }
+
+        //Acc TODO: Accuracy Int erstellen
+        
+        
+        //Conceal
+        bool CheckConceal()
+        {
+            return NumberFilter(weapon.Conceal, _minConceal, _maxConceal);
+        }
+        
+        //Reach
+        bool CheckReach()
+        {
+            return NumberFilter(weapon.Reach, _minReach, _maxReach);
+        }
+        
+        //FireModes TODO:(Muss noch in Weapon aufbereitet werden)
+        //Recoil Comp TODO:Int muss noch bereitgestellt werden
+        
+        //Mag Size
+        bool CheckAmmoCapacity()
+        {
+            return NumberFilter(weapon.Ammo?.MagazineSize, _minAmmo, _maxAmmo);
+        }
+        
+        //Ammo Cat
+        bool CheckAmmoCategory()
+        {
+            return ListFilter(_selectedAmmoCategories!, weapon.Ammo?.AmmoCategory);
+        }
+        
+        //Accessories
+        bool CheckAccessories()
+        {
+            if (weapon.Accessories.IsNullOrEmpty())
+                return true;
+
+            if (_accessoryFilter.IsNullOrEmpty())
+                return true;
+            
+            foreach (var weaponAccessory in weapon.Accessories)
+            {
+                if (weaponAccessory.Name.Contains(_accessoryFilter))
+                    return true;
+            }
+            return false;
+        }
+        
+        //Skill
+        bool CheckSkill()
+        {
+            if (weapon.Skill is null)
+                throw new ArgumentNullException(nameof(weapon.Skill));
+            
+            return weapon.Skill.Name.Contains(_skillFilter);
+        }
+            
+
+        bool NumberFilter(int? mainVariable, int min, int max)
+        {
+            if (mainVariable is null)
+                throw new ArgumentNullException(nameof(mainVariable));
+        
+            if (min == 0 && max == 0)
+                return true;
+            if (mainVariable > min && max < min)
+                return true;
+            return mainVariable > min && (mainVariable < max || mainVariable == 0 );
+        }
+
+        bool ListFilter<T>(HashSet<T>? collection, T propertyToCheck)
+        {
+            if (collection is null)
+                return true;
+            if (collection.Count == 0)
+                return true;
+            if (propertyToCheck is null)
+            {
+                Logger.LogInformation("{PropertyName} of {Name} was null", nameof(propertyToCheck) ,propertyToCheck);
+                return false;
+            }
+            return collection.Contains(propertyToCheck);
+        }
+    }
+    
 }

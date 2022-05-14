@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Chummer_Database.Enums;
 
 namespace Chummer_Database.Extensions;
 
@@ -14,6 +15,11 @@ public static class EnumExtensions
         var attributes = (DescriptionAttribute[])field.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
         return attributes.Length > 0 ? attributes[0].Description : val.ToString();
+    }
+
+    public static IEnumerable<T> GetValues<T>()
+    {
+        return (T[]) Enum.GetValues(typeof(T));
     }
 }
 
