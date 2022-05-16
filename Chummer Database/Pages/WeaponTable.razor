@@ -165,6 +165,7 @@
             <Repeater Items="Ammo.AllAmmoCategories">
                 <SelectItem TValue="string" Value="context">@context</SelectItem>
             </Repeater>
+            <SelectItem TValue="string" Value="@("All")">All</SelectItem>
         </Select>
                 
         @*Weapon Accessory Filter*@
@@ -199,8 +200,8 @@
                   
                   FixedHeader="true"
                   
+                  Filterable="false"
                   CustomFilter="@OnCustomFilter"
-                  Filterable="true"
                   FilterMethod="DataGridFilterMethod.Contains"
                   >
             <DataGridColumns>
@@ -208,8 +209,8 @@
                     TItem="Weapon" 
                     Field="@nameof(Weapon.Name)" 
                     Caption="Name" 
-                    SortDirection="SortDirection.Ascending" 
-                    Filterable/>
+                    SortDirection="SortDirection.Ascending"
+                    Filterable="false"/>
                 <DataGridNumericColumn 
                     TItem="Weapon" 
                     Field="@nameof(Weapon.Accuracy)" 
@@ -264,7 +265,8 @@
                         <DataGridColumn 
                             TItem="Weapon" 
                             Field="Category.Name" 
-                            Caption="Category"></DataGridColumn>
+                            Caption="Category"
+                            Filterable="false"/>
                     }
                 }
             </DataGridColumns>
@@ -338,7 +340,7 @@
     private int _minAmmo;
     private int _maxAmmo;
 
-    private HashSet<string>? _selectedAmmoCategories;
+    private HashSet<string> _selectedAmmoCategories = new();
 
     private string _accessoryFilter = string.Empty;
 
@@ -448,6 +450,8 @@
         //Ammo Cat
         bool CheckAmmoCategory()
         {
+            if (_selectedAmmoCategories.Contains("All"))
+                return true;
             return ListFilter(_selectedAmmoCategories!, weapon.Ammo?.AmmoCategory);
         }
         

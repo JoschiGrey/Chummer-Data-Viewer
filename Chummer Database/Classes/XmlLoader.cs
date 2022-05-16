@@ -10,9 +10,18 @@ public static class XmlLoader
     public static WeaponsXmlRoot? WeaponXmlData { get; private set; }
     public static RangesXmlRoot? RangesXmlData { get; private set; }
     public static SkillsXmlRoot? SkillsXmlData { get; private set; }
+    
+    public static BooksXmlRoot? BooksXmlData { get; private set; }
 
     public static async Task<bool> LoadAll(HttpClient client, ILogger logger)
     {
+        //I Really need to write some kind of dependency tree to load stuff in the correct order
+        //Info is never needed in deserialization. So we could paralelize  all ÍO calls and only need
+        //to handle the Create() calls in a correct order
+        
+        //Basically everything needs this.
+        await LoadBooksXml(client, logger);
+        
         //Later data may depend on this either while creating or deserializing
         logger.LogInformation("Started priority tasks");
         Task<bool>[] priorityTasks =
@@ -79,6 +88,22 @@ public static class XmlLoader
         SkillsXmlData = serializer.Deserialize(reader) as SkillsXmlRoot;
 
         SkillsXmlData?.Create(logger);
+
+        return true;
+    }
+    
+    private static async Task<bool> LoadBooksXml(HttpClient client, ILogger logger)
+    {
+        logger.LogDebug("Loading Books.xml");
+        var xmlString = await client.GetStringAsync("data/books.xml");
+        var serializer = new XmlSerializer(typeof(BooksXmlRoot));
+        
+        using var stringReader = new StringReader(xmlString);
+        using var reader = new CustomXmlReader(stringReader);
+
+        BooksXmlData = serializer.Deserialize(reader) as BooksXmlRoot;
+
+        BooksXmlData?.Create(logger);
 
         return true;
     }
