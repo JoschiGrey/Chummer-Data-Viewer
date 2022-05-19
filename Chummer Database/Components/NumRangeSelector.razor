@@ -1,0 +1,63 @@
+﻿
+<Div>
+    @*Min Value*@
+    <NumericPicker
+        TValue="int" 
+        CurrencySymbol="¥" 
+        Step="@Step"
+        Min="0"
+        Decimals="0"
+        SelectAllOnFocus
+        ValueChanged="OnMinChanged"
+    />
+    @*Max Value*@
+    <NumericPicker
+        TValue="int" 
+        CurrencySymbol="¥" 
+        Step="@Step"
+        Min="0"
+        Decimals="0"
+        SelectAllOnFocus
+        ValueChanged="OnMaxChanged"
+    />
+</Div>
+
+
+@code {
+             
+    [Parameter]
+    public int Min { get; set; }
+    
+    [Parameter]
+    public int Max { get; set; }
+
+    [Parameter]
+    public int? Step { get; set; } = 1;
+
+    [Parameter]
+    public string? CurrencySymbol { get; set; }
+    
+    [Parameter]  
+    public EventCallback<(int, int)> RangeChanged { get; set; }
+    
+    [Parameter]
+    public (int, int) Range { get; set; }
+    
+
+
+
+    private async Task OnMinChanged(int value)
+    {
+        Min = value;
+        Range = (Min, Max);
+        await RangeChanged.InvokeAsync();
+    }
+    
+    private async Task OnMaxChanged(int value)
+    {
+        Max = value;
+        Range = (Min, Max);
+        await RangeChanged.InvokeAsync();
+    }
+    
+}

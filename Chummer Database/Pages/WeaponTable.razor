@@ -2,185 +2,213 @@
 @using Chummer_Database.Extensions
 @using Blazorise.Extensions
 @using EnumExtensions = Chummer_Database.Extensions.EnumExtensions
-@using System.Collections.Immutable
 @inject HttpClient Client
 @inject ILogger<WeaponTable> Logger
 
 <div class="mt-2 d-flex align-content-center justify-content-center">
     <h1 class="text-decoration-underline">WeaponTable Test</h1>
 </div>
-
-<div>
-    <div>
-        @*Selector for WeaponCategory Filtering*@
-        <Select TValue="string" SelectedValuesChanged="@OnSelectedCategoriesChanged" Multiple>
-            @{
-                if (WeaponCategories is not null)
-                {
-                    foreach (var category in WeaponCategories)
+<Div class="d-flex">
+    <div class="">
+        <div>
+            @*Selector for WeaponCategory Filtering*@
+            <Select TValue="string" SelectedValuesChanged="@OnSelectedCategoriesChanged" Multiple>
+                @{
+                    if (WeaponCategories is not null)
                     {
-                        <SelectItem Value="@(category.Name)">@category.Name</SelectItem>
+                        foreach (var category in WeaponCategories)
+                        {
+                            <SelectItem Value="@(category.Name)">@category.Name</SelectItem>
+                        }
+                        <SelectItem Value="@("All")">All</SelectItem>
                     }
-                    <SelectItem Value="@("All")">All</SelectItem>
                 }
-            }
-        </Select>
-        
-        @*Weapon name Filter *@
-        <TextEdit 
-            @bind-Text="@_nameFilter" 
-            Immediate="false" 
-            Placeholder="Weapon Name"></TextEdit>
-        
-        @*Weapon Price Filter*@
-        @*Min Value*@
-        <NumericPicker 
-            @bind-Value="_minPrice"
-            TValue="int" 
-            CurrencySymbol="¥" 
-            Step="1000"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        @*Max Value*@
-        <NumericPicker 
-            @bind-Value="_maxPrice"
-            TValue="int" 
-            CurrencySymbol="¥" 
-            Step="1000"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        
-        @*Weapon Availability Filter*@
-        @*Min Availability*@
-        <NumericPicker 
-            @bind-Value="_minAvail"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        @*Max Availability*@
-        <NumericPicker 
-            @bind-Value="_maxAvail"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        @*Legality*@
-        <Select TValue="Legality" SelectedValuesChanged="@OnSelectedLegalitiesChanged" Multiple>
-            <Repeater Items="_legalities">
-                <SelectItem TValue="Legality" Value="context">@context</SelectItem>
-            </Repeater>
-        </Select>
-        
-        @*Weapon Damage Filter*@
-        @*Min Damage*@
-        <NumericPicker 
-            @bind-Value="_minDamage"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        @*Max Damage*@
-        <NumericPicker 
-            @bind-Value="_maxDamage"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        
-        @*Weapon Conceal Filter*@
-        @*Min Conceal*@
-        <NumericPicker 
-            @bind-Value="_minConceal"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        @*Max Conceal*@
-        <NumericPicker 
-            @bind-Value="_maxConceal"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        
-        @*Weapon Reach Filter*@
-        @*Min Reach*@
-        <NumericPicker 
-            @bind-Value="_minReach"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        @*Max Reach*@
-        <NumericPicker 
-            @bind-Value="_maxReach"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        
-        @*Weapon Ammo Capacity Filter*@
-        @*Min Capacity*@
-        <NumericPicker 
-            @bind-Value="_minAmmo"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        @*Max Capacity*@
-        <NumericPicker 
-            @bind-Value="_maxAmmo"
-            TValue="int"
-            Step="1"
-            Min="0"
-            Decimals="0"
-            SelectAllOnFocus
-        />
-        
-        @*Anmo Category Filter*@
-        <Select TValue="string" SelectedValuesChanged="@OnSelectedAmmoCategoriesChanged" Multiple>
-            <Repeater Items="Ammo.AllAmmoCategories">
-                <SelectItem TValue="string" Value="context">@context</SelectItem>
-            </Repeater>
-            <SelectItem TValue="string" Value="@("All")">All</SelectItem>
-        </Select>
+            </Select>
+            
+            @*Weapon name Filter *@
+            <TextEdit 
+                @bind-Text="@_nameFilter" 
+                Immediate="false" 
+                Placeholder="Weapon Name"></TextEdit>
+            
+
+            
+            @*
+            <Div>
+                $1$Weapon Price Filter#1#
+                $1$Min Value#1#
+                <NumericPicker 
+                    @bind-Value="_minPrice"
+                    TValue="int" 
+                    CurrencySymbol="¥" 
+                    Step="1000"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+                $1$Max Value#1#
+                <NumericPicker 
+                    @bind-Value="_maxPrice"
+                    TValue="int" 
+                    CurrencySymbol="¥" 
+                    Step="1000"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+            </Div>
+            *@
+            
+            <NumRangeSelector 
+                Step="1000"
+                CurrencySymbol="¥"
+                @bind-Range="range"
+            />
+
+            
+            <Div>
+                @*Weapon Availability Filter*@
+                @*Min Availability*@
+                <NumericPicker 
+                    @bind-Value="_minAvail"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+                @*Max Availability*@
+                <NumericPicker 
+                    @bind-Value="_maxAvail"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+            </Div>
+            
+            @*Legality*@
+            <Select TValue="Legality" SelectedValuesChanged="@OnSelectedLegalitiesChanged" Multiple>
+                <Repeater Items="_legalities">
+                    <SelectItem TValue="Legality" Value="context">@context</SelectItem>
+                </Repeater>
+            </Select>
+            
+
+            
+            <Div>
                 
-        @*Weapon Accessory Filter*@
-        <TextEdit 
-            @bind-Text="_accessoryFilter" 
-            Immediate="false" 
-            Placeholder="Accessory Name"></TextEdit>
-        
-        @*Weapon Skill Filter*@
-        <TextEdit 
-            @bind-Text="_skillFilter" 
-            Immediate="false" 
-            Placeholder="Skill Name"></TextEdit>
-        
-    </div>
+            </Div>
+                @*Weapon Damage Filter*@
+                @*Min Damage*@
+                <NumericPicker 
+                    @bind-Value="_minDamage"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+                @*Max Damage*@
+                <NumericPicker 
+                    @bind-Value="_maxDamage"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+            <Div>
+                @*Weapon Conceal Filter*@
+                @*Min Conceal*@
+                <NumericPicker 
+                    @bind-Value="_minConceal"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+                @*Max Conceal*@
+                <NumericPicker 
+                    @bind-Value="_maxConceal"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />            
+            </Div>
+
+            <Div>
+                @*Weapon Reach Filter*@
+                @*Min Reach*@
+                <NumericPicker 
+                    @bind-Value="_minReach"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+                @*Max Reach*@
+                <NumericPicker 
+                    @bind-Value="_maxReach"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+            </Div>
+            
+            <Div>
+                @*Weapon Ammo Capacity Filter*@
+                @*Min Capacity*@
+                <NumericPicker 
+                    @bind-Value="_minAmmo"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+                @*Max Capacity*@
+                <NumericPicker 
+                    @bind-Value="_maxAmmo"
+                    TValue="int"
+                    Step="1"
+                    Min="0"
+                    Decimals="0"
+                    SelectAllOnFocus
+                />
+            </Div>
+
+            
+            @*Anmo Category Filter*@
+            <Select TValue="string" SelectedValuesChanged="@OnSelectedAmmoCategoriesChanged" Multiple>
+                <Repeater Items="Ammo.AllAmmoCategories">
+                    <SelectItem TValue="string" Value="context">@context</SelectItem>
+                </Repeater>
+                <SelectItem TValue="string" Value="@("All")">All</SelectItem>
+            </Select>
+                    
+
+            <Div>
+                @*Weapon Accessory Filter*@
+                <TextEdit 
+                    @bind-Text="_accessoryFilter" 
+                    Immediate="false" 
+                    Placeholder="Accessory Name"></TextEdit>
+                
+                @*Weapon Skill Filter*@
+                <TextEdit 
+                    @bind-Text="_skillFilter" 
+                    Immediate="false" 
+                    Placeholder="Skill Name"></TextEdit>
+            </Div>
+        </div>
     <div>
         <DataGrid TItem="Weapon"
                   Data="Weapons"
@@ -272,7 +300,8 @@
             </DataGridColumns>
         </DataGrid>
     </div>
-</div>
+    </div>
+</Div>
 
 
 @code {
@@ -283,7 +312,8 @@
     private DataGrid<Weapon>? _dataGridRef;
     private int _pageSize = 10;
     
-
+    public (int, int) range;
+    
     protected override async Task OnInitializedAsync()
     {
         if (WeaponXmlData is null)
