@@ -30,63 +30,19 @@
                 @bind-Text="@_nameFilter" 
                 Immediate="false" 
                 Placeholder="Weapon Name"></TextEdit>
-            
 
-            
-            @*
-            <Div>
-                $1$Weapon Price Filter#1#
-                $1$Min Value#1#
-                <NumericPicker 
-                    @bind-Value="_minPrice"
-                    TValue="int" 
-                    CurrencySymbol="¥" 
-                    Step="1000"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-                $1$Max Value#1#
-                <NumericPicker 
-                    @bind-Value="_maxPrice"
-                    TValue="int" 
-                    CurrencySymbol="¥" 
-                    Step="1000"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-            </Div>
-            *@
-            
+            @*Weapon Cost Filter*@
             <NumRangeSelector 
                 Step="1000"
                 CurrencySymbol="¥"
-                @bind-Range="range"
+                @bind-Value="_costRange"
             />
-
             
-            <Div>
-                @*Weapon Availability Filter*@
-                @*Min Availability*@
-                <NumericPicker 
-                    @bind-Value="_minAvail"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-                @*Max Availability*@
-                <NumericPicker 
-                    @bind-Value="_maxAvail"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-            </Div>
+            @*Weapon Availability Filter*@
+            <NumRangeSelector 
+                Step="1"
+                @bind-Value="_availRange"
+            />
             
             @*Legality*@
             <Select TValue="Legality" SelectedValuesChanged="@OnSelectedLegalitiesChanged" Multiple>
@@ -95,95 +51,27 @@
                 </Repeater>
             </Select>
             
-
             
-            <Div>
-                
-            </Div>
-                @*Weapon Damage Filter*@
-                @*Min Damage*@
-                <NumericPicker 
-                    @bind-Value="_minDamage"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-                @*Max Damage*@
-                <NumericPicker 
-                    @bind-Value="_maxDamage"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-            <Div>
-                @*Weapon Conceal Filter*@
-                @*Min Conceal*@
-                <NumericPicker 
-                    @bind-Value="_minConceal"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-                @*Max Conceal*@
-                <NumericPicker 
-                    @bind-Value="_maxConceal"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />            
-            </Div>
-
-            <Div>
-                @*Weapon Reach Filter*@
-                @*Min Reach*@
-                <NumericPicker 
-                    @bind-Value="_minReach"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-                @*Max Reach*@
-                <NumericPicker 
-                    @bind-Value="_maxReach"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-            </Div>
-            
-            <Div>
-                @*Weapon Ammo Capacity Filter*@
-                @*Min Capacity*@
-                <NumericPicker 
-                    @bind-Value="_minAmmo"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-                @*Max Capacity*@
-                <NumericPicker 
-                    @bind-Value="_maxAmmo"
-                    TValue="int"
-                    Step="1"
-                    Min="0"
-                    Decimals="0"
-                    SelectAllOnFocus
-                />
-            </Div>
+            @*Weapon Damage Filter*@
+            <NumRangeSelector 
+                Step="1"
+                @bind-Value="_damageRange"
+            />
+            @*Weapon Conceal Filter*@
+            <NumRangeSelector 
+                Step="1"
+                @bind-Value="_concealRange"
+            />
+            @*Weapon Reach Filter*@
+            <NumRangeSelector 
+                Step="1"
+                @bind-Value="_reachRange"
+            />
+            @*Weapon Ammo Capacity Filter*@
+            <NumRangeSelector 
+                Step="1"
+                @bind-Value="_ammoRange"
+            />
 
             
             @*Anmo Category Filter*@
@@ -194,20 +82,19 @@
                 <SelectItem TValue="string" Value="@("All")">All</SelectItem>
             </Select>
                     
+            
+            @*Weapon Accessory Filter*@
+            <TextEdit 
+                @bind-Text="_accessoryFilter" 
+                Immediate="false" 
+                Placeholder="Accessory Name"></TextEdit>
+            
+            @*Weapon Skill Filter*@
+            <TextEdit 
+                @bind-Text="_skillFilter" 
+                Immediate="false" 
+                Placeholder="Skill Name"></TextEdit>
 
-            <Div>
-                @*Weapon Accessory Filter*@
-                <TextEdit 
-                    @bind-Text="_accessoryFilter" 
-                    Immediate="false" 
-                    Placeholder="Accessory Name"></TextEdit>
-                
-                @*Weapon Skill Filter*@
-                <TextEdit 
-                    @bind-Text="_skillFilter" 
-                    Immediate="false" 
-                    Placeholder="Skill Name"></TextEdit>
-            </Div>
         </div>
     <div>
         <DataGrid TItem="Weapon"
@@ -223,7 +110,7 @@
                   @bind-PageSize="_pageSize"
                   PageSizes="@(new []{5,10, 20, 50})"
                   PagerPosition="DataGridPagerPosition.Top"
-                  PageChanged="@(args => _dataGridRef?.ScrollToRow(1).AsTask() ?? throw new InvalidOperationException())"
+                  PageChanged="@(_ => _dataGridRef?.ScrollToRow(1).AsTask() ?? throw new InvalidOperationException())"
                   ShowPageSizes="true"
                   
                   FixedHeader="true"
@@ -278,7 +165,7 @@
                     Filterable="false"/>
                 <DataGridNumericColumn
                     TItem="Weapon" Field="@nameof(Weapon.Cost)" 
-                    SortField="@nameof(Weapon.Page)" 
+                    SortField="@nameof(Weapon.Cost)" 
                     Caption="Cost"
                     CellClass="@(item => item.FormCostCssClass())"
                     Filterable="false"/>
@@ -312,7 +199,7 @@
     private DataGrid<Weapon>? _dataGridRef;
     private int _pageSize = 10;
     
-    public (int, int) range;
+
     
     protected override async Task OnInitializedAsync()
     {
@@ -348,27 +235,21 @@
     private HashSet<string>? SelectedCategories { get; set; }
 
     private string _nameFilter = string.Empty;
-
-    private int _minPrice;
-    private int _maxPrice;
     
-    private int _minAvail;
-    private int _maxAvail;
+    private NumericRange _costRange = new();
+    
+    private NumericRange? _availRange;
 
     private HashSet<Legality>? _selectedLegalities;
     private readonly IEnumerable<Legality> _legalities = EnumExtensions.GetValues<Legality>();
-    
-    private int _minDamage;
-    private int _maxDamage;
 
-    private int _minConceal;
-    private int _maxConceal;
-    
-    private int _minReach;
-    private int _maxReach;
+    private NumericRange? _damageRange;
 
-    private int _minAmmo;
-    private int _maxAmmo;
+    private NumericRange? _concealRange;
+
+    private NumericRange? _reachRange;
+
+    private NumericRange? _ammoRange;
 
     private HashSet<string> _selectedAmmoCategories = new();
 
@@ -404,7 +285,7 @@
         //Price
         bool CheckPrice()
         {
-            return NumberFilter(weapon.Cost, _minPrice, _maxPrice);
+            return _costRange.NumberFilter(weapon.Cost);
         }
         
         //Legality
@@ -425,7 +306,7 @@
         //Availability
         bool CheckAvailability()
         {
-            return NumberFilter(weapon.Availability?.AvailabilityInt, _minAvail, _maxAvail);
+            return _availRange.NumberFilter(weapon.Availability?.AvailabilityInt);
         }
         
         //TODO: Source Book this requires the deserialization of books.xml
@@ -450,7 +331,7 @@
         //DMG
         bool CheckDamage()
         {
-            return NumberFilter(weapon.Damage?.DamageAmount, _minDamage, _maxDamage);
+            return _damageRange.NumberFilter(weapon.Damage?.DamageAmount);
         }
 
         //Acc TODO: Accuracy Int erstellen
@@ -459,13 +340,13 @@
         //Conceal
         bool CheckConceal()
         {
-            return NumberFilter(weapon.Conceal, _minConceal, _maxConceal);
+            return _concealRange.NumberFilter(weapon.Conceal);
         }
         
         //Reach
         bool CheckReach()
         {
-            return NumberFilter(weapon.Reach, _minReach, _maxReach);
+            return _reachRange.NumberFilter(weapon.Reach);
         }
         
         //FireModes TODO:(Muss noch in Weapon aufbereitet werden)
@@ -474,7 +355,7 @@
         //Mag Size
         bool CheckAmmoCapacity()
         {
-            return NumberFilter(weapon.Ammo?.MagazineSize, _minAmmo, _maxAmmo);
+            return _ammoRange.NumberFilter(weapon.Ammo?.MagazineSize);
         }
         
         //Ammo Cat
@@ -510,20 +391,7 @@
             
             return weapon.Skill.Name.Contains(_skillFilter);
         }
-            
-
-        bool NumberFilter(int? mainVariable, int min, int max)
-        {
-            if (mainVariable is null)
-                throw new ArgumentNullException(nameof(mainVariable));
         
-            if (min == 0 && max == 0)
-                return true;
-            if (mainVariable > min && max < min)
-                return true;
-            return mainVariable > min && (mainVariable < max || mainVariable == 0 );
-        }
-
         bool ListFilter<T>(HashSet<T>? collection, T propertyToCheck)
         {
             if (collection is null)

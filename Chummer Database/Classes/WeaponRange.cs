@@ -7,10 +7,10 @@ public class RangesXmlRoot
 {
     [XmlArray("ranges")]
     [XmlArrayItem("range")]
-    public List<Range> Ranges { get; set; } = new();
+    public List<WeaponRange> Ranges { get; set; } = new();
 
     [XmlIgnore]
-    public Dictionary<string, Range> RangeDictionary { get; set; } = new();
+    public Dictionary<string, WeaponRange> RangeDictionary { get; set; } = new();
 
     public bool Create(ILogger logger)
     {
@@ -23,7 +23,7 @@ public class RangesXmlRoot
 }
 
 
-public class Range
+public class WeaponRange
 {
     [XmlElement("name")]
     public string RangeCategory { get; set; } = string.Empty;

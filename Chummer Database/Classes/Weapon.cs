@@ -102,7 +102,7 @@ public class Weapon
 	
 	//TODO: This can be problematic if I ever introduce custom Data
 	[XmlIgnore]
-	public Range? Range => XmlLoader.RangesXmlData?.RangeDictionary[RangeCategory];
+	public WeaponRange? Range => XmlLoader.RangesXmlData?.RangeDictionary[RangeCategory];
 	
 	[XmlElement(ElementName = "spec")]
 	private string Specialisation { get; set; } = string.Empty;
@@ -123,7 +123,7 @@ public class Weapon
 	public string AlternateRangeString { get; set; } = string.Empty;
    
    [XmlIgnore]
-   public Range AlternateRange
+   public WeaponRange AlternateWeaponRange
    {
 	   get
 	   {
@@ -141,7 +141,7 @@ public class Weapon
 				   return value;
 		   }
 
-		   return new Range() {RangeCategory = "Undefined Range"};
+		   return new WeaponRange() {RangeCategory = "Undefined Range"};
 	   }
    }
 

@@ -1,9 +1,11 @@
-﻿
+﻿@using System.Diagnostics.CodeAnalysis
+
+
 <Div>
     @*Min Value*@
     <NumericPicker
         TValue="int" 
-        CurrencySymbol="¥" 
+        CurrencySymbol="@CurrencySymbol" 
         Step="@Step"
         Min="0"
         Decimals="0"
@@ -13,7 +15,7 @@
     @*Max Value*@
     <NumericPicker
         TValue="int" 
-        CurrencySymbol="¥" 
+        CurrencySymbol="@CurrencySymbol" 
         Step="@Step"
         Min="0"
         Decimals="0"
@@ -24,40 +26,37 @@
 
 
 @code {
-             
     [Parameter]
-    public int Min { get; set; }
-    
-    [Parameter]
-    public int Max { get; set; }
-
-    [Parameter]
-    public int? Step { get; set; } = 1;
+    public int Step { get; set; } = 1;
 
     [Parameter]
     public string? CurrencySymbol { get; set; }
     
     [Parameter]  
-    public EventCallback<(int, int)> RangeChanged { get; set; }
-    
+    public EventCallback<NumericRange> ValueChanged { get; set; }
+
     [Parameter]
-    public (int, int) Range { get; set; }
-    
+    public NumericRange Value { get; set; } = new();
 
-
+    private int _test;
 
     private async Task OnMinChanged(int value)
     {
-        Min = value;
-        Range = (Min, Max);
-        await RangeChanged.InvokeAsync();
+        var temp = Value;
+        temp.Minimum = value;
+        Value = temp;
+
+        await ValueChanged.InvokeAsync(Value);
     }
     
     private async Task OnMaxChanged(int value)
     {
-        Max = value;
-        Range = (Min, Max);
-        await RangeChanged.InvokeAsync();
+        Console.WriteLine(value);
+        var temp = Value;
+        temp.Maximum = value;
+        Value = temp;
+        
+        await ValueChanged.InvokeAsync(Value);
     }
     
 }
