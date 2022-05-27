@@ -7,13 +7,13 @@ public class BooksXmlRoot
 {
     [XmlArray("books")]
     [XmlArrayItem("book")]
-    public static HashSet<Book> Books { get; set; } = new();
+    public HashSet<Book> Books { get; set; } = new();
 
     [XmlIgnore]
-    public static Dictionary<string, Book> BooksDictionary { get; set; } = new();
+    public Dictionary<string, Book> BooksDictionary { get; set; } = new();
 
     [XmlIgnore]
-    private ILogger Logger { get; set; }
+    private ILogger? Logger { get; set; }
 
     public bool Create(ILogger logger)
     {

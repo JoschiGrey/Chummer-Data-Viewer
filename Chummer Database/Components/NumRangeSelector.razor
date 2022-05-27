@@ -1,28 +1,31 @@
-﻿@using System.Diagnostics.CodeAnalysis
-
-
-<Div>
+﻿<fieldset>
+    <legend class="float-none w-auto" >@Legend</legend>
     @*Min Value*@
-    <NumericPicker
-        TValue="int" 
-        CurrencySymbol="@CurrencySymbol" 
-        Step="@Step"
-        Min="0"
-        Decimals="0"
-        SelectAllOnFocus
-        ValueChanged="OnMinChanged"
-    />
+    <label><span>Min</span>
+        <NumericPicker
+            Class="numeric-picker"
+            TValue="int"
+            CurrencySymbol="@CurrencySymbol"
+            Step="@Step"
+            Min="0"
+            Decimals="0"
+            SelectAllOnFocus
+            ValueChanged="OnMinChanged"/>
+    </label>
+
     @*Max Value*@
+    <label><span>Max</span>
     <NumericPicker
-        TValue="int" 
-        CurrencySymbol="@CurrencySymbol" 
+        Class="numeric-picker"
+        TValue="int"
+        CurrencySymbol="@CurrencySymbol"
         Step="@Step"
         Min="0"
         Decimals="0"
         SelectAllOnFocus
-        ValueChanged="OnMaxChanged"
-    />
-</Div>
+        ValueChanged="OnMaxChanged"/>
+    </label>
+</fieldset>
 
 
 @code {
@@ -38,25 +41,40 @@
     [Parameter]
     public NumericRange Value { get; set; } = new();
 
-    private int _test;
+    [Parameter]
+    public string Legend { get; set; } = string.Empty;
 
     private async Task OnMinChanged(int value)
     {
-        var temp = Value;
-        temp.Minimum = value;
-        Value = temp;
+        Console.WriteLine(Legend);
+        Value.Minimum = value;
 
         await ValueChanged.InvokeAsync(Value);
     }
     
     private async Task OnMaxChanged(int value)
     {
-        Console.WriteLine(value);
-        var temp = Value;
-        temp.Maximum = value;
-        Value = temp;
+        Value.Maximum = value;
         
         await ValueChanged.InvokeAsync(Value);
     }
-    
 }
+
+<style>
+    fieldset{
+        border: 1px solid lightgrey;
+        display: inline-flex;
+        margin: 0.3rem;
+    }
+    legend{
+        margin: 0 0 0 5px;
+        padding: 0 5px 0 5px;
+    }
+    .numeric-picker{
+        width: auto;
+        margin: 0 0.3rem 0.3rem 0.3rem;
+    }
+    span{
+        margin-left: 0.5rem;
+    }
+</style>

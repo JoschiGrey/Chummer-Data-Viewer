@@ -26,7 +26,12 @@ public class Weapon
 	[XmlElement(ElementName="conceal")] 
 	public int Conceal { get; set; }
 
-	[XmlElement(ElementName = "accuracy")] public string Accuracy { get; set; } = string.Empty;
+	[XmlElement(ElementName = "accuracy")] 
+	public string AccuracyString { get; set; } = string.Empty;
+	
+	[XmlIgnore]
+	public int Accuracy { get; set; }
+	
 
 	[XmlElement(ElementName="reach")] 
 	public int Reach { get; set; }
@@ -38,13 +43,19 @@ public class Weapon
 	public Damage? Damage { get; set; }
 
 	[XmlElement(ElementName = "ap")] 
-	public string Ap { get; set; } = string.Empty;
+	public string ApString { get; set; } = string.Empty;
+	
+	[XmlIgnore]
+	public int Ap { get; set; }
 
 	[XmlElement(ElementName = "mode")] 
 	public string Mode { get; set; } = string.Empty;
 
 	[XmlElement(ElementName="rc")] 
-	public string RecoilCompensation { get; set; } = string.Empty;
+	public string RecoilCompensationString { get; set; } = string.Empty;
+	
+	[XmlIgnore]
+	public int RecoilComp { get; set; }
 
 	/// <summary>
 	/// Raw deserialized string. Use Ammo.DisplayString instead
@@ -65,12 +76,16 @@ public class Weapon
 	[XmlIgnore]
 	public int Cost { get; private set; }
 
-	[XmlElement(ElementName="source")] public string Source { get; set; } = string.Empty;
+	[XmlElement(ElementName="source")] 
+	public string Source { get; set; } = string.Empty;
 
-	[XmlElement(ElementName="page")] public int Page { get; set; }
+	[XmlElement(ElementName="page")] 
+	public int Page { get; set; }
 
     [XmlIgnore] 
     public string DisplaySource => $"p.{Page} ({Source})";
+
+    [XmlIgnore] public Book? Book => XmlLoader.BooksXmlData?.BooksDictionary[Source];
 
     
     [XmlArray("accessories")]
@@ -246,6 +261,13 @@ public class Weapon
 
 		Ammo = new Ammo(this, logger);
 
+		Ap = GetInt(ApString);
+
+		Accuracy = GetInt(AccuracyString);
+
+		RecoilComp = GetInt(RecoilCompensationString);
+
+
 		foreach (var accessoryString in AccessoriesStringList)
 		{
 			if(WeaponsXmlRoot.AccessoriesDictionary.ContainsKey(accessoryString))
@@ -254,7 +276,6 @@ public class Weapon
 
 		try
 		{
-
 			var match = Regex.Match(CostString, numberPattern).ToString();
 			if (!match.IsNullOrEmpty())
 				Cost = int.Parse(match);
@@ -266,6 +287,21 @@ public class Weapon
 		}
 		
 		return true;
+
+		int GetInt(string input)
+		{
+			try
+			{
+				var match = Regex.Match(input, numberPattern).ToString();
+				if (!match.IsNullOrEmpty())
+					return int.Parse(match);
+			}
+			catch (FormatException e)
+			{
+				logger.LogWarning(e, "Failed to parse {Input} to an cost", input);
+			}
+			return 0;
+		}
 
 		Category TryGetCategory()
 		{
@@ -341,6 +377,7 @@ public class Weapon
 }
 
 
+// ReSharper disable CommentTypo
 /*
 [XmlRoot(ElementName="usegear")]
 public class Usegear { 
@@ -507,6 +544,7 @@ public class DamageOperation {
 	public string Text { get; set; } 
 }
 */
+// ReSharper restore CommentTypo
 
 
 

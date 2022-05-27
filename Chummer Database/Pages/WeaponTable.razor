@@ -1,7 +1,6 @@
 ﻿@page "/WeaponTable"
 @using Chummer_Database.Extensions
 @using Blazorise.Extensions
-@using EnumExtensions = Chummer_Database.Extensions.EnumExtensions
 @inject HttpClient Client
 @inject ILogger<WeaponTable> Logger
 
@@ -11,19 +10,17 @@
 <Div class="d-flex">
     <div class="">
         <div>
-            @*Selector for WeaponCategory Filtering*@
-            <Select TValue="string" SelectedValuesChanged="@OnSelectedCategoriesChanged" Multiple>
-                @{
-                    if (WeaponCategories is not null)
-                    {
-                        foreach (var category in WeaponCategories)
-                        {
-                            <SelectItem Value="@(category.Name)">@category.Name</SelectItem>
-                        }
-                        <SelectItem Value="@("All")">All</SelectItem>
-                    }
-                }
-            </Select>
+            @*Weapon Accessory Filter*@
+            <TextEdit 
+                @bind-Text="_accessoryFilter" 
+                Immediate="false" 
+                Placeholder="Accessory Name"></TextEdit>
+
+            @*Weapon Skill Filter*@
+            <TextEdit 
+                @bind-Text="_skillFilter" 
+                Immediate="false" 
+                Placeholder="Skill Name"></TextEdit>
             
             @*Weapon name Filter *@
             <TextEdit 
@@ -31,380 +28,185 @@
                 Immediate="false" 
                 Placeholder="Weapon Name"></TextEdit>
 
+            
+            
             @*Weapon Cost Filter*@
             <NumRangeSelector 
                 Step="1000"
                 CurrencySymbol="¥"
                 @bind-Value="_costRange"
+                Legend="Cost"
             />
             
             @*Weapon Availability Filter*@
             <NumRangeSelector 
                 Step="1"
                 @bind-Value="_availRange"
+                Legend="Availability"
             />
-            
-            @*Legality*@
-            <Select TValue="Legality" SelectedValuesChanged="@OnSelectedLegalitiesChanged" Multiple>
-                <Repeater Items="_legalities">
-                    <SelectItem TValue="Legality" Value="context">@context</SelectItem>
-                </Repeater>
-            </Select>
-            
             
             @*Weapon Damage Filter*@
             <NumRangeSelector 
                 Step="1"
                 @bind-Value="_damageRange"
+                Legend="Damage"
             />
             @*Weapon Conceal Filter*@
             <NumRangeSelector 
                 Step="1"
                 @bind-Value="_concealRange"
+                Legend="Concealment"
             />
             @*Weapon Reach Filter*@
             <NumRangeSelector 
                 Step="1"
                 @bind-Value="_reachRange"
+                Legend="Reach"
             />
             @*Weapon Ammo Capacity Filter*@
             <NumRangeSelector 
                 Step="1"
                 @bind-Value="_ammoRange"
+                Legend="Ammo Capacity"
             />
 
             
             @*Anmo Category Filter*@
-            <Select TValue="string" SelectedValuesChanged="@OnSelectedAmmoCategoriesChanged" Multiple>
-                <Repeater Items="Ammo.AllAmmoCategories">
-                    <SelectItem TValue="string" Value="context">@context</SelectItem>
-                </Repeater>
-                <SelectItem TValue="string" Value="@("All")">All</SelectItem>
-            </Select>
-                    
+            <MultListSelect
+                Label="Ammo Category"
+                TItem="string"
+                TValue="string"
+                Items="Ammo.AllAmmoCategories"
+                @bind-SelectedItems="_selectedAmmoCategories">
+                    <SelectItem Value="@("All")">All</SelectItem>
+            </MultListSelect>
             
-            @*Weapon Accessory Filter*@
-            <TextEdit 
-                @bind-Text="_accessoryFilter" 
-                Immediate="false" 
-                Placeholder="Accessory Name"></TextEdit>
             
-            @*Weapon Skill Filter*@
-            <TextEdit 
-                @bind-Text="_skillFilter" 
-                Immediate="false" 
-                Placeholder="Skill Name"></TextEdit>
+            @*Selector for WeaponCategory Filtering*@
+            <MultListSelect
+                Label="Weapon Category"
+                TItem="Category"
+                TValue="string"
+                Items="WeaponCategories"
+                @bind-SelectedItems="_selectedCategories">
+                    <SelectItem Value="@("All")">All</SelectItem>
+            </MultListSelect>
+            
+            
+            @*Legality*@
+            <label> Legality
+                <Select TValue="Legality" SelectedValuesChanged="@OnSelectedLegalitiesChanged"Multiple>
+                    <Repeater Items="_legalities">
+                        <SelectItem TValue="Legality" Value="context">@context</SelectItem>
+                    </Repeater>
+                </Select>
+            </label>
+            
+            @*Source Book*@
+            <MultListSelect 
+                Label="Source Book" 
+                TItem="Book"
+                TValue="string" 
+                Items="Books"
+                @bind-SelectedItems="_selectedBooks">
+                <SelectItem TValue="Book" Value="null">All</SelectItem>
+            </MultListSelect>
+
 
         </div>
-    <div>
-        <DataGrid TItem="Weapon"
-                  Data="Weapons"
-                  @bind-SelectedRow="@SelectedWeapon"
-                  @ref="@_dataGridRef"
+        <div>
+            <DataGrid TItem="Weapon"
+                      Data="Weapons"
+                      @bind-SelectedRow="@SelectedWeapon"
+                      @ref="@_dataGridRef"
 
-                  SortMode="DataGridSortMode.Single"
-                  Hoverable="true"
-                  HeaderThemeContrast="ThemeContrast.Dark"
+                      SortMode="DataGridSortMode.Single"
+                      Hoverable="true"
+                      HeaderThemeContrast="ThemeContrast.Dark"
                   
-                  ShowPager="true"
-                  @bind-PageSize="_pageSize"
-                  PageSizes="@(new []{5,10, 20, 50})"
-                  PagerPosition="DataGridPagerPosition.Top"
-                  PageChanged="@(_ => _dataGridRef?.ScrollToRow(1).AsTask() ?? throw new InvalidOperationException())"
-                  ShowPageSizes="true"
+                      ShowPager="true"
+                      @bind-PageSize="_pageSize"
+                      PageSizes="@(new []{5,10, 20, 50})"
+                      PagerPosition="DataGridPagerPosition.Top"
+                      PageChanged="@(_ => _dataGridRef?.ScrollToRow(1).AsTask() ?? throw new InvalidOperationException())"
+                      ShowPageSizes="true"
                   
-                  FixedHeader="true"
+                      FixedHeader="true"
                   
-                  Filterable="false"
-                  CustomFilter="@OnCustomFilter"
-                  FilterMethod="DataGridFilterMethod.Contains"
-                  >
-            <DataGridColumns>
-                <DataGridColumn 
-                    TItem="Weapon" 
-                    Field="@nameof(Weapon.Name)" 
-                    Caption="Name" 
-                    SortDirection="SortDirection.Ascending"
-                    Filterable="false"/>
-                <DataGridNumericColumn 
-                    TItem="Weapon" 
-                    Field="@nameof(Weapon.Accuracy)" 
-                    Caption="ACC"
-                    Filterable="false"/>
-                <DataGridColumn 
-                    TItem="Weapon"
-                    Field="Damage.DisplayString" 
-                    Caption="DAMAGE"
-                    SortField="Damage.DamageAmount"
-                    Filterable="false"/>
-                <DataGridNumericColumn 
-                    TItem="Weapon" 
-                    Field="@nameof(Weapon.Ap)" 
-                    Caption="AP"
-                    Filterable="false"/>
-                <DataGridColumn 
-                    TItem="Weapon" 
-                    Field="@nameof(Weapon.Mode)" 
-                    Caption="Mode"
-                    Filterable="false"/>
-                <DataGridNumericColumn 
-                    TItem="Weapon" 
-                    Field="@nameof(Weapon.RecoilCompensation)" 
-                    Caption="RC"
-                    Filterable="false"/>
-                <DataGridNumericColumn 
-                    TItem="Weapon" 
-                    Field="Ammo.DisplayString" 
-                    SortField="Ammo.MagazineSize" Caption="Ammo"
-                    Filterable="false"/>
-                <DataGridNumericColumn 
-                    TItem="Weapon" 
-                    Field="Availability.AvailabilityString" 
-                    SortField="Availability.AvailabilityInt" 
-                    Caption="Avail"
-                    Filterable="false"/>
-                <DataGridNumericColumn
-                    TItem="Weapon" Field="@nameof(Weapon.Cost)" 
-                    SortField="@nameof(Weapon.Cost)" 
-                    Caption="Cost"
-                    CellClass="@(item => item.FormCostCssClass())"
-                    Filterable="false"/>
-                <DataGridColumn 
-                    TItem="Weapon" 
-                    Field="@nameof(Weapon.DisplaySource)" 
-                    Caption="Source"
-                    Filterable="false"/>
-                @{
-                    if (SelectedCategories.IsNullOrEmpty() || SelectedCategories?.Count > 1 || SelectedCategories?.First() == "All")
-                    {
-                        <DataGridColumn 
-                            TItem="Weapon" 
-                            Field="Category.Name" 
-                            Caption="Category"
-                            Filterable="false"/>
+                      Filterable="false"
+                      CustomFilter="@OnCustomFilter"
+                      FilterMethod="DataGridFilterMethod.Contains"
+            >
+                <DataGridColumns>
+                    <DataGridColumn 
+                        TItem="Weapon" 
+                        Field="@nameof(Weapon.Name)" 
+                        Caption="Name" 
+                        SortDirection="SortDirection.Ascending"
+                        Filterable="false"/>
+                    <DataGridNumericColumn 
+                        TItem="Weapon" 
+                        Field="@nameof(Weapon.AccuracyString)" 
+                        Caption="ACC"
+                        Filterable="false"/>
+                    <DataGridColumn 
+                        TItem="Weapon"
+                        Field="Damage.DisplayString" 
+                        Caption="DAMAGE"
+                        SortField="Damage.DamageAmount"
+                        Filterable="false"/>
+                    <DataGridNumericColumn 
+                        TItem="Weapon" 
+                        Field="@nameof(Weapon.ApString)" 
+                        Caption="AP"
+                        Filterable="false"/>
+                    <DataGridColumn 
+                        TItem="Weapon" 
+                        Field="@nameof(Weapon.Mode)" 
+                        Caption="Mode"
+                        Filterable="false"/>
+                    <DataGridNumericColumn 
+                        TItem="Weapon" 
+                        Field="@nameof(Weapon.RecoilCompensationString)" 
+                        Caption="RC"
+                        Filterable="false"/>
+                    <DataGridNumericColumn 
+                        TItem="Weapon" 
+                        Field="Ammo.DisplayString" 
+                        SortField="Ammo.MagazineSize" Caption="Ammo"
+                        Filterable="false"/>
+                    <DataGridNumericColumn 
+                        TItem="Weapon" 
+                        Field="Availability.AvailabilityString" 
+                        SortField="Availability.AvailabilityInt" 
+                        Caption="Avail"
+                        Filterable="false"/>
+                    <DataGridNumericColumn
+                        TItem="Weapon" Field="@nameof(Weapon.Cost)" 
+                        SortField="@nameof(Weapon.Cost)" 
+                        Caption="Cost"
+                        CellClass="@(item => item.FormCostCssClass())"
+                        Filterable="false"/>
+                    <DataGridColumn 
+                        TItem="Weapon" 
+                        Field="@nameof(Weapon.DisplaySource)" 
+                        Caption="Source"
+                        Filterable="false"/>
+                    @{
+                        if (_selectedCategories.IsNullOrEmpty() || _selectedCategories?.Count > 1 || _selectedCategories?.First() == "All")
+                        {
+                            <DataGridColumn 
+                                TItem="Weapon" 
+                                Field="Category.Name" 
+                                Caption="Category"
+                                Filterable="false"/>
+                        }
                     }
-                }
-            </DataGridColumns>
-        </DataGrid>
-    </div>
+                </DataGridColumns>
+            </DataGrid>
+        </div>
     </div>
 </Div>
 
 
-@code {
-    private HashSet<Weapon>? Weapons { get; set; }
-    private Weapon? SelectedWeapon { get; set; }
-    private HashSet<Category>? WeaponCategories { get; set; }
 
-    private DataGrid<Weapon>? _dataGridRef;
-    private int _pageSize = 10;
-    
-
-    
-    protected override async Task OnInitializedAsync()
-    {
-        if (WeaponXmlData is null)
-        {
-            await LoadAll(Client, Logger);
-        }
-        Weapons = WeaponXmlData?.Weapons.ToHashSet();
-        WeaponCategories = WeaponXmlData?.WeaponCategories.ToHashSet();
-    }
-
-    Task OnSelectedCategoriesChanged(IReadOnlyList<string> list)
-    {
-        SelectedCategories = list.ToHashSet();
-        
-        return Task.CompletedTask;
-    }
-
-    Task OnSelectedLegalitiesChanged(IReadOnlyList<Legality> list)
-    {
-        _selectedLegalities = list.ToHashSet();
-        
-        return Task.CompletedTask;
-    }
-
-    Task OnSelectedAmmoCategoriesChanged(IReadOnlyList<string> list)
-    {
-        _selectedAmmoCategories = list.ToHashSet();
-        
-        return Task.CompletedTask;
-    }
-    
-    private HashSet<string>? SelectedCategories { get; set; }
-
-    private string _nameFilter = string.Empty;
-    
-    private NumericRange _costRange = new();
-    
-    private NumericRange? _availRange;
-
-    private HashSet<Legality>? _selectedLegalities;
-    private readonly IEnumerable<Legality> _legalities = EnumExtensions.GetValues<Legality>();
-
-    private NumericRange? _damageRange;
-
-    private NumericRange? _concealRange;
-
-    private NumericRange? _reachRange;
-
-    private NumericRange? _ammoRange;
-
-    private HashSet<string> _selectedAmmoCategories = new();
-
-    private string _accessoryFilter = string.Empty;
-
-    private string _skillFilter = string.Empty;
-
-
-    private bool OnCustomFilter(Weapon weapon)
-    {
-
-        //TODO: Rework this to use individual callbacks on the inputs that update a list value to not recheck everything
-        return CheckName() &&
-               CheckPrice() &&
-               CheckLegality() &&
-               CheckCategory() &&
-               CheckAvailability() &&
-               CheckDamage() &&
-               CheckConceal() &&
-               CheckReach() &&
-               CheckAmmoCapacity() &&
-               CheckAmmoCategory() &&
-               CheckAccessories() &&
-               CheckSkill();
-
-
-        //Name
-        bool CheckName()
-        {
-            return weapon.Name.Contains(_nameFilter);
-        }
-        
-        //Price
-        bool CheckPrice()
-        {
-            return _costRange.NumberFilter(weapon.Cost);
-        }
-        
-        //Legality
-        bool CheckLegality()
-        {
-            if (_selectedLegalities is null)
-                return true;
-            if (_selectedLegalities.Count == 0)
-                return true;
-            if (weapon.Availability is null)
-            {
-                Logger.LogInformation("Availability of {Name} was null", weapon.Name);
-                return false;
-            }
-            return _selectedLegalities.Contains(weapon.Availability.Legality);
-        }
-
-        //Availability
-        bool CheckAvailability()
-        {
-            return _availRange.NumberFilter(weapon.Availability?.AvailabilityInt);
-        }
-        
-        //TODO: Source Book this requires the deserialization of books.xml
-        
-        //Category
-        bool CheckCategory()
-        {
-            if (weapon.Category is null)
-                throw new ArgumentNullException(nameof(weapon.Category));
-            if (SelectedCategories is null)
-                return true;
-            if (SelectedCategories.Count == 0)
-                return true;
-            if (SelectedCategories.First() == "All")
-                return true;
-
-            return SelectedCategories.Contains(weapon.Category.Name);
-        }
-        
-        //Ap TODO: ApInt erstellen in Weapon
-        
-        //DMG
-        bool CheckDamage()
-        {
-            return _damageRange.NumberFilter(weapon.Damage?.DamageAmount);
-        }
-
-        //Acc TODO: Accuracy Int erstellen
-        
-        
-        //Conceal
-        bool CheckConceal()
-        {
-            return _concealRange.NumberFilter(weapon.Conceal);
-        }
-        
-        //Reach
-        bool CheckReach()
-        {
-            return _reachRange.NumberFilter(weapon.Reach);
-        }
-        
-        //FireModes TODO:(Muss noch in Weapon aufbereitet werden)
-        //Recoil Comp TODO:Int muss noch bereitgestellt werden
-        
-        //Mag Size
-        bool CheckAmmoCapacity()
-        {
-            return _ammoRange.NumberFilter(weapon.Ammo?.MagazineSize);
-        }
-        
-        //Ammo Cat
-        bool CheckAmmoCategory()
-        {
-            if (_selectedAmmoCategories.Contains("All"))
-                return true;
-            return ListFilter(_selectedAmmoCategories!, weapon.Ammo?.AmmoCategory);
-        }
-        
-        //Accessories
-        bool CheckAccessories()
-        {
-            if (weapon.Accessories.IsNullOrEmpty())
-                return true;
-
-            if (_accessoryFilter.IsNullOrEmpty())
-                return true;
-            
-            foreach (var weaponAccessory in weapon.Accessories)
-            {
-                if (weaponAccessory.Name.Contains(_accessoryFilter))
-                    return true;
-            }
-            return false;
-        }
-        
-        //Skill
-        bool CheckSkill()
-        {
-            if (weapon.Skill is null)
-                throw new ArgumentNullException(nameof(weapon.Skill));
-            
-            return weapon.Skill.Name.Contains(_skillFilter);
-        }
-        
-        bool ListFilter<T>(HashSet<T>? collection, T propertyToCheck)
-        {
-            if (collection is null)
-                return true;
-            if (collection.Count == 0)
-                return true;
-            if (propertyToCheck is null)
-            {
-                Logger.LogInformation("{PropertyName} of {Name} was null", nameof(propertyToCheck) ,propertyToCheck);
-                return false;
-            }
-            return collection.Contains(propertyToCheck);
-        }
-    }
-    
-}

@@ -32,13 +32,13 @@ public class Accessory {
     public string Cost { get; set; } = string.Empty;
 
     [XmlElement(ElementName="source")] 
-    public string Source { get; set; } = string.Empty;
+    public string Book { get; set; } = string.Empty;
 
     [XmlElement(ElementName="page")] 
     public int Page { get; set; } 
     
     [XmlIgnore] 
-    public string DisplaySource => $"p.{Page} ({Source})";
+    public string DisplaySource => $"p.{Page} ({Book})";
     
     [XmlElement(ElementName = "mount")]
     private string MountString { get; set; } = string.Empty;
@@ -53,8 +53,8 @@ public class Accessory {
     {
         Logger = logger;
         
-        const string AccesoryMountStringPattern = @"([A-Z])\w+";
-        var matches = Regex.Matches(MountString, AccesoryMountStringPattern);
+        const string accesoryMountStringPattern = @"([A-Z])\w+";
+        var matches = Regex.Matches(MountString, accesoryMountStringPattern);
         foreach (Match match in matches)
         {
             if(Enum.TryParse<AccessoryMount>(match.ToString(), out var accessoryMount))

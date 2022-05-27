@@ -1,0 +1,61 @@
+﻿@using System.Collections
+@using System.ComponentModel
+@using System.Reflection
+@using Chummer_Database.Interfaces
+@typeparam TValue
+@typeparam TItem
+
+
+
+
+<label> @Label
+    <Select Class="multi-list-select" TValue="@TValue" SelectedValuesChanged="OnSelectedValuesChanged" Multiple>
+        <Repeater TItem="@TItem" Items="Items">
+            <SelectItem TValue="@TValue" Value="Value">@GetDisplayValue(context)</SelectItem>
+        </Repeater>
+        @ChildContent
+    </Select>
+</label>  
+
+@code {
+
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public IEnumerable<TItem>? Items { get; set; }
+
+    [Parameter]
+    public TValue? Value { get; set; }
+
+    [Parameter] 
+    public EventCallback<HashSet<TValue>> SelectedItemsChanged { get; set; }
+    
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] 
+    public HashSet<TValue>? SelectedItems { get; set; } = new();
+
+    private async Task OnSelectedValuesChanged(IReadOnlyList<TValue> list)
+    {
+        SelectedItems = list.ToHashSet();
+        await SelectedItemsChanged.InvokeAsync(SelectedItems);
+    }
+
+    private string GetDisplayValue(TItem item)
+    {
+        if (item is IDisplayable displayable)
+            return displayable.DisplayName;
+        if (item is string s)
+            return s;
+        throw new NotImplementedException("This is neither IDisplayable nor a string");
+    }
+}
+
+<style>
+    .multi-list-select:focus{
+        height: @(Items?.Count() * 21)px;
+        max-height: 400px;
+    }
+</style>

@@ -17,17 +17,16 @@ public static class FilterFunctions
 
         return numRange.ContainsValue(mainVariable);
     }
-    
-    public static bool NumberFilter(int? mainVariable, int min, int max)
+
+    public static bool ListFilter<T>(this HashSet<T>? collection, T? propertyToCheck)
     {
-        if (mainVariable is null)
-            throw new ArgumentNullException(nameof(mainVariable));
+        if (collection is null)
+            return true;
+        if (collection.Count == 0)
+            return true;
+        if (propertyToCheck is null)
+            throw new ArgumentNullException(nameof(propertyToCheck));
         
-        if (min == 0 && max == 0)
-            return true;
-        if (mainVariable > min && max < min)
-            return true;
-        return mainVariable > min && (mainVariable < max || mainVariable == 0 );
+        return collection.Contains(propertyToCheck);
     }
-    
 }
