@@ -10,109 +10,104 @@
 <Div class="d-flex">
     <div class="">
         <div>
-            @*Weapon Accessory Filter*@
-            <TextEdit 
-                @bind-Text="_accessoryFilter" 
-                Immediate="false" 
-                Placeholder="Accessory Name"></TextEdit>
+            <Div class="w-100">
+                @*Weapon Accessory Filter*@
+                <TextEdit
+                    @bind-Text="_accessoryFilter"
+                    Immediate="false"
+                    Placeholder="Accessory Name"></TextEdit>
 
-            @*Weapon Skill Filter*@
-            <TextEdit 
-                @bind-Text="_skillFilter" 
-                Immediate="false" 
-                Placeholder="Skill Name"></TextEdit>
-            
-            @*Weapon name Filter *@
-            <TextEdit 
-                @bind-Text="@_nameFilter" 
-                Immediate="false" 
-                Placeholder="Weapon Name"></TextEdit>
+                @*Weapon Skill Filter*@
+                <TextEdit
+                    @bind-Text="_skillFilter"
+                    Immediate="false"
+                    Placeholder="Skill Name"></TextEdit>
 
+                @*Weapon name Filter *@
+                <TextEdit
+                    @bind-Text="@_nameFilter"
+                    Immediate="false"
+                    Placeholder="Weapon Name"></TextEdit>
+            </Div>
             
             
             @*Weapon Cost Filter*@
-            <NumRangeSelector 
-                Step="1000"
-                CurrencySymbol="¥"
-                @bind-Value="_costRange"
-                Legend="Cost"
-            />
-            
-            @*Weapon Availability Filter*@
-            <NumRangeSelector 
-                Step="1"
-                @bind-Value="_availRange"
-                Legend="Availability"
-            />
-            
-            @*Weapon Damage Filter*@
-            <NumRangeSelector 
-                Step="1"
-                @bind-Value="_damageRange"
-                Legend="Damage"
-            />
-            @*Weapon Conceal Filter*@
-            <NumRangeSelector 
-                Step="1"
-                @bind-Value="_concealRange"
-                Legend="Concealment"
-            />
-            @*Weapon Reach Filter*@
-            <NumRangeSelector 
-                Step="1"
-                @bind-Value="_reachRange"
-                Legend="Reach"
-            />
-            @*Weapon Ammo Capacity Filter*@
-            <NumRangeSelector 
-                Step="1"
-                @bind-Value="_ammoRange"
-                Legend="Ammo Capacity"
-            />
+            <div class="w-100">
+                <NumRangeSelector
+                    Step="1000"
+                    CurrencySymbol="¥"
+                    @bind-Value="_costRange"
+                    Legend="Cost"/>
 
-            
-            @*Anmo Category Filter*@
-            <MultListSelect
-                Label="Ammo Category"
-                TItem="string"
-                TValue="string"
-                Items="Ammo.AllAmmoCategories"
-                @bind-SelectedItems="_selectedAmmoCategories">
-                    <SelectItem Value="@("All")">All</SelectItem>
-            </MultListSelect>
-            
-            
-            @*Selector for WeaponCategory Filtering*@
-            <MultListSelect
-                Label="Weapon Category"
-                TItem="Category"
-                TValue="string"
-                Items="WeaponCategories"
-                @bind-SelectedItems="_selectedCategories">
-                    <SelectItem Value="@("All")">All</SelectItem>
-            </MultListSelect>
-            
-            
-            @*Legality*@
-            <label> Legality
-                <Select TValue="Legality" SelectedValuesChanged="@OnSelectedLegalitiesChanged"Multiple>
-                    <Repeater Items="_legalities">
-                        <SelectItem TValue="Legality" Value="context">@context</SelectItem>
-                    </Repeater>
-                </Select>
-            </label>
-            
-            @*Source Book*@
-            <MultListSelect 
-                Label="Source Book" 
-                TItem="Book"
-                TValue="string" 
-                Items="Books"
-                @bind-SelectedItems="_selectedBooks">
-                <SelectItem TValue="Book" Value="null">All</SelectItem>
-            </MultListSelect>
+                @*Weapon Availability Filter*@
+                <NumRangeSelector
+                    Step="1"
+                    @bind-Value="_availRange"
+                    Legend="Availability"/>
+
+                @*Weapon Damage Filter*@
+                <NumRangeSelector
+                    Step="1"
+                    @bind-Value="_damageRange"
+                    Legend="Damage"/>
+                @*Weapon Conceal Filter*@
+                <NumRangeSelector
+                    Step="1"
+                    @bind-Value="_concealRange"
+                    Legend="Concealment"/>
+                @*Weapon Reach Filter*@
+                <NumRangeSelector
+                    Step="1"
+                    @bind-Value="_reachRange"
+                    Legend="Reach"/>
+                @*Weapon Ammo Capacity Filter*@
+                <NumRangeSelector
+                    Step="1"
+                    @bind-Value="_ammoRange"
+                    Legend="Ammo Capacity"/>
+                </div>
 
 
+            <div class="w-100">
+                @*Anmo Category Filter*@
+                <MultListSelect
+                    Label="Ammo Category"
+                    TItem="string"
+                    TValue="string"
+                    Items="Ammo.AllAmmoCategories"
+                    @bind-SelectedItems="_selectedAmmoCategories">
+                </MultListSelect>
+
+
+                @*Selector for WeaponCategory Filtering*@
+                <MultListSelect
+                    Label="Weapon Category"
+                    TItem="Category"
+                    TValue="string"
+                    Items="WeaponCategories"
+                    @bind-SelectedItems="_selectedCategories">
+                </MultListSelect>
+
+
+                @*Legality*@
+                <label>
+                    Legality
+                    <Select TValue="Legality" SelectedValuesChanged="@OnSelectedLegalitiesChanged"Multiple>
+                        <Repeater Items="_legalities">
+                            <SelectItem TValue="Legality" Value="context">@context</SelectItem>
+                        </Repeater>
+                    </Select>
+                </label>
+
+                @*Source Book*@
+                <MultListSelect
+                    Label="Source Book"
+                    TItem="Book"
+                    TValue="string"
+                    Items="Books"
+                    @bind-SelectedItems="_selectedBooks">
+                </MultListSelect>
+            </div>
         </div>
         <div>
             <DataGrid TItem="Weapon"

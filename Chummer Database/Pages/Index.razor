@@ -2,3 +2,43 @@
 
 <PageTitle>Index</PageTitle>
 
+
+<div class="grid-container">
+    <span class="a">1</span>
+    <Button class="b">dddd</Button>
+    <Select TValue="string" class="c" Multiple="true">
+        <SelectItem TValue="string">ddd</SelectItem>
+        <SelectItem TValue="string">ddd</SelectItem>
+        <SelectItem TValue="string">ddd</SelectItem>
+        <SelectItem TValue="string">ddd</SelectItem>
+    </Select>
+</div>
+
+<style>
+    span{
+    border: #0a53be thick;
+    background: #0c4128;
+    }
+    .a{
+    grid-area: a;
+    }
+    
+    .b{
+    grid-area: b;
+    }
+
+    .c{
+    grid-area: c;
+    }
+    
+    .grid-container{
+        display: inline-grid;
+        grid-template-areas: 
+                "a b"
+                "c c";
+        gap: 10px;
+        padding: 10px;
+        grid-template-columns: 100px 50px;
+    }
+    
+</style>

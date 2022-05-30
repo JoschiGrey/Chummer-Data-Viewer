@@ -1,0 +1,32 @@
+﻿.a{
+    grid-area: a;
+}
+
+.b{
+    grid-area: b;
+    justify-self: end;
+}
+
+.c{
+    grid-area: c;
+}
+
+.grid-container {
+    display: inline-grid;
+    grid-template-areas: "a b"
+        "c c";
+    gap: 1px;
+    padding: 10px;
+    grid-template-rows: auto;
+    justify-items: stretch;
+    align-items: baseline;
+}
+
+
+::deep button{
+    padding:  0.2em 0.7em 0.2em 0.7em;
+    margin-left: 0.6em;
+}
+
+
+
