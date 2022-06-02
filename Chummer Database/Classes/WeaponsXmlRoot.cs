@@ -1,13 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Xml.Serialization;
 using Blazor.Extensions.Logging;
+using Chummer_Database.Interfaces;
 using Microsoft.AspNetCore.Components;
 using NullGuard;
 
 namespace Chummer_Database.Classes;
 
 [XmlRoot("chummer")]
-public class WeaponsXmlRoot
+public class WeaponsXmlRoot : ICreatable, IHasDependency
 {
     [XmlArray("categories")]
     [XmlArrayItem("category", typeof(Category))]
@@ -26,7 +27,7 @@ public class WeaponsXmlRoot
     public static Dictionary<string, Accessory> AccessoriesDictionary { get; private set; } = new();
     public bool Create(ILogger logger)
     {
-        logger.LogTrace("Creating {Type}", GetType().Name);
+        logger.LogInformation("Creating {Type}", GetType().Name);
         
         WeaponCategoryDictionary = WeaponCategories.ToDictionary(k => k.Name);
         AccessoriesDictionary = Accessories.ToDictionary(k => k.Name);
@@ -45,5 +46,24 @@ public class WeaponsXmlRoot
 
 
         return true;
+    }
+    
+    public async Task<ICreatable> CreateAsync(ILogger logger)
+    {
+        await Task.Run(() =>
+        {
+            Create(logger);
+            XmlLoader.CreatedXml.Add(GetType());
+        });
+        logger.LogInformation("Created {Type}", GetType().Name);
+        return this;
+    }
+
+    
+    private static HashSet<Type> Dependencies { get; set; } = new HashSet<Type>()
+        {typeof(BooksXmlRoot), typeof(RangesXmlRoot), typeof(SkillsXmlRoot)};
+    public bool CheckDependencies()
+    {
+        return Dependencies.IsSubsetOf(XmlLoader.CreatedXml);
     }
 }
