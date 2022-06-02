@@ -1,9 +1,10 @@
 ﻿using System.Xml.Serialization;
+using Chummer_Database.Interfaces;
 
 namespace Chummer_Database.Classes;
 
 [XmlRoot("chummer")]
-public class RangesXmlRoot
+public class RangesXmlRoot: ICreatable
 {
     [XmlArray("ranges")]
     [XmlArrayItem("range")]
@@ -14,11 +15,22 @@ public class RangesXmlRoot
 
     public bool Create(ILogger logger)
     {
-        logger.LogDebug("Creating {Type}", GetType().Name);
+        logger.LogInformation("Creating {Type}", GetType().Name);
         
         RangeDictionary = Ranges.ToDictionary(k => k.RangeCategory);
 
         return true;
+    }
+
+    public async Task<ICreatable> CreateAsync(ILogger logger)
+    {
+        await Task.Run(() =>
+        {
+            Create(logger);
+            XmlLoader.CreatedXml.Add(GetType());
+        });
+        logger.LogInformation("Created {Type}", GetType().Name);
+        return this;
     }
 }
 

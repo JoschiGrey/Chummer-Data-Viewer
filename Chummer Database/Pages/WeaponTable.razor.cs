@@ -1,4 +1,5 @@
-﻿using Blazorise;
+﻿using System.Diagnostics;
+using Blazorise;
 using Blazorise.DataGrid;
 using Blazorise.Extensions;
 using Chummer_Database.Classes;
@@ -27,9 +28,9 @@ public partial class WeaponTable : ComponentBase
     
     protected override async Task OnInitializedAsync()
     {
-        if (WeaponXmlData is null)
+        if (!CreatedXml.Contains(typeof(WeaponsXmlRoot)))
         {
-            await LoadAll(Client, Logger);
+            await LoadAllAsync(Client, Logger);
         }
         Weapons = WeaponXmlData?.Weapons.ToHashSet();
         WeaponCategories = WeaponXmlData?.WeaponCategories.ToHashSet();
@@ -63,23 +64,21 @@ public partial class WeaponTable : ComponentBase
 
     private bool OnCustomFilter(Weapon weapon)
     {
-
+        var check = CheckName() &&
+                    CheckPrice() &&
+                    CheckLegality() &&
+                    CheckCategory() &&
+                    CheckAvailability() &&
+                    CheckBooks() &&
+                    CheckDamage() &&
+                    CheckConceal() &&
+                    CheckReach() &&
+                    CheckAmmoCapacity() &&
+                    CheckAmmoCategory() &&
+                    CheckAccessories() &&
+                    CheckSkill();
         //TODO: Rework this to use individual callbacks on the inputs that update a list value to not recheck everything
-        return CheckName() &&
-               CheckPrice() &&
-               CheckLegality() &&
-               CheckCategory() &&
-               CheckAvailability() &&
-               CheckBooks() &&
-               CheckDamage() &&
-               CheckConceal() &&
-               CheckReach() &&
-               CheckAmmoCapacity() &&
-               CheckAmmoCategory() &&
-               CheckAccessories() &&
-               CheckSkill();
-
-
+        return check;
         //Name
         bool CheckName()
         {
