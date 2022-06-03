@@ -2,7 +2,15 @@
 
 public static class FilterFunctions
 {
-    public static bool NumberFilter(this NumericRange? numRange, int? mainVariable)
+    /// <summary>
+    /// Filters an int against a given range
+    /// </summary>
+    /// <param name="numRange"></param>
+    /// <param name="mainVariable"></param>
+    /// <param name="fallbackToMinOnly">Default True only considers min on invalid ranges, if False it will return true if the range is invalid.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static bool NumberFilter(this NumericRange? numRange, int? mainVariable, bool fallbackToMinOnly = true)
     {
         if (mainVariable is null)
             throw new ArgumentNullException(nameof(mainVariable));
@@ -13,7 +21,12 @@ public static class FilterFunctions
         
         //Fallback to just min if range is invalid
         if (!numRange.IsValid())
-            return (mainVariable >= min);
+        {
+            if(fallbackToMinOnly)
+                return (mainVariable >= min);
+            return true;
+        }
+            
 
         return numRange.ContainsValue(mainVariable);
     }

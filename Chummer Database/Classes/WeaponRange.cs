@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using Chummer_Database.Extensions;
 using Chummer_Database.Interfaces;
 
 namespace Chummer_Database.Classes;
@@ -10,16 +11,19 @@ public class RangesXmlRoot: ICreatable
     [XmlArrayItem("range")]
     public List<WeaponRange> Ranges { get; set; } = new();
 
-    [XmlIgnore]
-    public Dictionary<string, WeaponRange> RangeDictionary { get; set; } = new();
 
-    public bool Create(ILogger logger)
+    public Task Create(ILogger logger)
     {
         logger.LogInformation("Creating {Type}", GetType().Name);
-        
-        RangeDictionary = Ranges.ToDictionary(k => k.RangeCategory);
 
-        return true;
+        var taskList = new List<Task>();
+
+        foreach (var range in Ranges)
+        {
+            taskList.Add(Task.Run(() => range.CreateAsync(logger)));
+        }
+
+        return Task.WhenAll(taskList);
     }
 
     public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject)
@@ -35,10 +39,10 @@ public class RangesXmlRoot: ICreatable
 }
 
 
-public class WeaponRange
+public class WeaponRange : ICreatable
 {
     [XmlElement("name")]
-    public string RangeCategory { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     [XmlElement(ElementName = "min")] 
     public string Min { get; set; } = "0";
@@ -54,22 +58,31 @@ public class WeaponRange
 
     [XmlElement(ElementName="extreme")] 
     public string Extreme { get; set; } = "0";
+    
+    public static Dictionary<string, WeaponRange> RangeDictionary { get; set; } = new();
 
-    public static WeaponRange GetWeaponRange(string rangeCategory)
+    public static WeaponRange GetWeaponRange(string rangeCategory, string weaponCategory)
     {
-        if (XmlLoader.RangesXmlData is null)
-            throw new ArgumentException(nameof(XmlLoader.RangesXmlData));
-        if (XmlLoader.RangesXmlData.RangeDictionary is null)
-            throw new ArgumentException(nameof(XmlLoader.RangesXmlData.RangeDictionary));
+        if(RangeDictionary.ContainsKey(rangeCategory))
+            return RangeDictionary[rangeCategory];
 
-        try
+        foreach (var (key,value) in RangeDictionary)
         {
-            return XmlLoader.RangesXmlData.RangeDictionary[rangeCategory];
+            if (key.Contains(rangeCategory))
+                return value;
+            if (key.Contains(weaponCategory))
+                return value;
         }
-        catch (KeyNotFoundException e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+
+        return new WeaponRange() {Name = "Undefined Range"};
+        
+        
+        return RangeDictionary.GetValueByString(rangeCategory);
+    }
+
+    public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject = null)
+    {
+        await Task.Run(() => RangeDictionary.Add(Name, this));
+        return this;
     }
 }

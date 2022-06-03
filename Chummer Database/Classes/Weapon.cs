@@ -44,52 +44,61 @@ public record Weapon : ICreatable
 
     //Melee Exclusive
     public int Reach { get; private set; }
-    
-    public List<Accessory> Accessories { get; private set; }
+
+    public List<Accessory> Accessories { get; private set; } = new();
     
     private const string NumberPattern = "[0-9]+";
 
     public string CostCss { get; private set; } = string.Empty;
 
     public static HashSet<Weapon> AllWeapons { get; } = new();
+    
 
     public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject)
     {
 	    if (baseObject is not XmlWeapon baseWeapon)
 		    throw new ArgumentException(nameof(baseObject));
+	    try
+	    {
+		    Name = baseWeapon.Name;
+		    Damage = new Damage(baseWeapon.DamageString, logger);
+		    Availability = new Availability(baseWeapon.AvailabilityString, logger);
+		    Ammo = new Ammo(baseWeapon, logger);
+		    Source = new Source(baseWeapon.BookCode, baseWeapon.Page);
+
+		    RangeType = baseWeapon.RangeType;
+		    Conceal = baseWeapon.Conceal;
+		    Reach = baseWeapon.Reach;
+		    FiringMode = baseWeapon.Mode;
+
+
+		    Ap = await GetInt(baseWeapon.ApString);
+
+		    Accuracy = await GetInt(baseWeapon.AccuracyString);
+
+		    RecoilCompensation = await GetInt(baseWeapon.RecoilCompensationString);
+
+		    Category = await GetCategory();
+		    Range = WeaponRange.GetWeaponRange(baseWeapon.WeaponRangeString, Category.Name);
+		    AlternateWeaponRange = WeaponRange.GetWeaponRange(baseWeapon.AlternateRangeString, Category.Name);
+
+		    Skill = await GetSkill();
+
+		    Cost = await GetInt(baseWeapon.CostString);
+
+		    Accessories = await GetAccessories();
+
+		    CostCss = baseWeapon.FormCostCssClass();
+		    
+		    AllWeapons.Add(this);
+	    }
+	    catch (Exception e)
+	    {
+		    Console.WriteLine(e);
+		    throw;
+	    }
+	    Console.WriteLine(AllWeapons.Count);
 	    
-	    Name = baseWeapon.Name;
-	    Damage = new Damage(baseWeapon.DamageString, logger);
-	    Availability = new Availability(baseWeapon.AvailabilityString, logger);
-	    Ammo = new Ammo(baseWeapon, logger);
-	    Source = new Source(baseWeapon.BookCode, baseWeapon.Page);
-	    Range = WeaponRange.GetWeaponRange(baseWeapon.WeaponRangeString);
-	    AlternateWeaponRange = WeaponRange.GetWeaponRange(baseWeapon.AlternateRangeString);
-	    RangeType = baseWeapon.RangeType;
-	    Conceal = baseWeapon.Conceal;
-	    Reach = baseWeapon.Reach;
-	    FiringMode = baseWeapon.Mode;
-
-
-	    Ap = await GetInt(baseWeapon.ApString);
-
-	    Accuracy = await GetInt(baseWeapon.AccuracyString);
-
-	    RecoilCompensation = await GetInt(baseWeapon.RecoilCompensationString);
-
-	    Category = await GetCategory();
-
-	    Skill = await GetSkill();
-
-	    Cost = await GetInt(baseWeapon.CostString);
-
-	    Accessories = await GetAccessories();
-
-	    CostCss = baseWeapon.FormCostCssClass();
-
-	    
-	    
-	    AllWeapons.Add(this);
 	    return this;
 
 

@@ -22,7 +22,7 @@ public class NumericRange
         return $"[{Minimum} - {Maximum}]";
     }
 
-    /// <summary>Determines if the range is valid. A Range is considered valid if the min is smaller then or equal to max.</summary>
+    /// <summary>Determines if the range is valid. A Range is considered valid if the min is smaller then the max.</summary>
     /// <returns>True if range is valid, else false</returns>
     public bool IsValid()
     {

@@ -62,19 +62,23 @@ public partial class WeaponTable : ComponentBase
 
     private bool OnCustomFilter(Weapon weapon)
     {
-        var check = CheckName() &&
-                    CheckPrice() &&
-                    CheckLegality() &&
-                    CheckCategory() &&
-                    CheckAvailability() &&
-                    CheckBooks() &&
-                    CheckDamage() &&
-                    CheckConceal() &&
-                    CheckReach() &&
-                    CheckAmmoCapacity() &&
-                    CheckAmmoCategory() &&
-                    CheckAccessories() &&
-                    CheckSkill();
+        var check =
+            CheckSkill() && // THis too
+            CheckName() &&
+            CheckPrice() &&
+            CheckLegality() &&
+            CheckCategory() &&
+            CheckAvailability() &&
+            CheckBooks() &&
+            CheckDamage() &&//Filters out "Fork Proboscis Throwing Syringe at default state
+            CheckConceal() &&
+            CheckReach() &&
+            CheckAmmoCapacity() &&
+            CheckAmmoCategory() &&
+            CheckAccessories(); 
+        
+        if(!check)
+            Console.WriteLine(weapon.Name);
         //TODO: Rework this to use individual callbacks on the inputs that update a list value to not recheck everything
         return check;
         //Name
@@ -123,7 +127,7 @@ public partial class WeaponTable : ComponentBase
         //DMG
         bool CheckDamage()
         {
-            return _damageRange.NumberFilter(weapon.Damage?.DamageAmount);
+            return _damageRange.NumberFilter(weapon.Damage?.DamageAmount, false);
         }
 
         //Acc TODO: Accuracy Int erstellen
@@ -132,13 +136,13 @@ public partial class WeaponTable : ComponentBase
         //Conceal
         bool CheckConceal()
         {
-            return _concealRange.NumberFilter(weapon.Conceal);
+            return _concealRange.NumberFilter(weapon.Conceal, false);
         }
         
         //Reach
         bool CheckReach()
         {
-            return _reachRange.NumberFilter(weapon.Reach);
+            return _reachRange.NumberFilter(weapon.Reach, false);
         }
         
         //FireModes TODO:(Muss noch in Weapon aufbereitet werden)

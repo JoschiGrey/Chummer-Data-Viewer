@@ -47,19 +47,25 @@
 
                 @*Weapon Damage Filter*@
                 <NumRangeSelector
+                    MinValue="-5"
                     Step="1"
                     @bind-Value="_damageRange"
                     Legend="Damage"/>
+                
                 @*Weapon Conceal Filter*@
                 <NumRangeSelector
+                    MinValue="int.MinValue"
                     Step="1"
                     @bind-Value="_concealRange"
                     Legend="Concealment"/>
+                
                 @*Weapon Reach Filter*@
                 <NumRangeSelector
+                    MinValue="-5"
                     Step="1"
                     @bind-Value="_reachRange"
                     Legend="Reach"/>
+                
                 @*Weapon Ammo Capacity Filter*@
                 <NumRangeSelector
                     Step="1"

@@ -7,7 +7,7 @@
             TValue="int"
             CurrencySymbol="@CurrencySymbol"
             Step="@Step"
-            Min="0"
+            Min="MinValue"
             Decimals="0"
             SelectAllOnFocus
             ValueChanged="OnMinChanged"/>
@@ -20,7 +20,7 @@
         TValue="int"
         CurrencySymbol="@CurrencySymbol"
         Step="@Step"
-        Min="0"
+        Min="MinValue"
         Decimals="0"
         SelectAllOnFocus
         ValueChanged="OnMaxChanged"/>
@@ -29,6 +29,13 @@
 
 
 @code {
+
+    [Parameter]
+    public int MinValue { get; set; } = 0;
+    
+    [Parameter]
+    public int MaxValue { get; set; } = int.MaxValue;
+    
     [Parameter]
     public int Step { get; set; } = 1;
 
@@ -46,7 +53,6 @@
 
     private async Task OnMinChanged(int value)
     {
-        Console.WriteLine(Legend);
         Value.Minimum = value;
 
         await ValueChanged.InvokeAsync(Value);
