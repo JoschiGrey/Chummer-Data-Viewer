@@ -3,5 +3,5 @@
 
 public interface ICreatable
 {
-    public Task<ICreatable> CreateAsync(ILogger logger);
+    public Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject = null);
 }

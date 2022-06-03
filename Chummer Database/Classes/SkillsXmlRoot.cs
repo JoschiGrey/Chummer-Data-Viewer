@@ -41,7 +41,7 @@ public class SkillsXmlRoot : ICreatable, IHasDependency
         return true;
     }
     
-    public async Task<ICreatable> CreateAsync(ILogger logger)
+    public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject)
     {
         await Task.Run(() =>
         {

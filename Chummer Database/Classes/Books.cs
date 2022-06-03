@@ -16,4 +16,12 @@ public class Book : IDisplayable {
     public string Code { get; set; } = string.Empty;
 
     public string DisplayName => Name;
+
+    public static Book GetBookByCode(string bookCode)
+    {
+        if (XmlLoader.BooksXmlData is null)
+            throw new ArgumentNullException(nameof(XmlLoader.BooksXmlData));
+        
+        return XmlLoader.BooksXmlData.BooksDictionary[bookCode];
+    }
 }

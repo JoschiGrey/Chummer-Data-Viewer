@@ -10,6 +10,9 @@ public class BooksXmlRoot : ICreatable
     [XmlArrayItem("book")]
     public HashSet<Book> Books { get; set; } = new();
 
+    /// <summary>
+    /// Dictionary of all books, that uses the Book Code as Key
+    /// </summary>
     [XmlIgnore]
     public Dictionary<string, Book> BooksDictionary { get; set; } = new();
 
@@ -26,7 +29,7 @@ public class BooksXmlRoot : ICreatable
         return true;
     }
     
-    public async Task<ICreatable> CreateAsync(ILogger logger)
+    public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject)
     {
         await Task.Run(() =>
         {

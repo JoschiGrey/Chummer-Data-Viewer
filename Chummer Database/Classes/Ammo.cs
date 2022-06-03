@@ -20,7 +20,7 @@ public class Ammo
 
     public static HashSet<string> AllAmmoCategories { get; } = new();
 
-    public Ammo(Weapon weapon, ILogger logger)
+    public Ammo(XmlWeapon weapon, ILogger logger)
     {
         Logger = logger;
         AmmoString = weapon.AmmoStringDeserialized;

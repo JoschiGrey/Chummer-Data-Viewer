@@ -129,7 +129,7 @@
                       FixedHeader="true"
                   
                       Filterable="false"
-                      CustomFilter="@OnCustomFilter"
+                      CustomFilter="@(weapon => OnCustomFilter(weapon))"
                       FilterMethod="DataGridFilterMethod.Contains"
             >
                 <DataGridColumns>
@@ -141,7 +141,7 @@
                         Filterable="false"/>
                     <DataGridNumericColumn 
                         TItem="Weapon" 
-                        Field="@nameof(Weapon.AccuracyString)" 
+                        Field="@nameof(Weapon.Accuracy)" 
                         Caption="ACC"
                         Filterable="false"/>
                     <DataGridColumn 
@@ -152,17 +152,17 @@
                         Filterable="false"/>
                     <DataGridNumericColumn 
                         TItem="Weapon" 
-                        Field="@nameof(Weapon.ApString)" 
+                        Field="@nameof(Weapon.Ap)"
                         Caption="AP"
                         Filterable="false"/>
                     <DataGridColumn 
                         TItem="Weapon" 
-                        Field="@nameof(Weapon.Mode)" 
+                        Field="@nameof(Weapon.FiringMode)" 
                         Caption="Mode"
                         Filterable="false"/>
                     <DataGridNumericColumn 
                         TItem="Weapon" 
-                        Field="@nameof(Weapon.RecoilCompensationString)" 
+                        Field="@nameof(Weapon.RecoilCompensation)" 
                         Caption="RC"
                         Filterable="false"/>
                     <DataGridNumericColumn 
@@ -180,11 +180,11 @@
                         TItem="Weapon" Field="@nameof(Weapon.Cost)" 
                         SortField="@nameof(Weapon.Cost)" 
                         Caption="Cost"
-                        CellClass="@(item => item.FormCostCssClass())"
+                        CellClass="@(item => item.CostCss)"
                         Filterable="false"/>
                     <DataGridColumn 
                         TItem="Weapon" 
-                        Field="@nameof(Weapon.DisplaySource)" 
+                        Field="@nameof(Weapon.Source)"
                         Caption="Source"
                         Filterable="false"/>
                     @{

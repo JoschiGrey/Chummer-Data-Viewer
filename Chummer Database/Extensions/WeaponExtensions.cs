@@ -9,43 +9,12 @@ namespace Chummer_Database.Extensions;
 public static class WeaponExtensions
 {
     private const string PlusRegexPattern = @"\+(?=[0-9])";
-    
-    public static string FormAvailabilityCssClass(this Weapon weapon)
-    {
-        StringBuilder cssStringBuilder = new StringBuilder();
 
-        if (weapon.Availability is null)
-            return string.Empty;
-
-        var avail = weapon.Availability;
-        switch (avail.Legality)
-        {
-            case Legality.Forbidden:
-                cssStringBuilder.Append("forbidden ");
-                break;
-            case Legality.Restricted:
-                cssStringBuilder.Append("restricted ");
-                break;
-        }
-
-        if (avail.AvailabilityString.Contains("{Rating}*"))
-            cssStringBuilder.Append("rating-times ");
-
-        if (avail.AvailabilityString.Contains("{Rating}+"))
-            cssStringBuilder.Append("rating-plus ");
-
-        if (Regex.IsMatch(avail.AvailabilityString, PlusRegexPattern))
-            cssStringBuilder.Append("prefix-plus ");
-
-
-        return cssStringBuilder.ToString();
-    }
-
-    public static string FormCostCssClass(this Weapon weapon)
+    public static string FormCostCssClass(this XmlWeapon xmlWeapon)
     {
         var sb = new StringBuilder();
 
-        if (weapon.CostString.Contains("{Rating}*"))
+        if (xmlWeapon.CostString.Contains("{Rating}*"))
             sb.Append("rating-times ");
 
         sb.Append("add-nuyen ");

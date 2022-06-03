@@ -1,13 +1,10 @@
-﻿using System.Diagnostics;
-using Blazorise;
-using Blazorise.DataGrid;
+﻿using Blazorise.DataGrid;
 using Blazorise.Extensions;
 using Chummer_Database.Classes;
 using Chummer_Database.Classes.DataStructures;
 using Chummer_Database.Enums;
 using EnumExtensions = Chummer_Database.Extensions.EnumExtensions;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using static Chummer_Database.Classes.XmlLoader;
 
 namespace Chummer_Database.Pages;
@@ -32,7 +29,8 @@ public partial class WeaponTable : ComponentBase
         {
             await LoadAllAsync(Client, Logger);
         }
-        Weapons = WeaponXmlData?.Weapons.ToHashSet();
+
+        Weapons = Weapon.AllWeapons;
         WeaponCategories = WeaponXmlData?.WeaponCategories.ToHashSet();
         Books = BooksXmlData?.Books;
     }
@@ -106,7 +104,7 @@ public partial class WeaponTable : ComponentBase
         //TODO: Source Book this requires the deserialization of books.xml
         bool CheckBooks()
         {
-            return _selectedBooks.ListFilter(weapon.Book?.Name);
+            return _selectedBooks.ListFilter(weapon.Source?.Book.Name);
         }
         
         //Category

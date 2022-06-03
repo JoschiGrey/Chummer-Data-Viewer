@@ -22,7 +22,7 @@ public class RangesXmlRoot: ICreatable
         return true;
     }
 
-    public async Task<ICreatable> CreateAsync(ILogger logger)
+    public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject)
     {
         await Task.Run(() =>
         {
@@ -54,4 +54,22 @@ public class WeaponRange
 
     [XmlElement(ElementName="extreme")] 
     public string Extreme { get; set; } = "0";
+
+    public static WeaponRange GetWeaponRange(string rangeCategory)
+    {
+        if (XmlLoader.RangesXmlData is null)
+            throw new ArgumentException(nameof(XmlLoader.RangesXmlData));
+        if (XmlLoader.RangesXmlData.RangeDictionary is null)
+            throw new ArgumentException(nameof(XmlLoader.RangesXmlData.RangeDictionary));
+
+        try
+        {
+            return XmlLoader.RangesXmlData.RangeDictionary[rangeCategory];
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }
