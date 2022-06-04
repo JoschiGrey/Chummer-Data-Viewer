@@ -4,6 +4,10 @@ using Chummer_Database.Interfaces;
 
 
 namespace Chummer_Database.Classes;
+/// <summary>
+/// Contains all the deserialized information of an Weapon.
+/// Use the cleaned up Weapon instead
+/// </summary>
 [XmlRoot(ElementName="weapon")]
 public class XmlWeapon : ICreatable
 {
@@ -199,7 +203,7 @@ public class XmlWeapon : ICreatable
 
 	
 
-	public Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject)
+	public Task CreateAsync(ILogger logger, ICreatable? baseObject)
 	{
 		Weapon newWeapon = new Weapon()
 		{

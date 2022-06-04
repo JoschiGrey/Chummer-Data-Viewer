@@ -54,7 +54,7 @@ public record Weapon : ICreatable
     public static HashSet<Weapon> AllWeapons { get; } = new();
     
 
-    public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject)
+    public async Task CreateAsync(ILogger logger, ICreatable? baseObject)
     {
 	    if (baseObject is not XmlWeapon baseWeapon)
 		    throw new ArgumentException(nameof(baseObject));
@@ -64,7 +64,7 @@ public record Weapon : ICreatable
 		    Damage = new Damage(baseWeapon.DamageString, logger);
 		    Availability = new Availability(baseWeapon.AvailabilityString, logger);
 		    Ammo = new Ammo(baseWeapon, logger);
-		    Source = new Source(baseWeapon.BookCode, baseWeapon.Page);
+		    Source = new Source(baseWeapon.BookCode, baseWeapon.Page, logger);
 
 		    RangeType = baseWeapon.RangeType;
 		    Conceal = baseWeapon.Conceal;
@@ -94,12 +94,10 @@ public record Weapon : ICreatable
 	    }
 	    catch (Exception e)
 	    {
-		    Console.WriteLine(e);
+		    logger.LogCritical(e, "Creation failed of {Type}, {Name}", GetType(), Name);
 		    throw;
 	    }
-	    Console.WriteLine(AllWeapons.Count);
-	    
-	    return this;
+
 
 
 	    async ValueTask<int> GetInt(string input)
@@ -131,7 +129,7 @@ public record Weapon : ICreatable
 			    
 			    if (Category.CategoryDictionary.ContainsKey(catAsString))
 			    {
-				    outCategory = Category.GetCategory(catAsString);
+				    outCategory = Category.GetCategory(catAsString, logger);
 				    //If WeaponType is not string.empty it should replace any category defined type.
 				    if (!baseWeapon.WeaponType.IsNullOrEmpty())
 					    outCategory.Type = baseWeapon.WeaponType;
@@ -161,7 +159,7 @@ public record Weapon : ICreatable
 	    {
 		    return await Task.Run(() =>
 		    {
-			    var skillDic = XmlLoader.SkillsXmlData?.SkillsDictionary;
+			    var skillDic = Skill.SkillDictionary;
 
 			    if (skillDic is null)
 				    throw new ArgumentNullException(nameof(skillDic), "SkillDictionary is not formed");
@@ -200,7 +198,7 @@ public record Weapon : ICreatable
 
 	    async ValueTask<List<Accessory>> GetAccessories()
 	    {
-		    return await Task.Run(() => baseWeapon.AccessoriesNameList.Select(Accessory.GetAccessory).ToList());
+		    return await Task.Run(() => baseWeapon.AccessoriesNameList.Select(accessoryWithName => Accessory.GetAccessory(accessoryWithName, logger)).ToList());
 	    }
 
     }

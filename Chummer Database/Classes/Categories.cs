@@ -23,14 +23,14 @@ public class Category : IDisplayable, ICreatable
     
     public static Dictionary<string, Category> CategoryDictionary { get; private set; } = new();
     
-    public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject = null)
+    public async Task CreateAsync(ILogger logger, ICreatable? baseObject = null)
     {
         await Task.Run(() => CategoryDictionary.Add(Name, this));
-        return this;
+;
     }
 
-    public static Category GetCategory(string name)
+    public static Category GetCategory(string name, ILogger logger)
     {
-        return CategoryDictionary.GetValueByString(name);
+        return CategoryDictionary.GetValueByString(name, logger);
     }
 }

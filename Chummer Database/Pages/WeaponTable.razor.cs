@@ -31,8 +31,8 @@ public partial class WeaponTable : ComponentBase
         }
 
         Weapons = Weapon.AllWeapons;
-        WeaponCategories = WeaponXmlData?.WeaponCategories.ToHashSet();
-        Books = BooksXmlData?.Books;
+        WeaponCategories = Category.CategoryDictionary.Values.ToHashSet();
+        Books = Book.BooksDictionary.Values.ToHashSet();
     }
 
     private Task OnSelectedLegalitiesChanged(IReadOnlyList<Legality> list)
@@ -77,8 +77,6 @@ public partial class WeaponTable : ComponentBase
             CheckAmmoCategory() &&
             CheckAccessories(); 
         
-        if(!check)
-            Console.WriteLine(weapon.Name);
         //TODO: Rework this to use individual callbacks on the inputs that update a list value to not recheck everything
         return check;
         //Name

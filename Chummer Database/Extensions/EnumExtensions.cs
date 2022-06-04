@@ -34,7 +34,7 @@ public static class EnumExtensions
         /// <param name="ignoreCase">Whether string comparison of descriptions should be case-sensitive or not</param>
         /// <returns>The matched enum item</returns>
         /// <exception cref="ArgumentException">Thrown if no enum item could be found with the corresponding description</exception>
-        public static TEnum GetEnumByDescription<TEnum>(string description, bool ignoreCase = false) 
+        public static TEnum? GetEnumByDescription<TEnum>(string description, bool ignoreCase = false) 
             // Add a condition to the generic type
             where TEnum : Enum
         {
@@ -42,15 +42,13 @@ public static class EnumExtensions
             foreach (var item in typeof(TEnum).GetFields())
             {
                 // Check to see if the enum item has a description attribute
-                if (Attribute.GetCustomAttribute(item, typeof(DescriptionAttribute)) is
-                    DescriptionAttribute attribute)
-                {
-                    // If the enum item has a description attribute, then check if
-                    // the description matches the given description parameter
-                    if (string.Equals(attribute.Description, description,
+                if (Attribute.GetCustomAttribute(item, typeof(DescriptionAttribute)) is not DescriptionAttribute
+                    attribute) continue;
+                // If the enum item has a description attribute, then check if
+                // the description matches the given description parameter
+                if (string.Equals(attribute.Description, description,
                         ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal))
-                        return (TEnum) item.GetValue(null);
-                }
+                    return (TEnum) item.GetValue(null);
             }
 
             // If no enum item was found with the specified description, throw an

@@ -14,7 +14,13 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddLogging(logger => logger
     .AddBrowserConsole()
+#if RELEASE
+    .SetMinimumLevel(LogLevel.Warning));
+#else
     .SetMinimumLevel(LogLevel.Information));
+#endif
+
+    
 
 builder.Services
     .AddBlazorise(options =>

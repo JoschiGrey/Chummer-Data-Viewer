@@ -22,9 +22,8 @@ public class WeaponsXmlRoot : ICreatable, IHasDependency
     private static HashSet<Type> Dependencies { get; set; } = new()
         {typeof(BooksXmlRoot), typeof(RangesXmlRoot), typeof(SkillsXmlRoot)};
     
-    public async Task Create(ILogger logger)
+    public async Task CreateAsync(ILogger logger, ICreatable? baseObject)
     {
-        logger.LogInformation("Creating {Type}", GetType().Name);
 
         var taskList = new List<Task>();
 
@@ -46,16 +45,11 @@ public class WeaponsXmlRoot : ICreatable, IHasDependency
         }
 
         await Task.WhenAll(taskList);
-    }
-    
-    public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject)
-    {
-
-        await Create(logger);
+        
         XmlLoader.CreatedXml.Add(GetType());
 
         logger.LogInformation("Created {Type}", GetType().Name);
-        return this;
+
     }
     
     public bool CheckDependencies()

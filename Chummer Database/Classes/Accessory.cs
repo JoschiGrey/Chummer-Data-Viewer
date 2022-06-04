@@ -55,7 +55,7 @@ public class Accessory : ICreatable
     [XmlIgnore]
     public static Dictionary<string, Accessory> AccessoriesDictionary { get; private set; } = new();
 
-    public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject = null)
+    public async Task CreateAsync(ILogger logger, ICreatable? baseObject = null)
     {
         const string accesoryMountStringPattern = @"([A-Z])\w+";
         await Task.Run(() =>
@@ -72,17 +72,15 @@ public class Accessory : ICreatable
             if (!AccessoriesDictionary.ContainsKey(Name))
                 AccessoriesDictionary.Add(Name, this);
         });
-
-        return this;
     }
 
-    public static Accessory GetAccessory(string name)
+    public static Accessory GetAccessory(string name, ILogger logger)
     {
-        return AccessoriesDictionary.GetValueByString(name);
+        return AccessoriesDictionary.GetValueByString(name, logger);
     }
 
-    public static Accessory GetAccessory(Accessory accessoryWithName)
+    public static Accessory GetAccessory(Accessory accessoryWithName, ILogger logger)
     {
-        return GetAccessory(accessoryWithName.Name);
+        return GetAccessory(accessoryWithName.Name, logger);
     }
 }

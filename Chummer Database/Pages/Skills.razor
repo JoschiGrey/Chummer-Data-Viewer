@@ -22,5 +22,5 @@
 
 
 @code {
-    private HashSet<Skill>? SkillsList { get; set; } = SkillsXmlData?.Skills;
+    private HashSet<Skill>? SkillsList { get; set; } = Skill.SkillDictionary.Values.ToHashSet();
 }

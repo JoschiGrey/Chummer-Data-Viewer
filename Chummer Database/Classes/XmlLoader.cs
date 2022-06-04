@@ -1,4 +1,5 @@
 ﻿
+using System.IO.Compression;
 using System.Reflection;
 
 using System.Xml.Serialization;
@@ -11,19 +12,12 @@ namespace Chummer_Database.Classes;
 
 public static class XmlLoader
 {
-    private static Dictionary<Type, ICreatable> DataDic { get; set; } = new Dictionary<Type, ICreatable>();
-
-    public static WeaponsXmlRoot? WeaponXmlData => DataDic[typeof(WeaponsXmlRoot)] as WeaponsXmlRoot;
-    public static RangesXmlRoot? RangesXmlData => DataDic[typeof(RangesXmlRoot)] as RangesXmlRoot;
-    public static SkillsXmlRoot? SkillsXmlData => DataDic[typeof(SkillsXmlRoot)] as SkillsXmlRoot;
-    public static BooksXmlRoot? BooksXmlData => DataDic[typeof(BooksXmlRoot)] as BooksXmlRoot;
-
     private static readonly Dictionary<Type, string> PathDictionary = new()
     {
-        {typeof(WeaponsXmlRoot), "data/weapons.xml"},
-        {typeof(RangesXmlRoot), "data/ranges.xml"},
-        {typeof(SkillsXmlRoot), "data/skills.xml"},
-        {typeof(BooksXmlRoot), "data/books.xml"}
+        {typeof(WeaponsXmlRoot), "data/weapons.zz"},
+        {typeof(RangesXmlRoot), "data/ranges.zz"},
+        {typeof(SkillsXmlRoot), "data/skills.zz"},
+        {typeof(BooksXmlRoot), "data/books.zz"}
     };
 
     public static HashSet<Type> CreatedXml { get; set; } = new HashSet<Type>();
@@ -54,15 +48,13 @@ public static class XmlLoader
 
 
         var waitingCreations = new List<IHasDependency>();
-        var creationTasks = new List<Task<ICreatable>>();
+        var creationTasks = new List<Task>();
         while (deserializeTasks.Any())
         {
-            Task<ICreatable> finishedTask = await Task.WhenAny(deserializeTasks);
+            var finishedTask = await Task.WhenAny(deserializeTasks);
             deserializeTasks.Remove(finishedTask);
 
             var result = await finishedTask;
-
-            DataDic.Add(key: result.GetType(), value: result);
 
             if (result is IHasDependency hasDependency && !hasDependency.CheckDependencies())
             {
@@ -106,19 +98,24 @@ public static class XmlLoader
     private static async Task<ICreatable> LoadXmlAsync<T>(string path, HttpClient client, ILogger logger) where T : ICreatable
     {
         logger.LogInformation("Loading {Type}", typeof(T).FullName);
+        
+        
+        var input = await client.GetStreamAsync(path);
 
-        var xmlString = client.GetStringAsync(path);
+        await using var ms = new MemoryStream();
+        //Sadly Brotli is not supported on browsers, could have saved some of those sweet sweet kB download size :/
+        await using var decompressor = new DeflateStream(input, CompressionMode.Decompress);
+        await decompressor.CopyToAsync(ms);
+        ms.Position = 0;
+        using var streamReader = new StreamReader(ms);
+        using var reader = new CustomXmlReader(streamReader);
         var serializer = new XmlSerializer(typeof(T));
-        
-        using var stringReader = new StringReader(await xmlString);
-        using var reader = new CustomXmlReader(stringReader);
-        
         var xmlData = serializer.Deserialize(reader);
+            
         if (xmlData is null)
             throw new NullReferenceException(nameof(xmlData) + typeof(T).FullName);
 
         var value = (ICreatable)xmlData;
-        
         logger.LogInformation("Finished Loading {Type}", typeof(T).FullName);
         
         return value;

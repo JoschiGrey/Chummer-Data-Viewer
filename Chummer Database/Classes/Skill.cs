@@ -1,10 +1,12 @@
 ﻿using System.Xml.Serialization;
+using Chummer_Database.Extensions;
+using Chummer_Database.Interfaces;
 
 namespace Chummer_Database.Classes;
 
 
 
-public class Skill { 
+public class Skill : ICreatable { 
 
     [XmlElement(ElementName="id")] 
     public Guid Id { get; set; }
@@ -37,13 +39,14 @@ public class Skill {
     [XmlElement(ElementName="page")] 
     public int Page { get; set; } 
     
-    [XmlIgnore] public string DisplaySource => $"p.{Page} ({Source})";
+    [XmlIgnore] 
+    public string DisplaySource => $"p.{Page} ({Source})";
 
     [XmlElement(ElementName="exotic")] 
     private string ExoticString { get; set; } = string.Empty;
     
     [XmlIgnore]
-    public bool Exotic => ExoticString.Equals("True");
+    public bool IsExotic => ExoticString.Equals("True");
 
     [XmlElement(ElementName="requiresflymovement")] 
     private bool RequiresFlyMovement { get; set; }
@@ -54,15 +57,17 @@ public class Skill {
 
     [XmlElement(ElementName="requiresswimmovement")] 
     private bool RequiresSwimMovement { get; set; }
+
+    [XmlIgnore] 
+    public static Dictionary<string, Skill> SkillDictionary { get; } = new();
     
 
-    public bool Create(ILogger logger)
+    public Task CreateAsync(ILogger logger, ICreatable? baseObject = null)
     {
-        if (XmlLoader.SkillsXmlData != null && XmlLoader.SkillsXmlData.SkillCategoriesDictionary.ContainsKey(CategoryAsString))
-        {
-            Category = XmlLoader.SkillsXmlData.SkillCategoriesDictionary[CategoryAsString];
-        }
+        Category.CategoryDictionary.GetValueByString(CategoryAsString, logger);
+        
+        SkillDictionary.Add(Name, this);
 
-        return true;
+        return Task.CompletedTask;
     }
 }
