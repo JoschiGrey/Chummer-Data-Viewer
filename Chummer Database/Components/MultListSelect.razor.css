@@ -22,6 +22,15 @@
     align-items: baseline;
 }
 
+::deep .mult-list-select{
+    min-height: 100px;
+    max-height: 100px;
+    transition: max-height 0.8s ease-in-out, height 0.8s ease-in-out;
+}
+
+::deep .mult-list-select:focus-within{
+    max-height: 400px;
+}
 
 ::deep button{
     padding:  0.2em 0.7em 0.2em 0.7em;

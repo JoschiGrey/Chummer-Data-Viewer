@@ -1,15 +1,17 @@
 ﻿@page "/WeaponTable"
-@using Chummer_Database.Extensions
 @using Blazorise.Extensions
 @inject HttpClient Client
 @inject ILogger<WeaponTable> Logger
 
+
+<PageTitle>Weapon Data</PageTitle>
+
 <div class="mt-2 d-flex align-content-center justify-content-center">
-    <h1 class="text-decoration-underline">WeaponTable Test</h1>
+    <h1 class="text-decoration-underline">Weapon Data</h1>
 </div>
-<Div class="d-flex">
+<Div class="d-flex justify-content-center">
     <div class="">
-        <div>
+        <div class="content-holder">
             <Div class="w-100">
                 @*Weapon Accessory Filter*@
                 <TextEdit
@@ -93,17 +95,25 @@
                     Items="WeaponCategories"
                     @bind-SelectedItems="_selectedCategories">
                 </MultListSelect>
+                
+                <MultListSelect
+                    Label="Legality"
+                    TItem="Legality"
+                    TValue="Legality"
+                    Items="_legalities"
+                    @bind-SelectedItems="_selectedLegalities">
+                </MultListSelect>
 
 
                 @*Legality*@
-                <label>
+                @*<label>
                     Legality
                     <Select TValue="Legality" SelectedValuesChanged="@OnSelectedLegalitiesChanged"Multiple>
                         <Repeater Items="_legalities">
                             <SelectItem TValue="Legality" Value="context">@context</SelectItem>
                         </Repeater>
                     </Select>
-                </label>
+                </label>*@
 
                 @*Source Book*@
                 <MultListSelect
@@ -115,7 +125,7 @@
                 </MultListSelect>
             </div>
         </div>
-        <div>
+        <div class="content-holder">
             <DataGrid TItem="Weapon"
                       Data="Weapons"
                       @bind-SelectedRow="@SelectedWeapon"

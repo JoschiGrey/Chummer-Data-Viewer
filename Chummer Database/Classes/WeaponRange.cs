@@ -75,9 +75,6 @@ public class WeaponRange : ICreatable
         }
 
         return new WeaponRange() {Name = "Undefined Range"};
-        
-        
-        return RangeDictionary.GetValueByString(rangeCategory);
     }
 
     public async Task<ICreatable> CreateAsync(ILogger logger, ICreatable? baseObject = null)

@@ -1,7 +1,19 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    --white-overlay--0dp: rgba(255, 255, 255, 0);
+    --white-overlay--1dp: rgba(255, 255, 255, .03);
+    --white-overlay--2dp: rgba(255, 255, 255, .07);
+    --white-overlay--3dp: rgba(255, 255, 255, .08);
+    --white-overlay--4dp: rgba(255, 255, 255, .09);
+    --white-overlay--6dp: rgba(255, 255, 255, .11);
+    --white-overlay--8dp: rgba(255, 255, 255, .12);
+    --white-overlay--12dp: rgba(255, 255, 255, .14);
+    --white-overlay--16dp: rgba(255, 255, 255, .15);
+    --white-overlay--24dp: rgba(255, 255, 255, .16);
 }
 
 h1:focus {
@@ -62,3 +74,11 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.content-holder{
+    border: solid 1px rgba(255, 255, 255, .1);
+    border-radius: 1rem;
+    background-color: var(--white-overlay--1dp);
+    margin: 1rem;
+    padding: 1rem;
+}

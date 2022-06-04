@@ -1,0 +1,4 @@
+﻿::deep .table-fixed-header{
+    height: auto !important;
+    max-height: none !important;
+}

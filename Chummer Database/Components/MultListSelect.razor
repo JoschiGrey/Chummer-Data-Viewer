@@ -11,9 +11,9 @@
     <label Class="a" for="@InternalIdString">@Label</label>
     <div class="b"><Button class="delete-all-button" Color="Color.Primary" Clicked="OnUnselectAllClicked">Unselect All</Button></div>
     <div class="c">
-        <Select ElementId="@InternalIdString" Class="mult-list-select" TValue="@TValue" SelectedValuesChanged="OnSelectedValuesChanged" Multiple>
+        <Select MaxVisibleItems="@Items?.Count()" ElementId="@InternalIdString" Class="mult-list-select" TValue="@TValue" SelectedValuesChanged="OnSelectedValuesChanged" Multiple>
             <Repeater TItem="@TItem" Items="Items">
-                <SelectItem TValue="@TValue" Value="Value">@GetDisplayValue(context)</SelectItem>
+                <SelectItem TValue="@TValue" Value="@GetValue(context)">@GetDisplayValue(context)</SelectItem>
             </Repeater>
         </Select>
     </div>
@@ -59,20 +59,31 @@
             return displayable.DisplayName;
         if (item is string s)
             return s;
+        if (item is Enum e)
+            return e.ToString();
         throw new NotImplementedException("This is neither IDisplayable nor a string");
     }
+
+    private TValue? GetValue(TItem contextItem)
+    {
+        if (contextItem is TValue item)
+        {
+            return item;
+        }
+        return Value;
+    }
+
+    private string CssHeight => GetHeight();
+
+    private string GetHeight()
+    {
+        var height = Items is null ? 400 : Math.Min(Items.Count() * 30, 400);
+
+        return $"height: {height}px";
+    }
+
 }
 
-
 <style>
-    .mult-list-select{
-        height: 100px;
-        max-height: 100px;
-        transition: max-height 0.8s ease-in-out, height 0.8s ease-in-out;
-    }
 
-    .mult-list-select:focus-within{
-        height: @(Items?.Count() * 30)px;
-        max-height: 400px;
-    }
 </style>
