@@ -26,7 +26,7 @@ if (!Directory.Exists(outputBase))
 
 var files=  Directory.GetFiles(inputBase);
 
-
+//Maybe make this faster some time but who cares tbh
 foreach (var file in files)
 {
     
