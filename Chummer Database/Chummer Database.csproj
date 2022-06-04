@@ -23,16 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Classes\" />
-    <Folder Include="Structs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\data\books.br" />
-    <None Include="wwwroot\data\books.zz" />
-    <None Include="wwwroot\data\ranges.zz" />
-    <None Include="wwwroot\data\skills.zz" />
-    <None Include="wwwroot\data\weapons.zz" />
+    <_ContentIncludedByDefault Remove="wwwroot\data" />
   </ItemGroup>
 
 </Project>
