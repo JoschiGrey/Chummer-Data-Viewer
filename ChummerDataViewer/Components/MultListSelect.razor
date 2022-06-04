@@ -1,0 +1,89 @@
+﻿@using System.Collections
+@using System.ComponentModel
+@using System.Reflection
+@using ChummerDataViewer.Interfaces
+@typeparam TValue
+@typeparam TItem
+
+
+
+<div class="grid-container mult-list-selector">
+    <label Class="a" for="@InternalIdString">@Label</label>
+    <div class="b"><Button class="delete-all-button" Color="Color.Primary" Clicked="OnUnselectAllClicked">Unselect All</Button></div>
+    <div class="c">
+        <Select MaxVisibleItems="@Items?.Count()" ElementId="@InternalIdString" Class="mult-list-select" TValue="@TValue" SelectedValuesChanged="OnSelectedValuesChanged" Multiple>
+            <Repeater TItem="@TItem" Items="Items">
+                <SelectItem TValue="@TValue" Value="@GetValue(context)">@GetDisplayValue(context)</SelectItem>
+            </Repeater>
+        </Select>
+    </div>
+</div>
+
+
+@code {
+    private Guid _internalId = Guid.NewGuid();
+
+    private string InternalIdString => _internalId.ToString();
+    
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public IEnumerable<TItem>? Items { get; set; }
+
+    [Parameter]
+    public TValue? Value { get; set; }
+
+    [Parameter] 
+    public EventCallback<HashSet<TValue>> SelectedItemsChanged { get; set; }
+
+    [Parameter] 
+    public HashSet<TValue>? SelectedItems { get; set; } = new();
+
+    private async Task OnSelectedValuesChanged(IReadOnlyList<TValue> list)
+    {
+        SelectedItems = list.ToHashSet();
+        
+        await SelectedItemsChanged.InvokeAsync(SelectedItems);
+    }
+
+    private async Task OnUnselectAllClicked()
+    {
+        SelectedItems?.Clear();
+        await SelectedItemsChanged.InvokeAsync(SelectedItems);
+    }
+
+    private string GetDisplayValue(TItem item)
+    {
+        if (item is IDisplayable displayable)
+            return displayable.DisplayName;
+        if (item is string s)
+            return s;
+        if (item is Enum e)
+            return e.ToString();
+        throw new NotImplementedException("This is neither IDisplayable nor a string");
+    }
+
+    private TValue? GetValue(TItem contextItem)
+    {
+        if (contextItem is TValue item)
+        {
+            return item;
+        }
+        return Value;
+    }
+
+    private string CssHeight => GetHeight();
+
+    private string GetHeight()
+    {
+        var height = Items is null ? 400 : Math.Min(Items.Count() * 30, 400);
+
+        return $"height: {height}px";
+    }
+
+}
+
+<style>
+
+</style>

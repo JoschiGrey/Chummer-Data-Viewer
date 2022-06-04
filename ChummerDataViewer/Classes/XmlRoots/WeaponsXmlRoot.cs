@@ -1,0 +1,60 @@
+﻿using System.Xml.Serialization;
+using ChummerDataViewer.Interfaces;
+
+namespace ChummerDataViewer.Classes;
+
+[XmlRoot("chummer")]
+public class WeaponsXmlRoot : ICreatable, IHasDependency
+{
+    [XmlArray("categories")]
+    [XmlArrayItem("category", typeof(Category))]
+    public List<Category> WeaponCategories { get; set; } = new();
+    
+    [XmlArray("weapons")]
+    [XmlArrayItem("weapon", typeof(XmlWeapon))]
+    public List<XmlWeapon> Weapons { get; set; } = new();
+
+
+    [XmlArray("accessories")]
+    [XmlArrayItem("accessory", typeof(Accessory))]
+    public List<Accessory> Accessories { get; set; } = new();
+    
+    [XmlIgnore]
+    private static HashSet<Type> Dependencies { get; set; } = new()
+        {typeof(BooksXmlRoot), typeof(RangesXmlRoot), typeof(SkillsXmlRoot)};
+    
+    public async Task CreateAsync(ILogger logger, ICreatable? baseObject)
+    {
+
+        var taskList = new List<Task>();
+
+        foreach (var category in WeaponCategories)
+        {
+            taskList.Add(category.CreateAsync(logger));
+        }
+
+        foreach (var accessory in Accessories)
+        {
+            taskList.Add(accessory.CreateAsync(logger));
+        }
+        
+        await Task.WhenAll(taskList);
+        
+        foreach (var weapon in Weapons)
+        {
+            taskList.Add(weapon.CreateAsync(logger, null));
+        }
+
+        await Task.WhenAll(taskList);
+        
+        XmlLoader.CreatedXml.Add(GetType());
+
+        logger.LogInformation("Created {Type}", GetType().Name);
+
+    }
+    
+    public bool CheckDependencies()
+    {
+        return Dependencies.IsSubsetOf(XmlLoader.CreatedXml);
+    }
+}
