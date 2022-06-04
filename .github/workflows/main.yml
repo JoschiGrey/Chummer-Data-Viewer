@@ -21,11 +21,11 @@ jobs:
 
     # publishes Blazor project to the release-folder
     - name: Publish .NET Core Project
-      run: dotnet publish "Chummer Database.csproj" -c Release -o release --nologo
+      run: dotnet publish ChummerDataViewer.csproj -c Release -o release --nologo
     
     # changes the base-tag in index.html from '/' to 'Chummer Database' to match GitHub Pages repository subdirectory
-    - name: Change base-tag in index.html from / to "Chummer Database"
-      run: sed -i 's/<base href="\/" \/>/<base href="\/Chummer Database\/" \/>/g' release/wwwroot/index.html
+    - name: Change base-tag in index.html from / to ChummerDataViewer
+      run: sed -i 's/<base href="\/" \/>/<base href="\/ChummerDataViewer\/" \/>/g' release/wwwroot/index.html
     
 
 
