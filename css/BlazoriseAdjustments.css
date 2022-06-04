@@ -1,0 +1,10 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+.table-fixed-header > .table > thead > tr > th {
+    background: var(--bs-table-bg) !important;
+}
+
+/*noinspection SpellCheckingInspection*/
+.b-bar-vertical-inline .b-bar-toggler-inline, .b-bar-vertical-popout .b-bar-toggler-inline, .b-bar-vertical-small .b-bar-toggler-inline {
+    padding: 3px !important;
+}
