@@ -128,7 +128,8 @@
         <div class="content-holder">
             <DataGrid TItem="Weapon"
                       Data="Weapons"
-                      @bind-SelectedRow="@SelectedWeapon"
+                      SelectedRowChanged="OnSelectedRowChange"
+                      
                       @ref="@_dataGridRef"
 
                       SortMode="DataGridSortMode.Single"

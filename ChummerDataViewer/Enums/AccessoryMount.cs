@@ -17,5 +17,7 @@ public enum AccessoryMount
     Under,
     
     [XmlEnum("Barrel")]
-    Barrel
+    Barrel,
+    
+    Internal
 }

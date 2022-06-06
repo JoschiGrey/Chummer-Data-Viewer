@@ -22,7 +22,18 @@ public partial class WeaponTable : ComponentBase
 
 
 
+    private Task OnSelectedRowChange(Weapon weapon)
+    {
+        SelectedWeapon = weapon;
+        
+        foreach (var slot in weapon.MountSlots)
+        {
+            Console.WriteLine($"{slot.Mount} holds {slot.Accessory?.Name} in {weapon.Name}");
+        }
 
+        
+        return Task.CompletedTask;
+    }
     
     protected override async Task OnInitializedAsync()
     {

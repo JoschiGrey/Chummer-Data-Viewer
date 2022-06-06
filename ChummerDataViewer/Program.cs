@@ -20,7 +20,6 @@ builder.Services.AddLogging(logger => logger
     .SetMinimumLevel(LogLevel.Information));
 #endif
 
-    
 
 builder.Services
     .AddBlazorise(options =>

@@ -10,18 +10,6 @@ namespace ChummerDataViewer.Classes;
 [XmlRoot(ElementName="accessory")]
 public class Accessory : ICreatable
 {
-    [XmlElement(ElementName="rating")] 
-    public int Rating { get; set; } 
-    
-    [XmlElement(ElementName="rc")] 
-    public int Rc { get; set; } 
-    
-    [XmlElement(ElementName="rcdeployable")] 
-    public bool Rcdeployable { get; set; } 
-    
-    [XmlElement(ElementName="rcgroup")] 
-    public int Rcgroup { get; set; } 
-    
     [XmlElement(ElementName="id")] 
     public Guid Id { get; set; }
     
@@ -40,15 +28,30 @@ public class Accessory : ICreatable
     [XmlElement(ElementName="page")] 
     public int Page { get; set; }
     
+
     [XmlElement(ElementName = "mount")]
-    private string MountString { get; set; } = string.Empty;
+    public string MountString { get; set; } = string.Empty;
+    [XmlIgnore] 
+    public HashSet<AccessoryMount> Mounts { get; set; } = new();
+    
+    
+    [XmlElement(ElementName="rating")] 
+    public int Rating { get; set; } 
+    
+    [XmlElement(ElementName="rc")] 
+    public int Rc { get; set; } 
+    
+    [XmlElement(ElementName="rcdeployable")] 
+    public bool Rcdeployable { get; set; } 
+    
+    [XmlElement(ElementName="rcgroup")] 
+    public int Rcgroup { get; set; }
     
     
     [XmlIgnore] 
     public string DisplaySource => $"p.{Page} ({Book})";
     
-    [XmlIgnore] 
-    public HashSet<AccessoryMount> Mounts { get; set; } = new();
+
     
     [XmlIgnore]
     private ILogger? Logger { get; set; }
@@ -58,12 +61,12 @@ public class Accessory : ICreatable
 
     public async Task CreateAsync(ILogger logger, ICreatable? baseObject = null)
     {
-        const string accesoryMountStringPattern = @"([A-Z])\w+";
+        const string accessoryMountStringPattern = @"([A-Z])\w+";
         await Task.Run(() =>
         {
             Logger = logger;
             
-            var matches = Regex.Matches(MountString, accesoryMountStringPattern);
+            var matches = Regex.Matches(MountString, accessoryMountStringPattern);
             foreach (Match match in matches)
             {
                 if(Enum.TryParse<AccessoryMount>(match.ToString(), out var accessoryMount))

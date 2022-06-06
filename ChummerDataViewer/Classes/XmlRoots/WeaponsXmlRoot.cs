@@ -38,7 +38,7 @@ public class WeaponsXmlRoot : ICreatable, IHasDependency
             taskList.Add(accessory.CreateAsync(logger));
         }
         
-        await Task.WhenAll(taskList).ConfigureAwait(false);
+        await Task.WhenAll(taskList);
         
         foreach (var weapon in Weapons)
         {

@@ -19,7 +19,7 @@ public class RangesXmlRoot: ICreatable
             taskList.Add(Task.Run(() => range.CreateAsync(logger)));
         }
 
-        await Task.WhenAll(taskList).ConfigureAwait(false);
+        await Task.WhenAll(taskList);
         XmlLoader.CreatedXml.Add(GetType());
         
         logger.LogInformation("Created {Type}", GetType().Name);
