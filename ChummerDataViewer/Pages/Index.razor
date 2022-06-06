@@ -42,11 +42,4 @@
 </style>
 
 @code{
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await XmlLoader.LoadAllAsync(Client, Logger);
-        await base.OnAfterRenderAsync(firstRender);
-    }
-
 }

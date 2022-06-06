@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
 using ChummerDataViewer.Interfaces;
 
-namespace ChummerDataViewer.Classes;
+namespace ChummerDataViewer.Classes.XmlRoots;
 
 [XmlRoot("chummer")]
 public class RangesXmlRoot: ICreatable
@@ -19,7 +19,7 @@ public class RangesXmlRoot: ICreatable
             taskList.Add(Task.Run(() => range.CreateAsync(logger)));
         }
 
-        await Task.WhenAll(taskList);
+        await Task.WhenAll(taskList).ConfigureAwait(false);
         XmlLoader.CreatedXml.Add(GetType());
         
         logger.LogInformation("Created {Type}", GetType().Name);

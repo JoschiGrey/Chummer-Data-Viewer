@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
 using ChummerDataViewer.Interfaces;
 
-namespace ChummerDataViewer.Classes;
+namespace ChummerDataViewer.Classes.XmlRoots;
 
 [XmlRoot("chummer")]
 public class WeaponsXmlRoot : ICreatable, IHasDependency
@@ -38,14 +38,14 @@ public class WeaponsXmlRoot : ICreatable, IHasDependency
             taskList.Add(accessory.CreateAsync(logger));
         }
         
-        await Task.WhenAll(taskList);
+        await Task.WhenAll(taskList).ConfigureAwait(false);
         
         foreach (var weapon in Weapons)
         {
             taskList.Add(weapon.CreateAsync(logger, null));
         }
 
-        await Task.WhenAll(taskList);
+        await Task.WhenAll(taskList).ConfigureAwait(false);
         
         XmlLoader.CreatedXml.Add(GetType());
 

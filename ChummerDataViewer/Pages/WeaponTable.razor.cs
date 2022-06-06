@@ -2,6 +2,7 @@
 using Blazorise.Extensions;
 using ChummerDataViewer.Classes;
 using ChummerDataViewer.Classes.DataStructures;
+using ChummerDataViewer.Classes.XmlRoots;
 using ChummerDataViewer.Enums;
 using EnumExtensions = ChummerDataViewer.Extensions.EnumExtensions;
 using Microsoft.AspNetCore.Components;

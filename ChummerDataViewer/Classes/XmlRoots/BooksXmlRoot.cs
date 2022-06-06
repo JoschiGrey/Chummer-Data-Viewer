@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
 using ChummerDataViewer.Interfaces;
 
-namespace ChummerDataViewer.Classes;
+namespace ChummerDataViewer.Classes.XmlRoots;
 
 [XmlRoot("chummer")]
 public class BooksXmlRoot : ICreatable
@@ -23,7 +23,7 @@ public class BooksXmlRoot : ICreatable
             taskList.Add(book.CreateAsync(logger));
         }
         
-        await Task.WhenAll(taskList);
+        await Task.WhenAll(taskList).ConfigureAwait(false);
         XmlLoader.CreatedXml.Add(GetType());
         logger.LogInformation("Created {Type}", GetType().Name);
 

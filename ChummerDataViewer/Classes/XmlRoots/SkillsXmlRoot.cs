@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
 using ChummerDataViewer.Interfaces;
 
-namespace ChummerDataViewer.Classes;
+namespace ChummerDataViewer.Classes.XmlRoots;
 
 [XmlRoot("chummer")]
 public class SkillsXmlRoot : ICreatable, IHasDependency
@@ -31,13 +31,13 @@ public class SkillsXmlRoot : ICreatable, IHasDependency
         {
            taskList.Add(category.CreateAsync(logger));
         }
-        await Task.WhenAll(taskList);
+        await Task.WhenAll(taskList).ConfigureAwait(false);
 
         foreach (var skill in Skills)
         {
             taskList.Add(skill.CreateAsync(logger));
         }
-        await Task.WhenAll(taskList);
+        await Task.WhenAll(taskList).ConfigureAwait(false);
         
             
         XmlLoader.CreatedXml.Add(GetType());

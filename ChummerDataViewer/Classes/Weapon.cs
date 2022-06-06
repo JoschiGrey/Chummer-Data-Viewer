@@ -38,7 +38,7 @@ public record Weapon : ICreatable
     
     public int Conceal { get; private set; }
     
-    //TODO:This should be reworked into it's own class
+    //TODO:This should be reworked into it's own class maybe an enum?
     public string FiringMode { get; private set; } = string.Empty;
 
 
@@ -70,23 +70,22 @@ public record Weapon : ICreatable
 		    Conceal = baseWeapon.Conceal;
 		    Reach = baseWeapon.Reach;
 		    FiringMode = baseWeapon.Mode;
-
-
-		    Ap = await GetInt(baseWeapon.ApString);
-
-		    Accuracy = await GetInt(baseWeapon.AccuracyString);
-
-		    RecoilCompensation = await GetInt(baseWeapon.RecoilCompensationString);
-
+		    
 		    Category = await GetCategory();
 		    Range = WeaponRange.GetWeaponRange(baseWeapon.WeaponRangeString, Category.Name);
 		    AlternateWeaponRange = WeaponRange.GetWeaponRange(baseWeapon.AlternateRangeString, Category.Name);
 
-		    Skill = await GetSkill();
+		    Ap = await GetInt(baseWeapon.ApString).ConfigureAwait(false);
 
-		    Cost = await GetInt(baseWeapon.CostString);
+		    Accuracy = await GetInt(baseWeapon.AccuracyString).ConfigureAwait(false);
 
-		    Accessories = await GetAccessories();
+		    RecoilCompensation = await GetInt(baseWeapon.RecoilCompensationString).ConfigureAwait(false);
+		    
+		    Skill = await GetSkill().ConfigureAwait(false);
+
+		    Cost = await GetInt(baseWeapon.CostString).ConfigureAwait(false);
+
+		    Accessories = await GetAccessories().ConfigureAwait(false);
 
 		    CostCss = baseWeapon.FormCostCssClass();
 		    

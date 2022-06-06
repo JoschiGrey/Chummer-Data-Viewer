@@ -3,6 +3,7 @@ using System.IO.Compression;
 using System.Reflection;
 
 using System.Xml.Serialization;
+using ChummerDataViewer.Classes.XmlRoots;
 using ChummerDataViewer.Interfaces;
 using ChummerDataViewer.Overrides;
 
@@ -50,7 +51,7 @@ public static class XmlLoader
         var creationTasks = new List<Task>();
         while (deserializeTasks.Any())
         {
-            var finishedTask = await Task.WhenAny(deserializeTasks);
+            var finishedTask = await Task.WhenAny(deserializeTasks).ConfigureAwait(false);
             deserializeTasks.Remove(finishedTask);
 
             var result = await finishedTask;
@@ -79,7 +80,7 @@ public static class XmlLoader
         //Make sure, that all creation tasks are completed and also that all IHasDependency that are waiting are thrown into the que
         while (creationTasks.Any())
         {
-            var finishedTask = await Task.WhenAny(creationTasks);
+            var finishedTask = await Task.WhenAny(creationTasks).ConfigureAwait(false);
             creationTasks.Remove(finishedTask);
 
             for (var i = waitingCreations.Count; i > 0 ; i--)
