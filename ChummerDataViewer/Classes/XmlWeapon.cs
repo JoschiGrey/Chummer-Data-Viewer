@@ -6,7 +6,7 @@ using ChummerDataViewer.Interfaces;
 namespace ChummerDataViewer.Classes;
 /// <summary>
 /// Contains all the deserialized information of an Weapon.
-/// Use the cleaned up Weapon instead
+/// Use the cleaned up WeaponClass instead
 /// </summary>
 [XmlRoot(ElementName="weapon")]
 public class XmlWeapon : ICreatable

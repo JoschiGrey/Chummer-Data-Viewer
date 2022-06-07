@@ -26,20 +26,7 @@ public partial class WeaponTable : ComponentBase
     private Task OnSelectedRowChange(Weapon weapon)
     {
         SelectedWeapon = weapon;
-        
-        foreach (var slot in weapon.MountSlots)
-        {
-            Console.WriteLine($"{slot.MountSlots} holds {slot.Accessory?.Name} in {weapon.Name}");
-        }
-        Console.WriteLine("ArmorPenValue is: "+ weapon.ArmorPen.ArmorPenValue);
-        Console.WriteLine("Accuracy is: "+ weapon.Accuracy);
-        Console.WriteLine("Base Accuracy is: "+ weapon.BackupWeapon.Accuracy);
-        foreach (var weaponAccessory in weapon.Accessories)
-        {
-            Console.WriteLine(weaponAccessory.Name);
-        }
 
-        
         return Task.CompletedTask;
     }
     
@@ -102,7 +89,7 @@ public partial class WeaponTable : ComponentBase
         //Name
         bool CheckName()
         {
-            return weapon.Name.Contains(_nameFilter);
+            return weapon.Name.Contains(_nameFilter, StringComparison.CurrentCultureIgnoreCase);
         }
         
         //Price
@@ -192,7 +179,7 @@ public partial class WeaponTable : ComponentBase
             
             foreach (var weaponAccessory in weapon.Accessories)
             {
-                if (weaponAccessory.Name.Contains(_accessoryFilter))
+                if (weaponAccessory.Name.Contains(_accessoryFilter, StringComparison.CurrentCultureIgnoreCase))
                     return true;
             }
             return false;
@@ -204,7 +191,7 @@ public partial class WeaponTable : ComponentBase
             if (weapon.Skill is null)
                 throw new ArgumentNullException(nameof(weapon.Skill));
 
-            return weapon.Skill.Name.Contains(_skillFilter);
+            return weapon.Skill.Name.Contains(_skillFilter, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }
