@@ -3,13 +3,12 @@ using System.Text.RegularExpressions;
 using Blazorise.Extensions;
 using ChummerDataViewer.Enums;
 using ChummerDataViewer.Classes;
+using ChummerDataViewer.Classes.HelperMethods;
 
 namespace ChummerDataViewer.Extensions;
 
 public static class WeaponExtensions
 {
-    private const string PlusRegexPattern = @"\+(?=[0-9])";
-
     public static string FormCostCssClass(this XmlWeapon xmlWeapon)
     {
         var sb = new StringBuilder();

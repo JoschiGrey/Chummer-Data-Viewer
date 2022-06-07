@@ -2,7 +2,7 @@
 
 namespace ChummerDataViewer.Enums;
 
-public enum AccessoryMount
+public enum WeaponMountSlots
 {
     [XmlEnum("Stock")]
     Stock,

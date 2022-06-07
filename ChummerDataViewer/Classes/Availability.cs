@@ -1,33 +1,30 @@
 ﻿using System.Text.RegularExpressions;
 using Blazor.Extensions.Logging;
 using Blazorise.Extensions;
+using ChummerDataViewer.Classes.HelperMethods;
 using ChummerDataViewer.Enums;
+using ChummerDataViewer.Interfaces;
 
 namespace ChummerDataViewer.Classes;
 
-public class Availability
+public record Availability
 {
-    public string AvailabilityString { get;  }
+    public string AvailabilityString { get; private set; } = string.Empty;
     
-    public int? AvailabilityInt { get; }
+    public int AvailabilityInt { get; private set; }
     
-    public Legality Legality { get; } = Legality.Unrestricted;
-    
-    private ILogger Logger { get; }
-
+    public Legality Legality { get; private set; } = Legality.Unrestricted;
 
     public Availability(string availabilityString, ILogger logger)
     {
-        Logger = logger;
         AvailabilityString = availabilityString;
 
-        string pattern;
-        string match;
+        AvailabilityInt = RegexHelper.GetInt(AvailabilityString, logger);
         
         try
         {
-            pattern = "[0-9]+";
-            match = Regex.Match(AvailabilityString, pattern).ToString();
+            const string pattern = "[0-9]+";
+            var match = Regex.Match(AvailabilityString, pattern).ToString();
             if (!match.IsNullOrEmpty())
                 AvailabilityInt = int.Parse(match);
         }
@@ -43,4 +40,34 @@ public class Availability
         if (AvailabilityInt >= 99)
             AvailabilityString = "NA";
     }
+
+    private Availability() { }
+
+    public static Availability operator +(Availability x, Availability y)
+    {
+        var newAvailInt =  x.AvailabilityInt + y.AvailabilityInt;
+
+        var newLegality = x.Legality;
+       
+        if (x.Legality < y.Legality)
+            newLegality = y.Legality;
+
+        string suffix = x.Legality switch
+        {
+            Legality.Restricted => "R",
+            Legality.Forbidden => "F",
+            _ => string.Empty
+        };
+
+        var newAvailabilityString = $"{x.AvailabilityInt}{suffix}";
+        
+        return new Availability()
+        {
+            AvailabilityInt = newAvailInt,
+            Legality = newLegality,
+            AvailabilityString = newAvailabilityString
+        };
+    }
+
+
 }

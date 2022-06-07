@@ -1,4 +1,6 @@
-﻿namespace ChummerDataViewer.Classes.DataStructures;
+﻿using ChummerDataViewer.Classes.DataStructures;
+
+namespace ChummerDataViewer.Classes.HelperMethods;
 
 public static class FilterFunctions
 {

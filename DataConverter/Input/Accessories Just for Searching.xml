@@ -1,0 +1,2561 @@
+﻿<accessories>
+    <!-- Region Shadowrun 5 -->
+    <accessory>
+        <id>d34a93a8-b695-4c46-8e34-0948df68d44f</id>
+        <name>Silencer, Ares Light Fire 70</name>
+        <mount>Barrel</mount>
+        <avail>6F</avail>
+        <cost>750</cost>
+        <source>SR5</source>
+        <page>425</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>Ares Light Fire 70</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>4026650e-ecd3-4514-b2c6-d03dc1d466b5</id>
+        <name>Silencer, Ares Light Fire 75</name>
+        <mount>Barrel</mount>
+        <avail>6F</avail>
+        <cost>0</cost>
+        <source>SR5</source>
+        <page>425</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>Ares Light Fire 75</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>294a6b30-6e1c-4b7d-8e93-10964647c2dd</id>
+        <name>Airburst Link</name>
+        <mount />
+        <avail>6R</avail>
+        <cost>600</cost>
+        <source>SR5</source>
+        <page>431</page>
+        <forbidden>
+            <oneof>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammocategory>Grenade Launchers</ammocategory>
+                    <ammocategory>Missile Launchers</ammocategory>
+                    <category>Grenade Launchers</category>
+                    <category>Missile Launchers</category>
+                    <spec>Grenade Launchers</spec>
+                    <spec>Missile Launchers</spec>
+                    <spec2>Grenade Launchers</spec2>
+                    <spec2>Missile Launchers</spec2>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>6e06df00-95b8-450f-9f2a-4a86c582d342</id>
+        <name>Bipod</name>
+        <mount>Under</mount>
+        <avail>2</avail>
+        <cost>200</cost>
+        <source>SR5</source>
+        <page>431</page>
+        <rating>0</rating>
+        <rc>2</rc>
+        <rcgroup>1</rcgroup>
+    </accessory>
+    <accessory>
+        <id>7f66a669-917a-4423-bd83-cf0e0a1fb2a8</id>
+        <name>Concealable Holster</name>
+        <mount />
+        <avail>2</avail>
+        <cost>150</cost>
+        <source>SR5</source>
+        <page>431</page>
+        <conceal>-1</conceal>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="lessthanequals">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>f46b623b-75b5-4947-a3e4-baa2930749bf</id>
+        <name>Gas-Vent 1 System</name>
+        <mount>Barrel</mount>
+        <avail>3R</avail>
+        <cost>200</cost>
+        <source>SR5</source>
+        <page>431</page>
+        <rating>0</rating>
+        <rc>1</rc>
+    </accessory>
+    <accessory>
+        <id>b3827611-f631-461e-8660-e744593ba2d2</id>
+        <name>Gas-Vent 2 System</name>
+        <mount>Barrel</mount>
+        <avail>6R</avail>
+        <cost>400</cost>
+        <source>SR5</source>
+        <page>431</page>
+        <rating>0</rating>
+        <rc>2</rc>
+    </accessory>
+    <accessory>
+        <id>6b06cf52-04fa-4034-bb10-2bcdd58c4bfb</id>
+        <name>Gas-Vent 3 System</name>
+        <mount>Barrel</mount>
+        <avail>9R</avail>
+        <cost>600</cost>
+        <source>SR5</source>
+        <page>431</page>
+        <rating>0</rating>
+        <rc>3</rc>
+    </accessory>
+    <accessory>
+        <id>baecb236-6b4a-4f7d-b9c4-25212f115d4a</id>
+        <name>Gyro Mount</name>
+        <mount>Under</mount>
+        <avail>7</avail>
+        <cost>1400</cost>
+        <source>SR5</source>
+        <page>432</page>
+        <rating>0</rating>
+        <rc>6</rc>
+        <rcgroup>1</rcgroup>
+    </accessory>
+    <accessory>
+        <id>7ca0c689-a05e-4377-ae44-3dc15abe2ee2</id>
+        <name>Hidden Gun Arm Slide</name>
+        <mount />
+        <avail>4R</avail>
+        <cost>350</cost>
+        <source>SR5</source>
+        <page>432</page>
+        <conceal>-1</conceal>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <conceal operation="lessthanequals">-2</conceal>
+                    <name>Cavalier Flash</name>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>2905095e-937e-4dbc-aa56-3b66676e1559</id>
+        <name>Imaging Scope</name>
+        <mount>Top</mount>
+        <avail>2</avail>
+        <cost>300</cost>
+        <source>SR5</source>
+        <page>432</page>
+        <allowgear>
+            <gearcategory>Vision Enhancements</gearcategory>
+            <gearcategory>Custom</gearcategory>
+        </allowgear>
+        <gears>
+            <usegear>
+                <name>Camera, Micro</name>
+                <category>Vision Devices</category>
+            </usegear>
+            <usegear>
+                <name>Vision Magnification</name>
+                <category>Vision Enhancements</category>
+            </usegear>
+        </gears>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>521f9c2e-dfb2-42a6-b707-9808ae4885de</id>
+        <name>Laser Sight</name>
+        <mount>Top/Under</mount>
+        <avail>2</avail>
+        <cost>125</cost>
+        <source>SR5</source>
+        <page>432</page>
+        <accuracy>1</accuracy>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>12e3bb7f-0058-4c9f-ba36-3a865d52b5a0</id>
+        <name>Periscope</name>
+        <mount>Top</mount>
+        <avail>3</avail>
+        <cost>70</cost>
+        <source>SR5</source>
+        <page>432</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>18e18bbc-f287-4455-bedf-ba349779a4cb</id>
+        <name>Quick-Draw Holster</name>
+        <mount />
+        <avail>4</avail>
+        <cost>175</cost>
+        <source>SR5</source>
+        <page>432</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="lessthanequals">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>46596db4-6f25-4990-80cc-c4102eaf80f7</id>
+        <name>Shock Pad</name>
+        <mount />
+        <avail>2</avail>
+        <cost>50</cost>
+        <source>SR5</source>
+        <page>432</page>
+        <forbidden>
+            <oneof>
+                <accessory>Stock Removal</accessory>
+                <accessory>Sawed Off/Shortbarrel and Stock Removal</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <rc>1</rc>
+        <rcdeployable>True</rcdeployable>
+        <rcgroup>2</rcgroup>
+        <required>
+            <weapondetails>
+                <OR>
+                    <category operation="contains">Rifles</category>
+                    <category>Shotguns</category>
+                    <category>Light Machine Guns</category>
+                    <category>Medium Machine Guns</category>
+                    <category>Heavy Machine Guns</category>
+                    <category>Underbarrel Weapons</category>
+                    <category>Assault Cannons</category>
+                    <category>Flamethrowers</category>
+                    <category>Laser Weapons</category>
+                    <category>Grenade Launchers</category>
+                    <category>Missile Launchers</category>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>0da6149e-982f-4051-825b-52c1b79c7e52</id>
+        <name>Silencer/Suppressor</name>
+        <mount>Barrel</mount>
+        <avail>9F</avail>
+        <cost>500</cost>
+        <source>SR5</source>
+        <page>432</page>
+        <forbidden>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">(cy)</ammo>
+                    <ammocategory>Shotguns</ammocategory>
+                    <category>Shotguns</category>
+                    <name>PSK-3 Collapsible Heavy Pistol</name>
+                    <spec>Revolvers</spec>
+                    <spec>Shotguns</spec>
+                    <spec2>Revolvers</spec2>
+                    <spec2>Shotguns</spec2>
+                </OR>
+            </weapondetails>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>3c329adb-7c13-4d2c-b25c-49be89173fa1</id>
+        <name>Sound Suppressor</name>
+        <mount>Barrel</mount>
+        <avail>9F</avail>
+        <cost>500</cost>
+        <source>SR5</source>
+        <page>432</page>
+        <forbidden>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">(cy)</ammo>
+                    <ammocategory>Shotguns</ammocategory>
+                    <category>Shotguns</category>
+                    <name>PSK-3 Collapsible Heavy Pistol</name>
+                    <spec>Revolvers</spec>
+                    <spec>Shotguns</spec>
+                    <spec2>Revolvers</spec2>
+                    <spec2>Shotguns</spec2>
+                </OR>
+            </weapondetails>
+        </forbidden>
+        <hide />
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>5D5D9FC6-9CB9-40A4-8185-891E29DAECC5</id>
+        <name>External Clip Port</name>
+        <mount />
+        <avail>0</avail>
+        <cost>1000</cost>
+        <source>SR5</source>
+        <page>458</page>
+        <hide />
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>7e25eb59-3ce1-44d8-8367-527fd8c8bc1d</id>
+        <name>Smart Firing Platform</name>
+        <mount>Under</mount>
+        <avail>12F</avail>
+        <cost>2000</cost>
+        <source>SR5</source>
+        <page>433</page>
+        <allowgear>
+            <gearcategory>Autosofts</gearcategory>
+            <gearcategory>Custom</gearcategory>
+        </allowgear>
+        <forbidden>
+            <oneof>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>d57d2c64-1f61-4f5f-a465-8ce0dfacec6a</id>
+        <name>Smartgun System, Internal</name>
+        <mount />
+        <avail>+2R</avail>
+        <cost>Weapon Cost</cost>
+        <source>SR5</source>
+        <page>433</page>
+        <accuracy>2</accuracy>
+        <forbidden>
+            <oneof>
+                <accessory>Ceramic/Plasteel Components</accessory>
+                <accessory>Collapsible Traditional Bow</accessory>
+                <accessory>Vintage</accessory>
+            </oneof>
+            <weapondetails>
+                <type>Melee</type>
+            </weapondetails>
+        </forbidden>
+        <gears>
+            <usegear>
+                <name>Laser Range Finder</name>
+                <category>Sensor Functions</category>
+            </usegear>
+            <usegear>
+                <name>Camera, Micro</name>
+                <category>Vision Devices</category>
+            </usegear>
+        </gears>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>b3562903-b1c6-4300-9f6e-25e0102aa69b</id>
+        <name>Smartgun System, External</name>
+        <mount>Top/Under</mount>
+        <avail>4R</avail>
+        <cost>200</cost>
+        <source>SR5</source>
+        <page>433</page>
+        <accuracy>2</accuracy>
+        <forbidden>
+            <oneof>
+                <accessory>Ceramic/Plasteel Components</accessory>
+                <accessory>Collapsible Traditional Bow</accessory>
+                <accessory>Vintage</accessory>
+            </oneof>
+            <weapondetails>
+                <type>Melee</type>
+            </weapondetails>
+        </forbidden>
+        <gears>
+            <usegear>
+                <name>Laser Range Finder</name>
+                <category>Sensor Functions</category>
+            </usegear>
+            <usegear>
+                <name>Camera, Micro</name>
+                <category>Vision Devices</category>
+            </usegear>
+        </gears>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>4ed24342-276e-4455-acba-22b551e4d775</id>
+        <name>Spare Clip</name>
+        <mount />
+        <avail>4</avail>
+        <cost>5</cost>
+        <source>SR5</source>
+        <page>433</page>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">(c)</ammo>
+                    <ammo operation="contains">(d)</ammo>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>6763996b-0458-46ee-a6a5-f50255ace664</id>
+        <name>Belt-Feed, 100-round</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>SR5</source>
+        <page>417</page>
+        <ammoreplace>100(belt)</ammoreplace>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <name>RPK HMG</name>
+                    <name>Ruhrmetall SF-20</name>
+                    <name>Ultamax HMG-2</name>
+                    <name>Ingram Valiant</name>
+                    <name>Krime Wave</name>
+                    <name>Shiawase Armaments Nemesis</name>
+                    <name>FN MAG-5</name>
+                    <name>Stoner-Ares M202</name>
+                    <name>Ultamax MMG</name>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>61ddc4d3-25fd-405c-af5d-2455efff2509</id>
+        <name>Drum Magazine, 24-round</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>SR5</source>
+        <page>417</page>
+        <ammoreplace>24(d)</ammoreplace>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name operation="contains">Enfield AS-7</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>d45c3b70-0e12-48b5-9c69-9f86f14d593b</id>
+        <name>Drum Magazine, 32-round</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>SR5</source>
+        <page>417</page>
+        <ammoreplace>32(d)</ammoreplace>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>Auto-Assault 16</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>6598e5fa-f2d0-4c5c-a773-570cd9d16300</id>
+        <name>External Power Source</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>SR5</source>
+        <page>417</page>
+        <ammoreplace>External Source</ammoreplace>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <name>Underbarrel Laser</name>
+                    <name>Repeating Laser</name>
+                    <name>Ares Lancer MP Laser</name>
+                    <name>Ares Redline</name>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>4c47baf0-6b34-4e00-8627-a0f605f84ba0</id>
+        <name>Speed Loader</name>
+        <mount />
+        <avail>2</avail>
+        <cost>25</cost>
+        <source>SR5</source>
+        <page>433</page>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <ammo operation="contains">(cy)</ammo>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>28936368-9e16-498f-b028-92ec31e89a00</id>
+        <name>Tripod</name>
+        <mount>Under</mount>
+        <avail>4</avail>
+        <cost>500</cost>
+        <source>SR5</source>
+        <page>433</page>
+        <rating>0</rating>
+        <rc>6</rc>
+        <rcdeployable>True</rcdeployable>
+        <rcgroup>1</rcgroup>
+    </accessory>
+    <!-- End Region-->
+    <!-- Region Run and Gun-->
+    <accessory>
+        <id>06e128ee-00fd-4992-8bf5-4be35815fd11</id>
+        <name>Advanced Safety System, Basic</name>
+        <mount />
+        <avail>4</avail>
+        <cost>600</cost>
+        <source>RG</source>
+        <page>50</page>
+        <forbidden>
+            <oneof>
+                <accessory>Advanced Safety System, Basic</accessory>
+                <accessory>Advanced Safety System, Electro Shocker</accessory>
+                <accessory>Advanced Safety System, Explosive Self Destruct</accessory>
+                <accessory>Advanced Safety System, Immobilization</accessory>
+                <accessory>Advanced Safety System, Self Destruct</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>7898e7dc-3ee6-46a9-83d7-d3ec54a456fb</id>
+        <name>Silencer, PSK-3 Collapsible Heavy Pistol</name>
+        <mount>Barrel</mount>
+        <avail>6F</avail>
+        <cost>700</cost>
+        <source>RG</source>
+        <page>32</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>PSK-3 Collapsible Heavy Pistol</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>90804D8B-16CA-4A6F-81E6-454F71768DCE</id>
+        <name>Collapsed Frame</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>RG</source>
+        <page>34</page>
+        <conceal>-6</conceal>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>PPSK-4 Collapsible Machine Pistol</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>b895c431-3fb0-49b7-a3fc-ddb4e54b69ee</id>
+        <name>Extra Case, Ares Executioner</name>
+        <mount />
+        <avail>0</avail>
+        <cost>400</cost>
+        <source>RG</source>
+        <page>35</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>Ares Executioner</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>2fa27223-dd56-4520-b26b-a112e8733320</id>
+        <name>Vindicator 200-Round Belt</name>
+        <mount />
+        <avail>4</avail>
+        <cost>100</cost>
+        <source>RG</source>
+        <page>42</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>GE Vindicator Mini-Gun</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>fad8757c-622f-41ce-8412-8bbb6fbf6445</id>
+        <name>Advanced Safety System, Immobilization</name>
+        <mount />
+        <avail>6</avail>
+        <cost>700</cost>
+        <source>RG</source>
+        <page>50</page>
+        <forbidden>
+            <oneof>
+                <accessory>Advanced Safety System, Basic</accessory>
+                <accessory>Advanced Safety System, Self Destruct</accessory>
+                <accessory>Advanced Safety System, Explosive Self Destruct</accessory>
+                <accessory>Advanced Safety System, Electro Shocker</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>c9739e50-bbaf-47e7-a19b-c3d7fd2b95af</id>
+        <name>Advanced Safety System, Self Destruct</name>
+        <mount />
+        <avail>6</avail>
+        <cost>800</cost>
+        <source>RG</source>
+        <page>50</page>
+        <forbidden>
+            <oneof>
+                <accessory>Advanced Safety System, Immobilization</accessory>
+                <accessory>Advanced Safety System, Basic</accessory>
+                <accessory>Advanced Safety System, Explosive Self Destruct</accessory>
+                <accessory>Advanced Safety System, Electro Shocker</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>25b695f8-ed5a-4b75-baf0-164dcde74f2d</id>
+        <name>Advanced Safety System, Explosive Self Destruct</name>
+        <mount />
+        <avail>11F</avail>
+        <cost>1000</cost>
+        <source>RG</source>
+        <page>50</page>
+        <forbidden>
+            <oneof>
+                <accessory>Advanced Safety System, Immobilization</accessory>
+                <accessory>Advanced Safety System, Self Destruct</accessory>
+                <accessory>Advanced Safety System, Basic</accessory>
+                <accessory>Advanced Safety System, Electro Shocker</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>b64d5256-0c24-4842-b05d-25ee735c9b6a</id>
+        <name>Advanced Safety System, Electro Shocker</name>
+        <mount />
+        <avail>6R</avail>
+        <cost>950</cost>
+        <source>RG</source>
+        <page>50</page>
+        <forbidden>
+            <oneof>
+                <accessory>Advanced Safety System, Immobilization</accessory>
+                <accessory>Advanced Safety System, Self Destruct</accessory>
+                <accessory>Advanced Safety System, Explosive Self Destruct</accessory>
+                <accessory>Advanced Safety System, Basic</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>dc859601-1271-4f5d-ac37-e389c95f052a</id>
+        <name>Bayonet</name>
+        <mount>Top/Under</mount>
+        <avail>4R</avail>
+        <cost>50</cost>
+        <source>RG</source>
+        <page>50</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="greaterthan">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>ea64527d-0e1e-4248-957b-7c02d79dad30</id>
+        <name>Concealed Quick-Draw Holster</name>
+        <mount />
+        <avail>6</avail>
+        <cost>275</cost>
+        <source>RG</source>
+        <page>51</page>
+        <conceal>-1</conceal>
+        <rating>0</rating>
+        <forbidden>
+            <weapondetails>
+                <name>Glock MP Custodes (MPV)</name>
+            </weapondetails>
+        </forbidden>
+        <required>
+            <weapondetails>
+                <conceal operation="lessthanequals">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>381dd922-19af-46fd-9999-0202c85574de</id>
+        <name>Extreme Environment Modification</name>
+        <mount />
+        <avail>8</avail>
+        <cost>Rating * 1500</cost>
+        <source>RG</source>
+        <page>51</page>
+        <rating>2</rating>
+    </accessory>
+    <accessory>
+        <id>41ca17be-6fe4-469f-9a66-7345263c4733</id>
+        <name>Flashlight, Standard</name>
+        <mount>Top/Under/Side</mount>
+        <avail>2</avail>
+        <cost>50</cost>
+        <source>RG</source>
+        <page>51</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>487ae8d8-f45b-4133-a79f-c831a6b6a651</id>
+        <name>Flashlight, Low Light</name>
+        <mount>Top/Under/Side</mount>
+        <avail>4</avail>
+        <cost>200</cost>
+        <source>RG</source>
+        <page>51</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>fa873465-a678-4077-888f-f7a1fb792d47</id>
+        <name>Flashlight, Infrared</name>
+        <mount>Top/Under/Side</mount>
+        <avail>6</avail>
+        <cost>400</cost>
+        <source>RG</source>
+        <page>51</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>f8090e1f-424a-4298-a5d9-f2e6d650ef39</id>
+        <name>Folding Stock</name>
+        <mount>Stock</mount>
+        <avail>2</avail>
+        <cost>30</cost>
+        <source>RG</source>
+        <page>51</page>
+        <rating>0</rating>
+        <rc>1</rc>
+        <rcdeployable>True</rcdeployable>
+        <rcgroup>2</rcgroup>
+    </accessory>
+    <accessory>
+        <id>27de824f-d5e4-43fd-abaa-e42da6023569</id>
+        <name>Stock</name>
+        <mount>Stock</mount>
+        <avail>2</avail>
+        <cost>30</cost>
+        <source>RG</source>
+        <page>51</page>
+        <hide />
+        <rating>0</rating>
+        <rc>1</rc>
+        <rcgroup>2</rcgroup>
+    </accessory>
+    <accessory>
+        <id>8eec5df1-88e2-4822-b156-9c2340a33efc</id>
+        <name>Foregrip</name>
+        <mount>Under/Barrel</mount>
+        <avail>2</avail>
+        <cost>100</cost>
+        <source>RG</source>
+        <page>52</page>
+        <conceal>1</conceal>
+        <forbidden>
+            <weapondetails>
+                <OR>
+                    <AND>
+                        <OR>
+                            <category>Tasers</category>
+                            <category>Holdouts</category>
+                            <category>Light Pistols</category>
+                            <category>Heavy Pistols</category>
+                        </OR>
+                        <useskill NOT="" operation="exists" />
+                    </AND>
+                    <category>Machine Pistols</category>
+                    <conceal operation="lessthanequals">0</conceal>
+                    <useskill>Pistols</useskill>
+                </OR>
+            </weapondetails>
+        </forbidden>
+        <rating>0</rating>
+        <rc>1</rc>
+        <rcgroup>1</rcgroup>
+    </accessory>
+    <accessory>
+        <id>627f212a-ac15-4739-afbc-f44676dfe508</id>
+        <name>Gecko Grip (for Weapon with No Stock Slot)</name>
+        <mount />
+        <avail>6</avail>
+        <cost>100</cost>
+        <source>RG</source>
+        <page>52</page>
+        <forbidden>
+            <weapondetails>
+                <accessorymounts>
+                    <mount>Stock</mount>
+                </accessorymounts>
+            </weapondetails>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>bf18c385-77bf-4f45-a51c-c17fd702526f</id>
+        <name>Gecko Grip</name>
+        <mount>Stock</mount>
+        <avail>6</avail>
+        <cost>100</cost>
+        <source>RG</source>
+        <page>52</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <accessorymounts>
+                    <mount>Stock</mount>
+                </accessorymounts>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>9a27efa9-f3f4-4e47-9165-76e8adbad4ba</id>
+        <name>Guncam</name>
+        <mount>Top/Under/Barrel/Side/Internal</mount>
+        <avail>4</avail>
+        <cost>350</cost>
+        <source>RG</source>
+        <page>52</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>71a37dd2-d162-4829-a233-5afdd954691d</id>
+        <name>Hip Pad Bracing System</name>
+        <mount>Stock</mount>
+        <avail>4</avail>
+        <cost>250</cost>
+        <source>RG</source>
+        <page>52</page>
+        <rating>0</rating>
+        <rc>1</rc>
+        <rcgroup>2</rcgroup>
+    </accessory>
+    <accessory>
+        <id>21bc8b85-3fd7-4bde-ac8d-35e1fa099f21</id>
+        <name>Improved Range Finder</name>
+        <mount>Top/Under/Barrel/Side/Internal</mount>
+        <avail>6</avail>
+        <cost>2000</cost>
+        <source>RG</source>
+        <page>52</page>
+        <rating>0</rating>
+        <rangemodifier>1</rangemodifier>
+        <required>
+            <oneof>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>06af1f95-772c-457d-9287-489cf1b0286d</id>
+        <name>Peak-Discharge Battery Pack, Power Clip</name>
+        <mount />
+        <avail>14F</avail>
+        <cost>400</cost>
+        <source>RG</source>
+        <page>52</page>
+        <ammoreplace>10</ammoreplace>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">External Source</ammo>
+                    <ammo operation="contains">Energy</ammo>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>dda0b64a-6fa5-4e61-8631-f662f7066756</id>
+        <name>Peak-Discharge Battery Pack, Satchel Power Pack</name>
+        <mount />
+        <avail>16F</avail>
+        <cost>900</cost>
+        <source>RG</source>
+        <page>52</page>
+        <ammoreplace>20</ammoreplace>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">External Source</ammo>
+                    <ammo operation="contains">Energy</ammo>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>5a7459f5-2d95-4866-a855-110c0bc4f158</id>
+        <name>Peak-Discharge Battery Pack, Power Backpack</name>
+        <mount />
+        <avail>20F</avail>
+        <cost>2500</cost>
+        <source>RG</source>
+        <page>52</page>
+        <ammoreplace>30</ammoreplace>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">External Source</ammo>
+                    <ammo operation="contains">Energy</ammo>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>51740a3d-4464-4a38-8e2e-8858b3c1481e</id>
+        <name>Safe Target System, Base</name>
+        <mount>Top/Under/Barrel/Side/Internal</mount>
+        <avail>6</avail>
+        <cost>750</cost>
+        <source>RG</source>
+        <page>52</page>
+        <forbidden>
+            <oneof>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>fbf1ac2e-b131-499c-809e-c2c93c5ec286</id>
+        <name>Safe Target System, Additional set of RFID or GPS data (10 data sets)</name>
+        <mount />
+        <avail>6</avail>
+        <cost>25</cost>
+        <source>RG</source>
+        <page>52</page>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Safe Target System, Base</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>9147a5ee-fba6-4915-9123-709df5835998</id>
+        <name>Safe Target System, Image Recognition Capabilities</name>
+        <mount />
+        <avail>8</avail>
+        <cost>300</cost>
+        <source>RG</source>
+        <page>52</page>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Safe Target System, Base</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>69e7431a-cf62-4712-8e71-728297385d20</id>
+        <name>Safe Target System, Extra image profiles (10 profiles)</name>
+        <mount />
+        <avail>8</avail>
+        <cost>25</cost>
+        <source>RG</source>
+        <page>52</page>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Safe Target System, Base</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>de62b79f-2864-4023-a286-6c1f270aade3</id>
+        <name>Slide Mount</name>
+        <mount>Top/Under/Side</mount>
+        <avail>4</avail>
+        <cost>500</cost>
+        <source>RG</source>
+        <page>52</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>a1865555-8ad5-43ec-a30e-b7d77e804fab</id>
+        <name>Sling</name>
+        <mount />
+        <avail>0</avail>
+        <cost>15</cost>
+        <source>RG</source>
+        <page>52</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>324ee965-d210-4768-a282-aa3180588fc7</id>
+        <name>Tracker</name>
+        <mount />
+        <avail>4</avail>
+        <cost>150</cost>
+        <source>RG</source>
+        <page>53</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>dd786d50-9f42-406e-82d6-359213c086cc</id>
+        <name>Underbarrel Bola Launcher</name>
+        <mount>Under</mount>
+        <avail>8R</avail>
+        <cost>350</cost>
+        <source>RG</source>
+        <page>53</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="greaterthan">0</conceal>
+            </weapondetails>
+        </required>
+        <hide />
+    </accessory>
+    <accessory>
+        <id>2ce42c74-5129-4b33-b829-aa392c8eb392</id>
+        <name>Underbarrel Chainsaw</name>
+        <mount>Under</mount>
+        <avail>10R</avail>
+        <cost>500</cost>
+        <source>RG</source>
+        <page>53</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="greaterthan">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>c0191eaa-058c-437c-9e10-141785fc7bc8</id>
+        <name>Underbarrel Flamethrower</name>
+        <mount>Under</mount>
+        <avail>2</avail>
+        <cost>200</cost>
+        <source>RG</source>
+        <page>53</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="greaterthan">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>b479bb05-3b39-4d1f-a4b2-65da27335f18</id>
+        <name>Underbarrel Grapple Gun</name>
+        <mount>Under</mount>
+        <avail>8R</avail>
+        <cost>600</cost>
+        <source>RG</source>
+        <page>53</page>
+        <rating>0</rating>
+        <hide />
+        <required>
+            <weapondetails>
+                <conceal operation="greaterthan">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>25691076-94be-4869-a067-34e7657285b7</id>
+        <name>Underbarrel Grenade Launcher</name>
+        <mount>Under</mount>
+        <avail>10F</avail>
+        <cost>3500</cost>
+        <source>RG</source>
+        <page>53</page>
+        <rating>0</rating>
+        <hide />
+        <required>
+            <weapondetails>
+                <conceal operation="greaterthan">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>9dc660bb-a0b2-4b14-8c43-f5893b174265</id>
+        <name>Underbarrel Weight</name>
+        <mount>Under</mount>
+        <avail>4R</avail>
+        <cost>50</cost>
+        <source>RG</source>
+        <page>53</page>
+        <rating>0</rating>
+        <rc>1</rc>
+        <rcgroup>1</rcgroup>
+    </accessory>
+    <accessory>
+        <id>6c703f4e-fade-4045-9d88-ea636e1266f6</id>
+        <name>Weapon Commlink</name>
+        <mount />
+        <avail>0</avail>
+        <cost>200</cost>
+        <source>RG</source>
+        <page>53</page>
+        <allowgear>
+            <gearcategory>Commlinks</gearcategory>
+            <gearcategory>Custom</gearcategory>
+        </allowgear>
+        <forbidden>
+            <oneof>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>e09095d7-72b5-44ef-b52a-aa2de172da2f</id>
+        <name>Weapon Personality</name>
+        <mount />
+        <avail>8</avail>
+        <cost>250</cost>
+        <source>RG</source>
+        <page>53</page>
+        <forbidden>
+            <oneof>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <!-- End Region-->
+    <!-- ReSharper disable once CommentTypo -->
+    <!-- Region Gun H(e)aven 3 -->
+    <accessory>
+        <id>4821b29d-55cd-4cb1-a6e2-c51e9d3a95a1</id>
+        <name>Vintage</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>GH3</source>
+        <page>3</page>
+        <accessorycostmultiplier>2</accessorycostmultiplier>
+        <forbidden>
+            <oneof>
+                <accessory>Weapon Personality</accessory>
+                <accessory>Weapon Commlink</accessory>
+                <accessory>Safe Target System, Base</accessory>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Smart Firing Platform</accessory>
+                <accessory>Airburst Link</accessory>
+                <accessory>Ammo Skip</accessory>
+                <accessory>Chameleon Coating (Pistol)</accessory>
+                <accessory>Chameleon Coating (Rifle)</accessory>
+                <accessory>Easy Breakdown (Powered)</accessory>
+                <accessory>Electronic Firing</accessory>
+                <accessory>Trigger Removal</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <!-- End Region -->
+    <!-- Region Chrome Flesh -->
+    <accessory>
+        <id>ca3f4cb7-6c0e-4736-8a7c-339d00f03567</id>
+        <name>Cyberimplanted</name>
+        <mount />
+        <avail>+4</avail>
+        <cost>0</cost>
+        <source>CF</source>
+        <page>90</page>
+        <rating>0</rating>
+    </accessory>
+    <!-- End Region -->
+    <!-- Region Hard Targets -->
+    <accessory>
+        <id>0c315fd8-3a1a-4748-8359-cb6a04436fbd</id>
+        <name>Ammo Skip</name>
+        <mount>Under</mount>
+        <avail>8R</avail>
+        <cost>250</cost>
+        <source>HT</source>
+        <page>180</page>
+        <forbidden>
+            <oneof>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Drum Magazine, 24-round</accessory>
+                <accessory>Drum Magazine, 32-round</accessory>
+                <weapondetails>
+                    <OR>
+                        <ammo operation="contains">(cy)</ammo>
+                        <ammo operation="contains">(d)</ammo>
+                    </OR>
+                </weapondetails>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>5157f235-47c7-4121-aebb-d76709c4b6f8</id>
+        <name>Explosive Magazine</name>
+        <mount />
+        <avail>2F</avail>
+        <cost>20</cost>
+        <source>HT</source>
+        <page>180</page>
+        <ammobonus>-2</ammobonus>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">(c)</ammo>
+                    <ammo operation="contains">(d)</ammo>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>d40d2fc6-3aad-4793-843d-20e3597b2365</id>
+        <name>Extended Clip</name>
+        <mount />
+        <avail>6R</avail>
+        <cost>35</cost>
+        <source>HT</source>
+        <page>180</page>
+        <ammobonus>50 * Rating</ammobonus>
+        <conceal>Rating</conceal>
+        <forbidden>
+            <weapondetails>
+                <OR>
+                    <name>Ares Crusader II</name>
+                    <name>Ceska Black Scorpion</name>
+                    <name>PPSK-4 Collapsible Machine Pistol</name>
+                    <name>Steyr TMP</name>
+                </OR>
+            </weapondetails>
+        </forbidden>
+        <rating>2</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">(belt)</ammo>
+                    <ammo operation="contains">(c)</ammo>
+                    <ammo operation="contains">(d)</ammo>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>5f672085-49f9-4fed-9a1f-4bebfea82e8d</id>
+        <name>Extended Clip (Large Ammo Machine Pistols)</name>
+        <mount />
+        <avail>6R</avail>
+        <cost>35</cost>
+        <source>HT</source>
+        <page>180</page>
+        <ammobonus>50</ammobonus>
+        <conceal>2</conceal>
+        <rating>1</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <name>Ares Crusader II</name>
+                    <name>Ceska Black Scorpion</name>
+                    <name>PPSK-4 Collapsible Machine Pistol</name>
+                    <name>Steyr TMP</name>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>5d819147-d262-48c2-bb0e-80e0049c67ed</id>
+        <name>Ceramic/Plasteel Components</name>
+        <mount />
+        <avail>12 + Rating</avail>
+        <cost>Weapon Cost * Rating</cost>
+        <source>HT</source>
+        <page>180</page>
+        <forbidden>
+            <oneof>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+                <accessory>Chameleon Coating (Pistol)</accessory>
+                <accessory>Chameleon Coating (Rifle)</accessory>
+            </oneof>
+        </forbidden>
+        <rating>6</rating>
+    </accessory>
+    <accessory>
+        <id>5cc39a55-3973-4368-81ee-c7a5c0432323</id>
+        <name>Chameleon Coating (Pistol)</name>
+        <mount>Side</mount>
+        <avail>10R</avail>
+        <cost>1000</cost>
+        <source>HT</source>
+        <page>180</page>
+        <conceal>-2</conceal>
+        <forbidden>
+            <oneof>
+                <accessory>Ceramic/Plasteel Components</accessory>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <conceal operation="lessthanequals">0</conceal>
+                    <category operation="contains">Pistol</category>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>98c9ed33-2636-40bb-a455-334e8fb8e65f</id>
+        <name>Chameleon Coating (Rifle)</name>
+        <mount>Side</mount>
+        <avail>10R</avail>
+        <cost>1000</cost>
+        <source>HT</source>
+        <page>180</page>
+        <conceal>-1</conceal>
+        <forbidden>
+            <oneof>
+                <accessory>Ceramic/Plasteel Components</accessory>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR NOT="">
+                    <conceal operation="lessthanequals">0</conceal>
+                    <category operation="contains">Pistol</category>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>4e54b271-2617-44b5-a70f-ab389890dda8</id>
+        <name>Holographic Sight</name>
+        <mount>Top</mount>
+        <avail>2</avail>
+        <cost>125</cost>
+        <source>HT</source>
+        <page>181</page>
+        <accuracy>1</accuracy>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>d5abeadd-fba4-47f9-ac35-bfbb31ce34be</id>
+        <name>Long Barrel</name>
+        <mount>Barrel</mount>
+        <avail>8R</avail>
+        <cost>Weapon Cost</cost>
+        <source>HT</source>
+        <page>181</page>
+        <accuracy>1</accuracy>
+        <conceal>+1</conceal>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>806bfacc-095e-448d-a5b2-c271c569ae51</id>
+        <name>Melee Hardening</name>
+        <mount />
+        <avail>6</avail>
+        <cost>500</cost>
+        <source>HT</source>
+        <page>181</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>83902f51-5f87-444f-a3ff-a74ce865e1af</id>
+        <name>Easy Breakdown (Unpowered)</name>
+        <mount>Side</mount>
+        <avail>8R</avail>
+        <cost>750</cost>
+        <source>HT</source>
+        <page>180</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>f27402fa-2845-4314-a97d-2747b3263e0d</id>
+        <name>Easy Breakdown (Powered)</name>
+        <mount>Side</mount>
+        <avail>10R</avail>
+        <cost>1250</cost>
+        <source>HT</source>
+        <page>180</page>
+        <forbidden>
+            <oneof>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>2da4f104-cf0c-4e0c-a001-4a6da4c2b46b</id>
+        <name>Electronic Firing</name>
+        <mount>Barrel</mount>
+        <avail>10R</avail>
+        <cost>1000</cost>
+        <source>HT</source>
+        <page>180</page>
+        <forbidden>
+            <oneof>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <rc>1</rc>
+    </accessory>
+    <accessory>
+        <id>a2e4fcc6-cc21-4fc8-bbdf-efb489e9c377</id>
+        <name>Mounted Crossbow</name>
+        <mount>Under/Barrel</mount>
+        <extramount>Under/Barrel</extramount>
+        <avail>8R</avail>
+        <cost>1000</cost>
+        <source>HT</source>
+        <page>182</page>
+        <hide />
+        <rating>0</rating>
+        <required>
+            <OR>
+                <weapondetails>
+                    <category>Assault Rifles</category>
+                    <category>Sniper Rifles</category>
+                    <category>Sporting Rifles</category>
+                    <useskill>Longarms</useskill>
+                    <AND>
+                        <useskill NOT="" operation="exists" />
+                        <OR>
+                            <category>Shotguns</category>
+                            <category>Sporting Rifles</category>
+                            <category>Sniper Rifles</category>
+                        </OR>
+                    </AND>
+                </weapondetails>
+            </OR>
+        </required>
+    </accessory>
+    <accessory>
+        <id>b83d5f60-7be2-4991-a518-775f6ae49207</id>
+        <name>Underbarrel Laser</name>
+        <mount>Under/Side</mount>
+        <extramount>Under/Side</extramount>
+        <avail>16F</avail>
+        <cost>22000</cost>
+        <source>HT</source>
+        <page>182</page>
+        <hide />
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>13d90aa2-6a67-47e5-a211-89aabea5f837</id>
+        <name>Underbarrel Shotgun</name>
+        <mount>Under</mount>
+        <avail>5R</avail>
+        <cost>600</cost>
+        <source>HT</source>
+        <page>182</page>
+        <addunderbarrels>
+            <weapon>Underbarrel Shotgun</weapon>
+        </addunderbarrels>
+        <hide />
+        <rating>0</rating>
+        <required>
+            <OR>
+                <category>Assault Rifles</category>
+                <category>Sniper Rifles</category>
+                <category>Sporting Rifles</category>
+                <useskill>Longarms</useskill>
+                <useskill>Heavy Weapons</useskill>
+                <AND>
+                    <useskill NOT="" operation="exists" />
+                    <OR>
+                        <category>Shotguns</category>
+                        <category>Sporting Rifles</category>
+                        <category>Sniper Rifles</category>
+                        <category>Light Machine Guns</category>
+                        <category>Medium Machine Guns</category>
+                        <category>Heavy Machine Guns</category>
+                        <category>Assault Cannons</category>
+                        <category>Grenade Launchers</category>
+                        <category>Missile Launchers</category>
+                    </OR>
+                </AND>
+            </OR>
+        </required>
+    </accessory>
+    <accessory>
+        <id>b8c019cc-5772-43b0-8ba8-a08581bab406</id>
+        <name>Overclocked</name>
+        <mount />
+        <avail>6F</avail>
+        <cost>200</cost>
+        <source>HT</source>
+        <page>182</page>
+        <damage>-2</damage>
+        <damagetype>P</damagetype>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <damage operation="contains">S(e)</damage>
+                <type>Melee</type>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>b83bfd3a-8011-4a8e-8e76-033dbd6a79c1</id>
+        <name>Retractable Bayonet</name>
+        <mount>Under</mount>
+        <avail>6R</avail>
+        <cost>200</cost>
+        <source>HT</source>
+        <page>182</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>d67f3194-61f3-4440-b02c-e5f173532b01</id>
+        <name>Custom Look</name>
+        <mount />
+        <avail>2</avail>
+        <cost>300</cost>
+        <source>HT</source>
+        <page>180</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>225d5411-953e-4537-9e97-40bced059bd3</id>
+        <name>Sawed Off/Shortbarrel</name>
+        <mount>Barrel</mount>
+        <avail>4R</avail>
+        <cost>20</cost>
+        <source>HT</source>
+        <page>182</page>
+        <conceal>-1</conceal>
+        <damage>-1</damage>
+        <forbidden>
+            <oneof>
+                <accessory>Stock Removal</accessory>
+                <accessory>Sawed Off/Shortbarrel and Stock Removal</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <category>Heavy Pistols</category>
+                    <category>Assault Rifles</category>
+                    <category>Shotguns</category>
+                    <category>Sniper Rifles</category>
+                    <category>Sporting Rifles</category>
+                    <useskill>Longarms</useskill>
+                    <AND>
+                        <useskill NOT="" operation="exists" />
+                        <OR>
+                            <category>Shotguns</category>
+                            <category>Sporting Rifles</category>
+                            <category>Sniper Rifles</category>
+                        </OR>
+                    </AND>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>88d0e08b-1ac2-442e-8f2f-dfaeb9cda9ab</id>
+        <name>Stock Removal</name>
+        <mount>Stock</mount>
+        <avail>2</avail>
+        <cost>20</cost>
+        <source>HT</source>
+        <page>182</page>
+        <conceal>-1</conceal>
+        <forbidden>
+            <oneof>
+                <accessory>Sawed Off/Shortbarrel</accessory>
+                <accessory>Sawed Off/Shortbarrel and Stock Removal</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="greaterthan">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>01bb2926-c25f-4eba-acfc-aa4b14019607</id>
+        <name>Sawed Off/Shortbarrel and Stock Removal</name>
+        <mount>Stock</mount>
+        <extramount>Barrel</extramount>
+        <avail>2</avail>
+        <cost>20</cost>
+        <source>HT</source>
+        <page>182</page>
+        <accuracy>-1</accuracy>
+        <conceal>-2</conceal>
+        <damage>-1</damage>
+        <forbidden>
+            <oneof>
+                <accessory>Stock Removal</accessory>
+                <accessory>Sawed Off/Shortbarrel</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <category>Heavy Pistols</category>
+                    <category>Assault Rifles</category>
+                    <useskill>Longarms</useskill>
+                    <AND>
+                        <useskill NOT="" operation="exists" />
+                        <OR>
+                            <category>Shotguns</category>
+                            <category>Sporting Rifles</category>
+                            <category>Sniper Rifles</category>
+                        </OR>
+                    </AND>
+                </OR>
+                <conceal operation="greaterthan">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>f2eee4ed-d0cb-4163-84d9-91e537cd13d9</id>
+        <name>Trigger Removal</name>
+        <mount />
+        <avail>2</avail>
+        <cost>50</cost>
+        <source>HT</source>
+        <page>182</page>
+        <accuracy>1</accuracy>
+        <forbidden>
+            <oneof>
+                <accessory>Vintage</accessory>
+            </oneof>
+            <weapondetails>
+                <OR>
+                    <category>Bows</category>
+                    <type>Melee</type>
+                </OR>
+            </weapondetails>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <oneof>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>85b01b5c-c788-4b43-8190-9e0c18391436</id>
+        <name>Personalized Grip</name>
+        <mount />
+        <avail>2</avail>
+        <cost>100</cost>
+        <source>HT</source>
+        <page>182</page>
+        <accuracy>1</accuracy>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>f277db83-e5f0-47c8-a465-e0307105796f</id>
+        <name>Collapsible Traditional Bow</name>
+        <mount />
+        <avail>0</avail>
+        <cost>Rating * 50</cost>
+        <source>HT</source>
+        <page>197</page>
+        <forbidden>
+            <oneof>
+                <accessory>Smartgun System, Internal</accessory>
+                <accessory>Smartgun System, External</accessory>
+                <accessory>Krime Dual-Mode External Smartgun Link</accessory>
+            </oneof>
+        </forbidden>
+        <rating>10</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <category>Bows</category>
+                    <spec>Bow</spec>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <!-- End Region -->
+    <!-- Region Shadowrun 2050 SR5 -->
+    <accessory>
+        <id>0c2e21a0-4f1d-409d-a33e-cb3d5f0b0897</id>
+        <name>Tripod (2050)</name>
+        <mount>Under</mount>
+        <avail>10</avail>
+        <cost>600</cost>
+        <source>2050</source>
+        <page>186</page>
+        <rating>0</rating>
+        <rc>6</rc>
+        <rcdeployable>True</rcdeployable>
+        <rcgroup>1</rcgroup>
+    </accessory>
+    <accessory>
+        <id>ec157e2d-5868-4652-8cf0-8e30e46fb130</id>
+        <name>Spare Clip (2050)</name>
+        <mount />
+        <avail>2</avail>
+        <cost>5</cost>
+        <source>2050</source>
+        <page>189</page>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">(c)</ammo>
+                    <ammo operation="contains">(d)</ammo>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>e632b766-55fb-42bf-8bd3-6c9c46830a29</id>
+        <name>Gas-Vent 2 System (2050)</name>
+        <mount>Barrel</mount>
+        <avail>2R</avail>
+        <cost>450</cost>
+        <source>2050</source>
+        <page>189</page>
+        <rating>0</rating>
+        <rc>2</rc>
+    </accessory>
+    <accessory>
+        <id>9998a80c-6452-4fcb-9508-66da27eea850</id>
+        <name>Gas-Vent 3 System (2050)</name>
+        <mount>Barrel</mount>
+        <avail>2R</avail>
+        <cost>700</cost>
+        <source>2050</source>
+        <page>189</page>
+        <rating>0</rating>
+        <rc>2</rc>
+    </accessory>
+    <accessory>
+        <id>ac1e63bd-4cce-44c4-ac65-71831ebaa1d4</id>
+        <name>Grenade Launcher (2050)</name>
+        <mount>Under</mount>
+        <avail>8F</avail>
+        <cost>1700</cost>
+        <source>2050</source>
+        <page>189</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="greaterthan">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>e6b1550c-c392-4e85-b618-04f8a09b8020</id>
+        <name>Gyro Mount, default (2050) </name>
+        <mount>Under</mount>
+        <avail>4</avail>
+        <cost>2500</cost>
+        <source>2050</source>
+        <page>189</page>
+        <rating>0</rating>
+        <rc>5</rc>
+        <rcgroup>1</rcgroup>
+    </accessory>
+    <accessory>
+        <id>6ed9f566-4696-4436-9d79-4e807fbb2a1f</id>
+        <name>Gyro Mount, Deluxe (2050) </name>
+        <mount>Under</mount>
+        <avail>4</avail>
+        <cost>6000</cost>
+        <source>2050</source>
+        <page>189</page>
+        <rating>0</rating>
+        <rc>6</rc>
+        <rcgroup>1</rcgroup>
+    </accessory>
+    <accessory>
+        <id>1bf98490-9642-436b-9b7c-fdbd6d5a65f1</id>
+        <name>Laser Sight (2050)</name>
+        <mount>Top/Under</mount>
+        <avail>6</avail>
+        <cost>500</cost>
+        <source>2050</source>
+        <page>189</page>
+        <accuracy>1</accuracy>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>dd5a1cf9-38a6-49a6-9ed5-c7ee79670e4e</id>
+        <name>Silencer (2050)</name>
+        <mount>Barrel</mount>
+        <avail>9F</avail>
+        <cost>500</cost>
+        <source>2050</source>
+        <page>189</page>
+        <forbidden>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">(cy)</ammo>
+                    <ammocategory>Shotguns</ammocategory>
+                    <category>Shotguns</category>
+                    <name>PSK-3 Collapsible Heavy Pistol</name>
+                    <spec>Revolvers</spec>
+                    <spec>Shotguns</spec>
+                    <spec2>Revolvers</spec2>
+                    <spec2>Shotguns</spec2>
+                </OR>
+            </weapondetails>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>57651486-8344-4b4b-af96-780e99cfb015</id>
+        <name>Speed Loader (2050)</name>
+        <mount />
+        <avail>2</avail>
+        <cost>10</cost>
+        <source>2050</source>
+        <page>189</page>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <ammo operation="contains">(cy)</ammo>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>1c8c3432-315b-4365-8a15-31e9427cbff9</id>
+        <name>Shock Pad (2050)</name>
+        <mount />
+        <avail>2</avail>
+        <cost>200</cost>
+        <source>2050</source>
+        <page>189</page>
+        <forbidden>
+            <oneof>
+                <accessory>Stock Removal</accessory>
+                <accessory>Sawed Off/Shortbarrel and Stock Removal</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <rc>1</rc>
+        <rcdeployable>True</rcdeployable>
+        <rcgroup>2</rcgroup>
+        <required>
+            <weapondetails>
+                <OR>
+                    <category operation="contains">Rifles</category>
+                    <category>Shotguns</category>
+                    <category>Light Machine Guns</category>
+                    <category>Medium Machine Guns</category>
+                    <category>Heavy Machine Guns</category>
+                    <category>Underbarrel Weapons</category>
+                    <category>Assault Cannons</category>
+                    <category>Flamethrowers</category>
+                    <category>Laser Weapons</category>
+                    <category>Grenade Launchers</category>
+                    <category>Missile Launchers</category>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>e62964cd-767f-4b10-b456-d87f5a04b64e</id>
+        <name>Smartgun System, Internal (2050)</name>
+        <mount />
+        <avail>+2R</avail>
+        <cost>Weapon Cost</cost>
+        <source>2050</source>
+        <page>189</page>
+        <accuracy>2</accuracy>
+        <forbidden>
+            <oneof>
+                <accessory>Ceramic/Plasteel Components</accessory>
+                <accessory>Collapsible Traditional Bow</accessory>
+                <accessory>Vintage</accessory>
+            </oneof>
+            <weapondetails>
+                <type>Melee</type>
+            </weapondetails>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>e6058e8b-c4b5-422f-aa2f-d0f23769b094</id>
+        <name>Smartgun System, External (2050)</name>
+        <mount>Top/Under</mount>
+        <avail>4R</avail>
+        <cost>600</cost>
+        <source>2050</source>
+        <page>189</page>
+        <accuracy>2</accuracy>
+        <forbidden>
+            <oneof>
+                <accessory>Ceramic/Plasteel Components</accessory>
+                <accessory>Collapsible Traditional Bow</accessory>
+                <accessory>Vintage</accessory>
+            </oneof>
+            <weapondetails>
+                <type>Melee</type>
+            </weapondetails>
+        </forbidden>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>a465112e-b597-4b39-b2c3-19d1b2fafb09</id>
+        <name>Concealable Holster (2050)</name>
+        <mount />
+        <avail>2</avail>
+        <cost>100</cost>
+        <source>2050</source>
+        <page>189</page>
+        <conceal>-2</conceal>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="lessthanequals">0</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>97de111c-4cf2-4a45-963f-14349b3b9c38</id>
+        <name>Imaging Scope (2050)</name>
+        <mount>Top</mount>
+        <avail>3</avail>
+        <cost>500</cost>
+        <source>2050</source>
+        <page>189</page>
+        <allowgear>
+            <gearcategory>Vision Enhancements</gearcategory>
+            <gearcategory>Custom</gearcategory>
+        </allowgear>
+        <gears>
+            <usegear>
+                <name>Vision Magnification</name>
+                <category>Vision Enhancements</category>
+            </usegear>
+        </gears>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>605c079d-baeb-422d-9653-9efe595d9dc2</id>
+        <name>Bipod (2050)</name>
+        <mount>Under</mount>
+        <avail>2</avail>
+        <cost>400</cost>
+        <source>2050</source>
+        <page>189</page>
+        <rating>0</rating>
+        <rc>2</rc>
+        <rcgroup>1</rcgroup>
+    </accessory>
+    <!-- End Region -->
+    <accessory>
+        <id>75cf7909-ac1b-4659-977a-371a950fcda9</id>
+        <name>Silencer (HK Urban Fighter)</name>
+        <mount>Barrel</mount>
+        <avail>16F</avail>
+        <cost>1000</cost>
+        <source>SAG</source>
+        <page>21</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>HK Urban Fighter</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>112122f6-71de-43fd-b4bf-7db2e309590e</id>
+        <name>Silencer (Onotari Arms Pressure KS-X)</name>
+        <mount>Barrel</mount>
+        <avail>14F</avail>
+        <cost>900</cost>
+        <source>SAG</source>
+        <page>35</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>Onotari Arms Pressure KS-X</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>c50723ab-8354-4b32-a1a8-b3720df0dd2d</id>
+        <name>Survival Knife Bonuses</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>SR5</source>
+        <page>422</page>
+        <gears>
+            <usegear>
+                <name>GPS Monitor</name>
+                <category>Survival Gear</category>
+            </usegear>
+            <usegear>
+                <name>Mini-Multitool</name>
+                <category>Survival Gear</category>
+            </usegear>
+            <usegear>
+                <name>Micro-Lighter</name>
+                <category>Survival Gear</category>
+            </usegear>
+            <usegear>
+                <name>Hidden Compartment</name>
+                <category>Survival Gear</category>
+            </usegear>
+            <usegear>
+                <name>Phosphorescent Blade Coating</name>
+                <category>Survival Gear</category>
+            </usegear>
+        </gears>
+        <hide />
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>471d2d54-34cc-493c-b888-e27498b28e39</id>
+        <name>Survival Knife Wireless Bonuses</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>SR5</source>
+        <page>422</page>
+        <gears>
+            <usegear>
+                <name>ARO of Local Maps</name>
+                <category>Software</category>
+            </usegear>
+            <usegear>
+                <name>Can Make Commcalls</name>
+                <category>Electronic Accessories</category>
+            </usegear>
+        </gears>
+        <hide />
+        <rating>0</rating>
+    </accessory>
+    <!-- Region Street Lethal -->
+    <accessory>
+        <id>5fac79b3-5eff-44f8-a13c-e1eba38df873</id>
+        <name>Terracotta Arms Pup Silencer</name>
+        <mount />
+        <avail>+2F</avail>
+        <cost>400</cost>
+        <source>SL</source>
+        <page>27</page>
+        <forbidden>
+            <oneof>
+                <accessory>Ceramic/Plasteel Components</accessory>
+                <accessory>Vintage</accessory>
+            </oneof>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>Terracotta Arms Pup</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>6f84482e-5a9d-4fb3-bad3-4fbbfa569919</id>
+        <name>HK Urban Fighter Spare Clip</name>
+        <mount />
+        <avail>10F</avail>
+        <cost>100</cost>
+        <source>SL</source>
+        <page>45</page>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <name>HK Urban Fighter</name>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>d2a1cc9b-72e3-49df-957c-8ed6fb47a813</id>
+        <name>Additional Clip/Magazine</name>
+        <mount>Side</mount>
+        <avail>10R</avail>
+        <cost>Weapon Cost</cost>
+        <source>SL</source>
+        <page>45</page>
+        <ammoslots>1</ammoslots>
+        <conceal>+2</conceal>
+        <forbidden>
+            <weapondetails>
+                <OR>
+                    <category>Holdouts</category>
+                    <category>Light Pistols</category>
+                    <category>Heavy Pistols</category>
+                    <category>Machine Pistols</category>
+                </OR>
+            </weapondetails>
+        </forbidden>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">(c)</ammo>
+                    <ammo operation="contains">(m)</ammo>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>20d18222-448c-47f8-bb4e-be307a0cd995</id>
+        <name>Additional Clip/Magazine (Pistol)</name>
+        <mount>Side</mount>
+        <avail>10R</avail>
+        <cost>Weapon Cost</cost>
+        <source>SL</source>
+        <page>45</page>
+        <ammoslots>1</ammoslots>
+        <conceal>+2</conceal>
+        <modifyammocapacity>* 3 div 4</modifyammocapacity>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <ammo operation="contains">(c)</ammo>
+                    <ammo operation="contains">(m)</ammo>
+                </OR>
+                <OR>
+                    <category>Holdouts</category>
+                    <category>Light Pistols</category>
+                    <category>Heavy Pistols</category>
+                    <category>Machine Pistols</category>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>37d3ffa9-b33e-4280-845c-bee0d063f193</id>
+        <name>Krime Pack</name>
+        <mount />
+        <avail>14R</avail>
+        <cost>500</cost>
+        <source>SL</source>
+        <page>45</page>
+        <ammoreplace>2500(belt)</ammoreplace>
+        <ammoslots>1</ammoslots>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>f52db08a-a2f5-482b-8cd0-4cf3045e0d60</id>
+        <name>Krime Stun-O-Net</name>
+        <mount>Under</mount>
+        <avail>10R</avail>
+        <cost>800</cost>
+        <source>SL</source>
+        <page>46</page>
+        <addunderbarrels>
+            <weapon>Krime Stun-O-Net</weapon>
+        </addunderbarrels>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <OR>
+                    <category>Assault Rifles</category>
+                    <category>Sniper Rifles</category>
+                    <category>Sporting Rifles</category>
+                    <useskill>Longarms</useskill>
+                    <useskill>Heavy Weapons</useskill>
+                    <AND>
+                        <useskill NOT="" operation="exists" />
+                        <OR>
+                            <category>Shotguns</category>
+                            <category>Sporting Rifles</category>
+                            <category>Sniper Rifles</category>
+                            <category>Light Machine Guns</category>
+                            <category>Medium Machine Guns</category>
+                            <category>Heavy Machine Guns</category>
+                            <category>Assault Cannons</category>
+                            <category>Grenade Launchers</category>
+                            <category>Missile Launchers</category>
+                        </OR>
+                    </AND>
+                </OR>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>7629baa4-2240-45f3-b3d5-066dfc536877</id>
+        <name>Narcoject Dazzler</name>
+        <mount>Top</mount>
+        <avail>15R</avail>
+        <cost>1000</cost>
+        <source>SL</source>
+        <page>46</page>
+        <rating>0</rating>
+        <required>
+            <weapondetails>
+                <conceal operation="greaterthanorequals">4</conceal>
+            </weapondetails>
+        </required>
+    </accessory>
+    <accessory>
+        <id>a16a52a9-3b57-4e3c-96f6-564616bcd576</id>
+        <name>Red Dot Sight</name>
+        <mount>Top</mount>
+        <avail>4</avail>
+        <cost>75</cost>
+        <source>SL</source>
+        <page>47</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>91d1b0c0-3146-4435-b2ef-322e80dbbb59</id>
+        <name>Breeching Teeth</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>SL</source>
+        <page>131</page>
+        <rating>0</rating>
+        <hide />
+    </accessory>
+    <accessory>
+        <id>2eea1d98-8c6f-4f59-a8e8-e39b17c60869</id>
+        <name>Modified Pump Handle</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>SL</source>
+        <page>131</page>
+        <rating>0</rating>
+        <hide />
+    </accessory>
+    <!-- Region Special Modifications -->
+    <accessory>
+        <id>b741b729-106e-46f2-9143-0f745fd48789</id>
+        <name>Special Modification: Improved AP</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>BTB</source>
+        <page>161</page>
+        <rating>0</rating>
+        <ap>-1</ap>
+        <specialmodification>True</specialmodification>
+        <required>
+            <oneof>
+                <specialmodificationlimit>1</specialmodificationlimit>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>56b17280-27c6-414a-9957-f628ae5efefa</id>
+        <name>Special Modification: Improved Accuracy</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>BTB</source>
+        <page>161</page>
+        <rating>0</rating>
+        <accuracy>1</accuracy>
+        <specialmodification>True</specialmodification>
+        <required>
+            <oneof>
+                <specialmodificationlimit>1</specialmodificationlimit>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>9084d801-c654-4eec-960e-4186a6de81d6</id>
+        <name>Special Modification: Improved Ammunition Capacity</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>BTB</source>
+        <page>161</page>
+        <rating>0</rating>
+        <modifyammocapacity>+(Weapon * 0.5)</modifyammocapacity>
+        <specialmodification>True</specialmodification>
+        <required>
+            <oneof>
+                <specialmodificationlimit>1</specialmodificationlimit>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>93be91c1-3f77-4e7b-9ac2-eb349b76d017</id>
+        <name>Special Modification: Improved Concealment</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>BTB</source>
+        <page>161</page>
+        <rating>0</rating>
+        <conceal>-1</conceal>
+        <specialmodification>True</specialmodification>
+        <required>
+            <oneof>
+                <specialmodificationlimit>1</specialmodificationlimit>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>3c82e17b-76cd-47b9-9bda-c3131a64e0ee</id>
+        <name>Special Modification: Damage</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>BTB</source>
+        <page>161</page>
+        <rating>0</rating>
+        <damage>1</damage>
+        <specialmodification>True</specialmodification>
+        <required>
+            <oneof>
+                <specialmodificationlimit>2</specialmodificationlimit>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>15d159e8-d3db-4cf3-8964-0eb2235ed6c2</id>
+        <name>Special Modification: Improved Reach</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>BTB</source>
+        <page>161</page>
+        <rating>0</rating>
+        <reach>1</reach>
+        <specialmodification>True</specialmodification>
+        <required>
+            <oneof>
+                <specialmodificationlimit>1</specialmodificationlimit>
+            </oneof>
+        </required>
+    </accessory>
+    <accessory>
+        <id>09abdea8-df9a-4e74-86aa-0f79ce96f422</id>
+        <name>Special Modification: Improved Recoil Comp</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>BTB</source>
+        <page>161</page>
+        <rating>0</rating>
+        <rc>1</rc>
+        <specialmodification>True</specialmodification>
+        <required>
+            <oneof>
+                <specialmodificationlimit>1</specialmodificationlimit>
+            </oneof>
+        </required>
+    </accessory>
+    <!-- End Region -->
+    <!-- End Region -->
+    <!-- Region Datapuls Sota 2080 -->
+    <accessory>
+        <id>2d5cd697-4754-420c-ba11-27cf957a4d09</id>
+        <name>Maker Mag</name>
+        <mount />
+        <avail>18R</avail>
+        <cost>1000</cost>
+        <source>SOTG</source>
+        <page>12</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>63a4c7fe-847e-46e6-a99d-da0f39e63b8a</id>
+        <name>Plastic Components 6</name>
+        <mount />
+        <avail>18R</avail>
+        <cost>1000</cost>
+        <source>SOTG</source>
+        <page>12</page>
+        <rating>6</rating>
+    </accessory>
+    <!-- End Region -->
+    <!-- Region Krime Katalog -->
+    <accessory>
+        <id>610dffea-8295-434f-b279-5327adbefd59</id>
+        <name>Metahuman Adaptation</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>KK</source>
+        <page>0</page>
+        <rating>0</rating>
+        <hide />
+    </accessory>
+    <accessory>
+        <id>1c70c3bf-9a59-45d9-bb3e-4569a2a624d6</id>
+        <name>Matrix Signal Scanner</name>
+        <mount />
+        <avail>0</avail>
+        <cost>0</cost>
+        <source>KK</source>
+        <page>18</page>
+        <hide />
+        <gears>
+            <usegear>
+                <name>Radio Signal Scanner</name>
+                <category>Sensor Functions</category>
+            </usegear>
+        </gears>
+        <rating>0</rating>
+    </accessory>
+    <!--TODO: Mode selection-->
+    <accessory>
+        <id>aefc5dd2-4b2d-4662-99d6-3bddc8db026e</id>
+        <name>Krime Dual-Mode External Smartgun Link</name>
+        <mount>Top/Under</mount>
+        <avail>7R</avail>
+        <cost>500</cost>
+        <source>KK</source>
+        <page>22</page>
+        <accuracy>2</accuracy>
+        <forbidden>
+            <oneof>
+                <accessory>Ceramic/Plasteel Components</accessory>
+                <accessory>Collapsible Traditional Bow</accessory>
+                <accessory>Vintage</accessory>
+            </oneof>
+            <weapondetails>
+                <type>Melee</type>
+            </weapondetails>
+        </forbidden>
+        <gears>
+            <usegear>
+                <name>Laser Range Finder</name>
+                <category>Sensor Functions</category>
+            </usegear>
+            <usegear>
+                <name>Camera, Micro</name>
+                <category>Vision Devices</category>
+            </usegear>
+        </gears>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>502c319a-68a9-4e89-8521-e4e535738890</id>
+        <name>Krime Explosive Securing Tripod</name>
+        <mount>Under</mount>
+        <avail>12</avail>
+        <cost>1000</cost>
+        <source>KK</source>
+        <page>23</page>
+        <rating>0</rating>
+        <rc>6</rc>
+        <rcdeployable>True</rcdeployable>
+        <rcgroup>1</rcgroup>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>9b09fc1e-cb5b-473f-83a5-6f23a7524012</id>
+        <name>Krime Offline Support Solutions</name>
+        <mount />
+        <avail>0</avail>
+        <cost>25</cost>
+        <source>KK</source>
+        <page>23</page>
+        <rating>0</rating>
+    </accessory>
+    <accessory>
+        <id>3e048d18-3011-4e43-a557-0696c4c09042</id>
+        <name>Krime Loudener</name>
+        <mount>Barrel</mount>
+        <avail>0</avail>
+        <cost>250</cost>
+        <source>KK</source>
+        <page>23</page>
+        <rating>0</rating>
+        <rc>2</rc>
+    </accessory>
+    <accessory>
+        <id>a869d692-db53-4b31-847a-5216d9e48c0e</id>
+        <name>Krime Keeper</name>
+        <mount />
+        <avail>0</avail>
+        <cost>50</cost>
+        <source>KK</source>
+        <page>23</page>
+        <rating>0</rating>
+    </accessory>
+    <!-- End Region -->
+</accessories>

@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Xml.Serialization;
+using Blazorise.Extensions;
+using ChummerDataViewer.Classes.HelperMethods;
 using ChummerDataViewer.Extensions;
 using ChummerDataViewer.Enums;
 using ChummerDataViewer.Interfaces;
@@ -7,76 +9,136 @@ using ChummerDataViewer.Interfaces;
 
 namespace ChummerDataViewer.Classes;
 
-[XmlRoot(ElementName="accessory")]
-public class Accessory : ICreatable
+
+public record Accessory : ICreatable, IHasSource
 {
-    [XmlElement(ElementName="id")] 
     public Guid Id { get; set; }
-    
-    [XmlElement(ElementName = "name")] 
     public string Name { get; set; } = string.Empty;
     
-    [XmlElement(ElementName = "avail")] 
-    public string Avail { get; set; } = string.Empty;
+    public Availability? Availability { get; set; }
     
-    [XmlElement(ElementName = "cost")] 
-    public string Cost { get; set; } = string.Empty;
+    public int Cost { get; set; }
     
-    [XmlElement(ElementName="source")] 
-    public string Book { get; set; } = string.Empty;
-    
-    [XmlElement(ElementName="page")] 
-    public int Page { get; set; }
-    
-
-    [XmlElement(ElementName = "mount")]
-    public string MountString { get; set; } = string.Empty;
-    [XmlIgnore] 
-    public HashSet<AccessoryMount> Mounts { get; set; } = new();
-    
-    
-    [XmlElement(ElementName="rating")] 
     public int Rating { get; set; } 
     
-    [XmlElement(ElementName="rc")] 
-    public int Rc { get; set; } 
+    //Recoil Comp Modifications
+    public int RecoilModification { get; set; } 
     
-    [XmlElement(ElementName="rcdeployable")] 
-    public bool Rcdeployable { get; set; } 
+    public bool RcDeployable { get; set; } 
     
-    [XmlElement(ElementName="rcgroup")] 
-    public int Rcgroup { get; set; }
+    public int RcGroup { get; set; }
     
+    public int ConcealModification { get; set; }
     
-    [XmlIgnore] 
-    public string DisplaySource => $"p.{Page} ({Book})";
-    
+    public int Accuracy { get; set; }
 
+    public Ammo? AmmoModification { get; set; }
     
-    [XmlIgnore]
-    private ILogger? Logger { get; set; }
+    //This feeds Calculations like +(Weapon * 0.5). Maybe we can an Action out of this?
+    public string ModifyAmmoCapacity { get; set; } = string.Empty;
     
-    [XmlIgnore]
-    public static Dictionary<string, Accessory> AccessoriesDictionary { get; private set; } = new();
+    //Only exists on the Improved Range finder yay special case handling
+    //public int RangeModifier { get; set; }
+    
+    public int AccessoryCostMultiplier { get; set; } = 1;
+
+    public List<WeaponMountSlots> ExtraMount { get; set; } = new();
+    
+    //This sadly can't be made into a List<Weapon> because Weapon is not created at this point and this cannot depend on Weapon, because weapon depends on Accessory.
+    //TODO: Just like in weapons delay this by hooking it up to an observable collection of weapons
+    public List<string> UnderBarrelWeaponNames { get; set; } = new();
+    
+    public int DamageAmountModification { get; set; }
+    
+    //TODO: Parse this into the Damage Type
+    public string DamageTypeOverride { get; set; } = string.Empty;
+    
+    public int ArmorPenModification { get; set; }
+    
+    public int ReachModifier { get; set; }
+    
+    public HashSet<WeaponMountSlots> PossibleMountSlots { get; set; } = new();
+    public Source? Source { get; set; }
+    
+    public static Dictionary<string, Accessory> AccessoriesDictionary { get; } = new();
+    
+    
 
     public async Task CreateAsync(ILogger logger, ICreatable? baseObject = null)
     {
-        const string accessoryMountStringPattern = @"([A-Z])\w+";
-        await Task.Run(() =>
+        if(baseObject is not XmlAccessory baseAccessory)
+            return;
+
+        Cost = await Task.Run(() => RegexHelper.GetInt(baseAccessory.Cost, logger)).ConfigureAwait(false);
+        ExtraMount = await  Task.Run(()=>GetMounts(baseAccessory.ExtraMount)).ConfigureAwait(false);
+        PossibleMountSlots = await  Task.Run(()=>GetMounts(baseAccessory.MountString).ToHashSet()).ConfigureAwait(false);
+        ConcealModification = await Task.Run(()=>GetConcealValue(baseAccessory.Concealment)).ConfigureAwait(false);
+        Id = baseAccessory.Id;
+        Name = baseAccessory.Name;
+        Availability = new Availability(baseAccessory.Avail, logger);
+        Rating = baseAccessory.Rating;
+        RecoilModification = baseAccessory.Rc;
+        RcDeployable = baseAccessory.Rcdeployable;
+        RcGroup = baseAccessory.RcGroup;
+        ModifyAmmoCapacity = baseAccessory.ModifyAmmoCapacity;
+        //RangeModifier = baseAccessory.RangeModifier;
+        AccessoryCostMultiplier = baseAccessory.AccessoryCostMultiplier;
+        Accuracy = baseAccessory.Accuracy;
+        AmmoModification = new Ammo(baseAccessory, logger);
+        UnderBarrelWeaponNames = baseAccessory.UnderBarrelWeapons;
+        DamageAmountModification = baseAccessory.DamageAmountModification;
+        DamageTypeOverride = baseAccessory.DamageTypeOverride;
+        ArmorPenModification = baseAccessory.ArmorPenModification;
+        ReachModifier = baseAccessory.RangeModifier;
+        Source = new Source(baseAccessory.BookCode, baseAccessory.Page, logger);
+
+
+
+
+        if (!AccessoriesDictionary.ContainsKey(Name))
+            AccessoriesDictionary.Add(Name, this);
+        
+        int GetConcealValue(string baseConceal)
         {
-            Logger = logger;
+            if (baseConceal.IsNullOrEmpty())
+                return 0;
             
-            var matches = Regex.Matches(MountString, accessoryMountStringPattern);
+            if (baseConceal.Equals("Rating"))
+                return baseAccessory.Rating;
+            
+            try
+            {
+                return int.Parse(baseConceal);
+            }
+            catch (FormatException e)
+            {
+                logger.LogWarning("Unrecognised Conceal Value pattern {BaseConceal}", baseConceal);
+                throw;
+            }
+        }
+
+        const string accessoryMountStringPattern = @"([A-Z])\w+";
+        List<WeaponMountSlots> GetMounts(string? mountString)
+        {
+
+            
+            var returnList = new List<WeaponMountSlots>();
+
+            if (mountString.IsNullOrEmpty())
+                return returnList;
+            
+            var matches = Regex.Matches(mountString!, accessoryMountStringPattern);
             foreach (Match match in matches)
             {
-                if(Enum.TryParse<AccessoryMount>(match.ToString(), out var accessoryMount))
-                    Mounts.Add(accessoryMount);
+                if(Enum.TryParse<WeaponMountSlots>(match.ToString(), out var accessoryMount))
+                    returnList.Add(accessoryMount);
             }
 
-            if (!AccessoriesDictionary.ContainsKey(Name))
-                AccessoriesDictionary.Add(Name, this);
-        });
+            return returnList;
+        }
     }
+    
+    
 
     public static Accessory GetAccessory(string name, ILogger logger)
     {
@@ -87,4 +149,6 @@ public class Accessory : ICreatable
     {
         return GetAccessory(accessoryWithName.Name, logger);
     }
+
+
 }

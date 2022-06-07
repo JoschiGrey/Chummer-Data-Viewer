@@ -2,6 +2,7 @@
 using Blazorise.Extensions;
 using ChummerDataViewer.Classes;
 using ChummerDataViewer.Classes.DataStructures;
+using ChummerDataViewer.Classes.HelperMethods;
 using ChummerDataViewer.Classes.XmlRoots;
 using ChummerDataViewer.Enums;
 using EnumExtensions = ChummerDataViewer.Extensions.EnumExtensions;
@@ -28,7 +29,14 @@ public partial class WeaponTable : ComponentBase
         
         foreach (var slot in weapon.MountSlots)
         {
-            Console.WriteLine($"{slot.Mount} holds {slot.Accessory?.Name} in {weapon.Name}");
+            Console.WriteLine($"{slot.MountSlots} holds {slot.Accessory?.Name} in {weapon.Name}");
+        }
+        Console.WriteLine("ArmorPenValue is: "+ weapon.ArmorPen.ArmorPenValue);
+        Console.WriteLine("Accuracy is: "+ weapon.Accuracy);
+        Console.WriteLine("Base Accuracy is: "+ weapon.BackupWeapon.Accuracy);
+        foreach (var weaponAccessory in weapon.Accessories)
+        {
+            Console.WriteLine(weaponAccessory.Name);
         }
 
         

@@ -15,8 +15,8 @@ public class XmlWeapon : ICreatable
 	/// THis list only contains names!
 	/// </summary>
 	[XmlArray("accessories")]
-	[XmlArrayItem("accessory", typeof(Accessory))]
-	public List<Accessory> AccessoriesNameList { get; set; } = new();
+	[XmlArrayItem("accessory", typeof(XmlAccessory))]
+	public List<XmlAccessory> AccessoriesNameList { get; set; } = new();
 	
 	[XmlElement(ElementName="id")] 
 	public Guid Id { get; set; }
@@ -78,8 +78,8 @@ public class XmlWeapon : ICreatable
 	public int Page { get; set; }
 	
 	[XmlArray("accessorymounts")]
-	[XmlArrayItem("mount", typeof(AccessoryMount))]
-	public List<AccessoryMount> AccessoryMounts { get; set; } = new();
+	[XmlArrayItem("mount", typeof(WeaponMountSlots))]
+	public List<WeaponMountSlots> AccessoryMounts { get; set; } = new();
 	
 	[XmlArray(ElementName="underbarrels")]
 	[XmlArrayItem("underbarrel")]
@@ -147,27 +147,18 @@ public class XmlWeapon : ICreatable
    [XmlElement(ElementName="required")] 
    public Required Required { get; set; } 
    */
-
-	private AccessoryMount _extraMount;
+   
 	/// <summary>
 	/// Seems to be used by underbarrel weapons to replace the used up mount in chummer. Not really needed here -> just add it to the mounts list.
 	/// </summary>
 	[XmlElement(ElementName="extramount")] 
-	public AccessoryMount ExtraMount
-	{
-		get => _extraMount;
-		set
-		{
-			_extraMount = value;
-			AccessoryMounts.Add(value);
-		} 
-	} 
+	public WeaponMountSlots ExtraMountSlots { get; set; }
 	
 	/// <summary>
 	/// Mostly used by underbarrel weapons to show what mount they use.
 	/// </summary>
 	[XmlElement(ElementName="mount")] 
-	public AccessoryMount Mount { get; set; }
+	public WeaponMountSlots MountSlots { get; set; }
 
 	[XmlArray("allowgear")]
 	[XmlArrayItem(ElementName = "gearcategory")]
@@ -178,7 +169,7 @@ public class XmlWeapon : ICreatable
 	/// </summary>
 	[XmlArray("doubledcostaccessorymounts")]
 	[XmlArrayItem(ElementName = "mount")]
-	public List<AccessoryMount>? DoubledCostAccessoryMounts { get; set; }
+	public List<WeaponMountSlots>? DoubledCostAccessoryMounts { get; set; }
 
 	/// <summary>
 	/// Special Case for Hammerli Gemini... it shopots 2 bullets at singleshot

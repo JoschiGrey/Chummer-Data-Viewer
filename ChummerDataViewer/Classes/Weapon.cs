@@ -1,12 +1,15 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Xml.Serialization;
 using Blazorise.Extensions;
+using ChummerDataViewer.Classes.HelperMethods;
 using ChummerDataViewer.Enums;
 using ChummerDataViewer.Extensions;
 using ChummerDataViewer.Interfaces;
+// ReSharper disable CommentTypo
+
 
 namespace ChummerDataViewer.Classes;
 
-public record Weapon : ICreatable, IHoldAccessories
+public sealed record Weapon : ICreatable, IHoldAccessories
 {
     public Guid Id { get; init; }
     
@@ -18,7 +21,7 @@ public record Weapon : ICreatable, IHoldAccessories
     
     public Damage? Damage { get; private set; }
     
-    public int Ap { get; private set; }
+    public ArmorPen? ArmorPen { get; private set; }
     
     public int RecoilCompensation { get; private set; }
     
@@ -41,27 +44,55 @@ public record Weapon : ICreatable, IHoldAccessories
     
     //TODO:This should be reworked into it's own class maybe an enum?
     public string FiringMode { get; private set; } = string.Empty;
+    
+    /// <summary>
+    /// Stores a weapon object with all original values, that could have been changed by an accessory.
+    /// </summary>
+    public Weapon? BackupWeapon { get; set; }
 
     /// <summary>
     /// All Mounts
     /// </summary>
     public HashSet<MountSlot> MountSlots { get; set; } = new HashSet<MountSlot>();
-
-
+    
     //Melee Exclusive
     public int Reach { get; private set; }
 
     public List<Accessory> Accessories { get; private set; } = new();
-    
-    private const string NumberPattern = "[0-9]+";
 
     public string CostCss { get; private set; } = string.Empty;
-
+    
     public static HashSet<Weapon> AllWeapons { get; } = new();
     
+    
+    /// <summary>
+    /// This copy Constructor saves all the values an accessory could change into a backup weapon object
+    /// </summary>
+    /// <param name="templateWeapon"></param>
+    private Weapon(Weapon templateWeapon)
+    {
+	    Availability = templateWeapon.Availability;
+	    Cost = templateWeapon.Cost;
+	    RecoilCompensation = templateWeapon.RecoilCompensation;
+	    Conceal = templateWeapon.Conceal;
+	    Accuracy = templateWeapon.Accuracy;
+	    Ammo = templateWeapon.Ammo;
+	    _accessoryCostMultiplier = templateWeapon._accessoryCostMultiplier;
+	    MountSlots = templateWeapon.MountSlots;
+	    //TODO: True Unberbarrelweapon Support
+	    Damage = templateWeapon.Damage;
+	    ArmorPen = templateWeapon.ArmorPen;
+	    Reach = templateWeapon.Reach;
+    }
+
+    public Weapon()
+    {
+	    
+    }
 
     public async Task CreateAsync(ILogger logger, ICreatable? baseObject)
     {
+	    //TODO: Add underbarrel support. Make AllWeapons into an observablecollection and wait until the correct weapon was filled?
 	    if (baseObject is not XmlWeapon baseWeapon)
 		    throw new ArgumentException(nameof(baseObject));
 	    try
@@ -86,19 +117,19 @@ public record Weapon : ICreatable, IHoldAccessories
 		    Range = WeaponRange.GetWeaponRange(baseWeapon.WeaponRangeString, Category.Name);
 		    AlternateWeaponRange = WeaponRange.GetWeaponRange(baseWeapon.AlternateRangeString, Category.Name);
 
-		    Ap = await GetInt(baseWeapon.ApString).ConfigureAwait(false);
+		    ArmorPen = new ArmorPen(baseWeapon.ApString);
 		    
-		    RecoilCompensation = await GetInt(baseWeapon.RecoilCompensationString).ConfigureAwait(false);
+		    RecoilCompensation = await Task.Run(() => RegexHelper.GetInt(baseWeapon.RecoilCompensationString, logger)).ConfigureAwait(false);
 		    
 		    Skill = await GetSkill().ConfigureAwait(false);
-
-		    Cost = await GetInt(baseWeapon.CostString).ConfigureAwait(false);
 		    
-		    Accuracy = await GetInt(baseWeapon.AccuracyString).ConfigureAwait(false);
-
-		    Accessories = await Task.Run(GetAccessories).ConfigureAwait(false);
-
+		    Cost = await Task.Run(() => RegexHelper.GetInt(baseWeapon.CostString, logger)).ConfigureAwait(false);
+		    
+		    Accuracy = await Task.Run(() => RegexHelper.GetInt(baseWeapon.AccuracyString, logger)).ConfigureAwait(false);
+		    
 		    CostCss = baseWeapon.FormCostCssClass();
+
+		    Accessories = await AddAccessoriesAsync();
 		    
 		    AllWeapons.Add(this);
 	    }
@@ -106,28 +137,6 @@ public record Weapon : ICreatable, IHoldAccessories
 	    {
 		    logger.LogCritical(e, "Creation failed of {Type}, {Name}", GetType(), Name);
 		    throw;
-	    }
-
-
-
-	    async ValueTask<int> GetInt(string input)
-	    {
-		    return await Task.Run(() =>
-		    {
-			    int output = 0;
-			    try
-			    {
-				    var match = Regex.Match(input, NumberPattern).ToString();
-				    if (!match.IsNullOrEmpty())
-					    output = int.Parse(match);
-			    }
-			    catch (FormatException e)
-			    {
-				    logger.LogWarning(e, "Failed to parse {Input} to an cost", input);
-			    }
-
-			    return output;
-		    });
 	    }
 
 	    async ValueTask<Category> GetCategory()
@@ -206,12 +215,12 @@ public record Weapon : ICreatable, IHoldAccessories
 		    });
 	    }
 
-	    List<Accessory> GetAccessories()
+	    async ValueTask<List<Accessory>> AddAccessoriesAsync()
 	    {
 		    var list = baseWeapon.AccessoriesNameList
-			    .Select(accessoryWithName => Accessory.GetAccessory(accessoryWithName, logger)).ToList();
-		    
-		    if(!TryAddMultipleAccessories(list, logger, true))
+			    .Select(accessoryWithName => Accessory.GetAccessory(accessoryWithName.Name, logger)).ToList();
+
+		    if(await TryAddMultipleAccessoriesAsync(list, logger, true))
 			    logger.LogDebug("Could not gracefully add all accessories for {Name}", Name);
 		    return list;
 	    }
@@ -219,18 +228,19 @@ public record Weapon : ICreatable, IHoldAccessories
     }
 
     
-    public bool TryAddAccessory(Accessory accessory, ILogger logger, bool forceAdd = false)
+    public async ValueTask<bool> TryAddAccessoryAsync(Accessory accessory, ILogger logger, bool forceAdd = false)
     {
-	    if (!accessory.Mounts.Any())
+	    if (!accessory.PossibleMountSlots.Any())
 	    {
-		    ForceAddAccessory(accessory, logger);
+		    await ForceAddAccessoryAsync(accessory, logger);
+		    return true;
 	    }
 
 
 		if (!accessory.TryGetFreeSlots(this, logger, out var fittingSlots))
 	    {
 		    if (forceAdd)
-			    ForceAddAccessory(accessory, logger);
+			    await ForceAddAccessoryAsync(accessory, logger);
 		    
 		    return false;
 	    }
@@ -239,7 +249,7 @@ public record Weapon : ICreatable, IHoldAccessories
 
 
 
-	    AddAccessory(accessory, ref firstFreeSlot, logger);
+	    await AddAccessory(accessory, firstFreeSlot, logger);
 	    return true;
     }
 
@@ -250,10 +260,10 @@ public record Weapon : ICreatable, IHoldAccessories
     /// <param name="logger"></param>
     /// <param name="forceAdd">If no slot is free, a slot will be generated for that accessory</param>
     /// <returns></returns>
-    public bool TryAddMultipleAccessories(IEnumerable<Accessory> accessories, ILogger logger, bool forceAdd = false)
+    public async ValueTask<bool> TryAddMultipleAccessoriesAsync(IEnumerable<Accessory> accessories, ILogger logger, bool forceAdd = false)
     {
 	    var accessoryList = accessories.ToList();
-	    accessoryList.Sort((x, y) => x.Mounts.Count.CompareTo(y.Mounts.Count));
+	    accessoryList.Sort((x, y) => x.PossibleMountSlots.Count.CompareTo(y.PossibleMountSlots.Count));
 	    
 	    //TODO: Das Folgende Problem Lösen
 	    // Waffe: Barrel, Top, Side
@@ -266,37 +276,113 @@ public record Weapon : ICreatable, IHoldAccessories
 	    var addedAll = true;
 	    foreach (var accessory in accessoryList)
 	    {
-		    if (!TryAddAccessory(accessory, logger, forceAdd))
+		    if (!await TryAddAccessoryAsync(accessory, logger, forceAdd))
 			    addedAll = false;
 	    }
-
 	    return addedAll;
     }
 
-    public bool TryRemoveAccessory(Accessory accessory, ILogger logger)
-    {
-	    throw new NotImplementedException();
-    }
-
-    public void AddAccessory(Accessory accessory, ref MountSlot mountSlot, ILogger logger)
+    public async ValueTask AddAccessory(Accessory accessory, MountSlot mountSlot, ILogger logger)
     {
 	    mountSlot.Accessory = accessory;
+	    await ApplyAccessoryAsync(accessory, logger);
     }
 
-    public void ForceAddAccessory(Accessory accessory, ILogger logger)
+    public async ValueTask ForceAddAccessoryAsync(Accessory accessory, ILogger logger)
     {
+	    MountSlot forcedSlot;
 	    //Handles internal mods.
-	    if (!accessory.Mounts.Any())
-	    {
-		    MountSlots.Add(new MountSlot(AccessoryMount.Internal, accessory){IsForced = true});
-		    return;
-	    }
+	    if (!accessory.PossibleMountSlots.Any())
+		    forcedSlot = new MountSlot(WeaponMountSlots.Internal){IsForced = true};
 
-	    MountSlots.Add(new MountSlot(accessory.Mounts.First(), accessory){IsForced = true});
+	    else
+		    forcedSlot = new MountSlot(accessory.PossibleMountSlots.First()){IsForced = true};
+	    
+	    MountSlots.Add(forcedSlot);
+	    await AddAccessory(accessory, forcedSlot, logger);
     }
 
     public void RemoveAccessory(Accessory accessory, MountSlot mountSlot, ILogger logger)
     {
 	    throw new NotImplementedException();
     }
+
+    /// <summary>
+    /// Key:RcGroup Value:Modification
+    /// </summary>
+    private readonly Dictionary<int, int> _usedRcGroups = new();
+
+    private int _accessoryCostMultiplier = 1;
+    private async Task ApplyAccessoryAsync(Accessory accessory, ILogger logger)
+    {
+	    BackupWeapon ??= new Weapon(this);
+
+	    if(accessory.Availability is not null && Availability is not null)
+			Availability += accessory.Availability;
+
+	    Cost += accessory.Cost;
+
+	    await Task.Run(ModifyRecoil);
+
+	    Conceal += accessory.ConcealModification;
+
+	    Accuracy += accessory.Accuracy;
+		
+	    if(Ammo is not null && accessory.AmmoModification is not null)
+			Ammo.ApplyAccessoryModification(accessory.AmmoModification);
+
+	    if (!string.IsNullOrEmpty(accessory.ModifyAmmoCapacity) && Ammo is not null)
+	    {
+			Ammo.ModifyWithExpression(accessory.ModifyAmmoCapacity);
+	    }
+
+	    _accessoryCostMultiplier *= accessory.AccessoryCostMultiplier;
+
+	    foreach (var mount in accessory.ExtraMount)
+	    {
+		    MountSlots.Add(new MountSlot(mount));
+	    }
+	    
+	    //TODO: True Unberbarrelweapon Support
+
+	    if (Damage is not null) 
+		    Damage.DamageAmount += accessory.DamageAmountModification;
+
+	    if (Damage is not null && accessory.DamageTypeOverride.Equals("P"))
+		    Damage.DamageType = DamageType.Physical;
+
+	    if (ArmorPen is not null) 
+		    ArmorPen.ApModifier = accessory.ArmorPenModification;
+
+	    Reach += accessory.ReachModifier;
+
+	    void ModifyRecoil()
+	    {
+		    if (accessory.RecoilModification == 0) return;
+
+		    //No Group => Always applicable
+		    if (accessory.RcGroup == 0)
+		    {
+			    RecoilCompensation += accessory.RecoilModification;
+			    return;
+		    }
+
+		    //No Mod of that group present => Add it to the dic and add Mod to weapon
+		    if (!_usedRcGroups.ContainsKey(accessory.RcGroup))
+		    {
+			    _usedRcGroups.Add(accessory.RcGroup, accessory.RecoilModification);
+			    RecoilCompensation += accessory.RecoilModification;
+			    return;
+		    }
+		    
+		    //Always keep the higher modification
+		    if(accessory.RecoilModification <= _usedRcGroups[accessory.RcGroup])
+			    return;
+
+		    _usedRcGroups[accessory.RcGroup] = accessory.RecoilModification;
+		    RecoilCompensation += accessory.RecoilModification;
+	    }
+    }
+
+
 }

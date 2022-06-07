@@ -169,7 +169,8 @@
                         Filterable="false"/>
                     <DataGridNumericColumn 
                         TItem="Weapon" 
-                        Field="@nameof(Weapon.Ap)"
+                        Field="@nameof(Weapon.ArmorPen)"
+                        SortField="ArmorPen.ArmorPenValue"
                         Caption="AP"
                         Filterable="false"/>
                     <DataGridColumn 
@@ -179,7 +180,7 @@
                         Filterable="false"/>
                     <DataGridNumericColumn 
                         TItem="Weapon" 
-                        Field="@nameof(Weapon.RecoilCompensation)" 
+                        Field="@nameof(Weapon.RecoilCompensation)"
                         Caption="RC"
                         Filterable="false"/>
                     <DataGridNumericColumn 

@@ -12,9 +12,9 @@ public class Damage
 {
     private string FullDamageString { get; }
     public string DisplayString { get; }
-    public DamageType DamageType { get; } = DamageType.Special;
+    public DamageType DamageType { get; set; } = DamageType.Special;
     public Element Element { get; } = Element.None;
-    public int DamageAmount { get; }
+    public int DamageAmount { get; set; }
     public int DamageDropPerMeter { get; }
     public string? DamageDropPerMeterString { get; }
     public int DamageRadius { get; }

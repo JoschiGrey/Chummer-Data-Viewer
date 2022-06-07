@@ -4,7 +4,7 @@ namespace ChummerDataViewer.Classes;
 
 public record MountSlot
 {
-    public AccessoryMount Mount { get; }
+    public WeaponMountSlots MountSlots { get; }
     public Accessory? Accessory { get; set; }
 
     /// <summary>
@@ -13,14 +13,14 @@ public record MountSlot
     public bool IsForced { get; init; } = false;
     
     
-    public MountSlot(AccessoryMount mount)
+    public MountSlot(WeaponMountSlots mountSlots)
     {
-        Mount = mount;
+        MountSlots = mountSlots;
     }
 
-    public MountSlot(AccessoryMount mount, Accessory accessory)
+    public MountSlot(WeaponMountSlots mountSlots, Accessory accessory)
     {
-        Mount = mount;
+        MountSlots = mountSlots;
         Accessory = accessory;
     }
 }

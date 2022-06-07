@@ -18,7 +18,7 @@ public static class AccessoryExtensions
     {
         fittingSlots = new List<MountSlot>();
         
-        fittingSlots = holder.MountSlots.Where(slot => accessory.Mounts.Contains(slot.Mount)).ToList();
+        fittingSlots = holder.MountSlots.Where(slot => accessory.PossibleMountSlots.Contains(slot.MountSlots)).ToList();
         if (!fittingSlots.Any())
         {
             if(holder is Weapon weapon)
@@ -56,3 +56,4 @@ public static class AccessoryExtensions
         return true;
     }
 }
+

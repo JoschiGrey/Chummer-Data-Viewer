@@ -16,8 +16,8 @@ public class WeaponsXmlRoot : ICreatable, IHasDependency
 
 
     [XmlArray("accessories")]
-    [XmlArrayItem("accessory", typeof(Accessory))]
-    public List<Accessory> Accessories { get; set; } = new();
+    [XmlArrayItem("accessory", typeof(XmlAccessory))]
+    public List<XmlAccessory> Accessories { get; set; } = new();
     
     [XmlIgnore]
     private static HashSet<Type> Dependencies { get; set; } = new()
