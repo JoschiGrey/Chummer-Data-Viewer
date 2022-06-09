@@ -1,4 +1,6 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Immutable;
+using System.ComponentModel;
+using System.Xml.Serialization;
 using Blazorise.Extensions;
 using ChummerDataViewer.Classes.HelperMethods;
 using ChummerDataViewer.Enums;
@@ -11,7 +13,7 @@ namespace ChummerDataViewer.Classes;
 
 public sealed record Weapon : ICreatable, IHoldAccessories
 {
-    public Guid Id { get; init; }
+	public Guid Id { get; init; }
     
     public string Name { get; private set; } = string.Empty;
     
@@ -58,7 +60,7 @@ public sealed record Weapon : ICreatable, IHoldAccessories
     //Melee Exclusive
     public int Reach { get; private set; }
 
-    public List<Accessory> Accessories { get; private set; } = new();
+    public IReadOnlySet<Accessory> BaseAccessories { get; private set; }
 
     public string CostCss { get; private set; } = string.Empty;
     
@@ -129,7 +131,7 @@ public sealed record Weapon : ICreatable, IHoldAccessories
 		    
 		    CostCss = baseWeapon.FormCostCssClass();
 
-		    Accessories = await AddAccessoriesAsync();
+		    await AddAccessoriesAsync();
 		    
 		    AllWeapons.Add(this);
 	    }
@@ -215,14 +217,13 @@ public sealed record Weapon : ICreatable, IHoldAccessories
 		    });
 	    }
 
-	    async ValueTask<List<Accessory>> AddAccessoriesAsync()
+	    async Task AddAccessoriesAsync()
 	    {
-		    var list = baseWeapon.AccessoriesNameList
-			    .Select(accessoryWithName => Accessory.GetAccessory(accessoryWithName.Name, logger)).ToList();
+		    BaseAccessories = baseWeapon.AccessoriesNameList
+			    .Select(accessoryWithName => Accessory.GetAccessory(accessoryWithName.Name, logger)).ToImmutableHashSet();
 
-		    if(await TryAddMultipleAccessoriesAsync(list, logger, true))
+		    if(await TryAddMultipleAccessoriesAsync(BaseAccessories, logger, true))
 			    logger.LogDebug("Could not gracefully add all accessories for {Name}", Name);
-		    return list;
 	    }
 
     }
@@ -317,10 +318,13 @@ public sealed record Weapon : ICreatable, IHoldAccessories
     {
 	    BackupWeapon ??= new Weapon(this);
 
-	    if(accessory.Availability is not null && Availability is not null)
+	    //If an acessory is part of the base weapon it does not modify availability.
+	    if(accessory.Availability is not null && Availability is not null && !BaseAccessories.Contains(accessory))
 			Availability += accessory.Availability;
 
-	    Cost += accessory.Cost;
+	    //If an acessory is part of the base weapon it does not modify cost
+	    if(!BaseAccessories.Contains(accessory))
+			Cost += accessory.Cost;
 
 	    await Task.Run(ModifyRecoil);
 

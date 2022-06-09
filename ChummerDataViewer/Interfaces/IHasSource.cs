@@ -4,5 +4,5 @@ namespace ChummerDataViewer.Interfaces;
 
 public interface IHasSource
 {
-    public Source Source { get; set; }
+    public Source? Source { get; set; }
 }

@@ -7,6 +7,8 @@ using ChummerDataViewer.Interfaces;
 
 namespace ChummerDataViewer.Classes;
 
+//TODO: Cavalier Falchion GH3 avail way too high!
+//TODO: Mods in base weapon don't apply avail
 public record Availability
 {
     public string AvailabilityString { get; private set; } = string.Empty;
@@ -14,24 +16,19 @@ public record Availability
     public int AvailabilityInt { get; private set; }
     
     public Legality Legality { get; private set; } = Legality.Unrestricted;
+    
+    public bool IsModifyingAvailability { get; }
 
     public Availability(string availabilityString, ILogger logger)
     {
         AvailabilityString = availabilityString;
 
         AvailabilityInt = RegexHelper.GetInt(AvailabilityString, logger);
+
+        if (AvailabilityString.Contains('+'))
+            IsModifyingAvailability = true;
         
-        try
-        {
-            const string pattern = "[0-9]+";
-            var match = Regex.Match(AvailabilityString, pattern).ToString();
-            if (!match.IsNullOrEmpty())
-                AvailabilityInt = int.Parse(match);
-        }
-        catch (FormatException e)
-        {
-            logger.LogWarning(e,"Failed Parsing of AvailabilityInt for {AvailabilityString}", AvailabilityString);
-        }
+        
         if (AvailabilityString.EndsWith('R'))
             Legality = Legality.Restricted;
         if (AvailabilityString.EndsWith('F'))
@@ -45,8 +42,13 @@ public record Availability
 
     public static Availability operator +(Availability x, Availability y)
     {
-        var newAvailInt =  x.AvailabilityInt + y.AvailabilityInt;
-
+        //Keep the avail if it isn't a modifying one (like smartgun)
+        int newAvailInt;
+        if (y.IsModifyingAvailability)
+            newAvailInt = x.AvailabilityInt + y.AvailabilityInt;
+        else
+            newAvailInt = x.AvailabilityInt;
+        
         var newLegality = x.Legality;
        
         if (x.Legality < y.Legality)

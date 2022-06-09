@@ -112,7 +112,7 @@ public record Accessory : ICreatable, IHasSource
             }
             catch (FormatException e)
             {
-                logger.LogWarning("Unrecognised Conceal Value pattern {BaseConceal}", baseConceal);
+                logger.LogWarning(e, "Unrecognised Conceal Value pattern {BaseConceal}", baseConceal);
                 throw;
             }
         }

@@ -171,13 +171,13 @@ public partial class WeaponTable : ComponentBase
         //Accessories
         bool CheckAccessories()
         {
-            if (weapon.Accessories.IsNullOrEmpty())
+            if (weapon.BaseAccessories.IsNullOrEmpty())
                 return true;
 
             if (_accessoryFilter.IsNullOrEmpty())
                 return true;
             
-            foreach (var weaponAccessory in weapon.Accessories)
+            foreach (var weaponAccessory in weapon.BaseAccessories)
             {
                 if (weaponAccessory.Name.Contains(_accessoryFilter, StringComparison.CurrentCultureIgnoreCase))
                     return true;
