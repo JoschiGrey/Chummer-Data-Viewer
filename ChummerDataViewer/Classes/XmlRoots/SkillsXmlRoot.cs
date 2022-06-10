@@ -46,7 +46,7 @@ public class SkillsXmlRoot : ICreatable, IHasDependency
 
     }
 
-    private static HashSet<Type> Dependencies { get; set; } = new HashSet<Type>() {typeof(BooksXmlRoot)};
+    public IReadOnlySet<Type> Dependencies { get; } = new HashSet<Type>() {typeof(BooksXmlRoot)};
     public bool CheckDependencies()
     {
         return Dependencies.IsSubsetOf(XmlLoader.CreatedXml);

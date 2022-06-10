@@ -34,7 +34,7 @@ public partial class WeaponTable : ComponentBase
     {
         if (!CreatedXml.Contains(typeof(WeaponsXmlRoot)))
         {
-            await LoadAllAsync(Client, Logger);
+            await LoadAllAsync<WeaponsXmlRoot>(Client, Logger);
         }
 
         Weapons = Weapon.AllWeapons;

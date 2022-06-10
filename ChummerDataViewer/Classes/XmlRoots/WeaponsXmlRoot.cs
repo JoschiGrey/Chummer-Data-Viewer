@@ -18,11 +18,10 @@ public class WeaponsXmlRoot : ICreatable, IHasDependency
     [XmlArray("accessories")]
     [XmlArrayItem("accessory", typeof(XmlAccessory))]
     public List<XmlAccessory> Accessories { get; set; } = new();
-    
-    [XmlIgnore]
-    private static HashSet<Type> Dependencies { get; set; } = new()
+
+    public IReadOnlySet<Type> Dependencies { get; } = new HashSet<Type>()
         {typeof(BooksXmlRoot), typeof(RangesXmlRoot), typeof(SkillsXmlRoot)};
-    
+
     public async Task CreateAsync(ILogger logger, ICreatable? baseObject)
     {
 
