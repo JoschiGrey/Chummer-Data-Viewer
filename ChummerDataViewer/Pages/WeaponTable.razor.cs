@@ -1,13 +1,13 @@
 ﻿using Blazorise.DataGrid;
 using Blazorise.Extensions;
-using ChummerDataViewer.Classes;
-using ChummerDataViewer.Classes.DataStructures;
-using ChummerDataViewer.Classes.HelperMethods;
-using ChummerDataViewer.Classes.XmlRoots;
-using ChummerDataViewer.Enums;
-using EnumExtensions = ChummerDataViewer.Extensions.EnumExtensions;
+using ChummerDataViewer.Backend.Classes;
+using ChummerDataViewer.Backend.Classes.DataStructures;
+using ChummerDataViewer.Backend.Classes.HelperMethods;
+using ChummerDataViewer.Backend.Classes.XmlRoots;
+using ChummerDataViewer.Backend.Enums;
+using EnumExtensions = ChummerDataViewer.Backend.Extensions.EnumExtensions;
 using Microsoft.AspNetCore.Components;
-using static ChummerDataViewer.Classes.XmlLoader;
+using static ChummerDataViewer.Backend.Classes.XmlLoader;
 
 namespace ChummerDataViewer.Pages;
 
